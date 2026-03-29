@@ -10,9 +10,11 @@ RewriteRule ^(.*)$ https://healthy-future.sk/$1 [L,R=301]
 # Security headers
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
-  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-Frame-Options "DENY"
   Header set X-XSS-Protection "1; mode=block"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
 # Cache static assets
