@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zdravá budúcnosť Slovenska — Váš príbeh má hodnotu</title>
+  <meta name="description" content="Zdieľajte svoju skúsenosť so zdravotnou starostlivosťou na Slovensku. Anonymne, bezpečne, za pár minút. Vaše príbehy pomáhajú meniť zdravotníctvo k lepšiemu.">
+  <meta property="og:title" content="Zdravá budúcnosť Slovenska">
+  <meta property="og:description" content="Váš príbeh môže zmeniť zdravotníctvo na Slovensku.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://healthy-future.sk">
+  <meta property="og:image" content="https://healthy-future.sk/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="sk_SK">
+  <link rel="canonical" href="https://healthy-future.sk">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,300..700;1,6..12,300..700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --sapphire:#06244B;--sapphire-90:rgba(6,36,75,.9);--sapphire-light:#0A3266;
+      --maya:#4FC5FF;--maya-dim:rgba(79,197,255,.12);--maya-glow:rgba(79,197,255,.06);
+      --marigold:#FFAE00;--marigold-hover:#FFC033;
+      --cream:#F8F7F4;--cream-mid:#EFEDE8;
+      --text:#1A1A1A;--text-muted:#5C5C5C;--white:#FFFFFF;
+      --font-serif:'Source Serif 4',Georgia,serif;
+      --font-sans:'Nunito Sans',-apple-system,sans-serif
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-sans);color:var(--text);background:var(--cream);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 2.5rem;background:rgba(248,247,244,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(6,36,75,.06);transition:box-shadow .4s}
+    .nav.scrolled{box-shadow:0 1px 24px rgba(6,36,75,.06)}
+    .nav-left{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .nav-logo{width:28px;height:28px;background:var(--sapphire);border-radius:6px;display:flex;align-items:center;justify-content:center}
+    .nav-logo svg{width:16px;height:16px}
+    .nav-title{font-family:var(--font-serif);font-size:.95rem;font-weight:600;color:var(--sapphire);letter-spacing:-.01em}
+    .nav-right{display:flex;gap:1.8rem;align-items:center}
+    .nav-link{font-size:.82rem;font-weight:600;color:var(--text-muted);text-decoration:none;letter-spacing:.02em;transition:color .2s}
+    .nav-link:hover{color:var(--sapphire)}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 2.5rem 5rem;position:relative;background:url('/hero-bg.png') center right/50% no-repeat}
+    .hero::after{content:'';position:absolute;top:0;right:0;width:50%;height:100%;background:linear-gradient(to right,var(--cream) 0%,rgba(248,247,244,.7) 30%,transparent 100%);pointer-events:none}
+    .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;position:relative;z-index:1}
+    .hero-content{max-width:520px}
+    .hero-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--maya);margin-bottom:1.8rem}
+    .hero h1{font-family:var(--font-serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:400;line-height:1.2;color:var(--sapphire);letter-spacing:-.025em;margin-bottom:1.6rem}
+    .hero h1 strong{font-weight:700}
+    .hero-text{font-size:1.05rem;line-height:1.7;color:var(--text-muted);margin-bottom:2.5rem}
+    .hero-cta{display:inline-flex;align-items:center;gap:.7rem;padding:1rem 2.2rem;background:var(--marigold);color:var(--sapphire);font-family:var(--font-sans);font-size:.95rem;font-weight:700;border:none;border-radius:8px;text-decoration:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(255,174,0,.25)}
+    .hero-cta:hover{background:var(--marigold-hover);transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,174,0,.35)}
+    .hero-cta svg{width:18px;height:18px;transition:transform .2s}
+    .hero-cta:hover svg{transform:translateX(3px)}
+    .hero-microcopy{font-size:.82rem;color:var(--text-muted);margin-top:.8rem}
+    .hero-trust-strip{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted);margin-top:1rem}
+    .hero-trust-strip a{color:var(--maya);text-decoration:none;font-weight:600;transition:color .2s}
+    .hero-trust-strip a:hover{color:var(--sapphire)}
+    .trust-sep{color:var(--cream-mid);user-select:none}
+    .hero-meta{display:flex;gap:2rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--cream-mid)}
+    .hero-meta-item{font-size:.78rem;color:var(--text-muted);line-height:1.5}
+    .hero-meta-item strong{display:block;font-size:.82rem;color:var(--sapphire);font-weight:700;margin-bottom:.15rem}
+    .hero-visual{display:flex;flex-direction:column;gap:1.2rem}
+    .stat-card{background:var(--white);border:1px solid var(--cream-mid);border-radius:12px;padding:1.6rem 1.8rem;transition:transform .3s,box-shadow .3s}
+    .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(6,36,75,.06)}
+    .stat-num{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--sapphire);letter-spacing:-.02em;line-height:1;display:flex;align-items:baseline;gap:.5rem}
+    .stat-num .accent{color:var(--maya)}
+    .stat-num .tag{font-family:var(--font-sans);font-size:1rem;font-weight:600;color:var(--maya)}
+    .stat-card.highlight .stat-num .tag{color:var(--white)}
+    .stat-label{font-size:.85rem;color:var(--text-muted);margin-top:.4rem;line-height:1.5}
+    .stat-card.highlight{background:var(--sapphire);border-color:var(--sapphire)}
+    .stat-card.highlight .stat-num{color:var(--marigold)}
+    .stat-card.highlight .stat-label{color:rgba(248,247,244,.75)}
+    .stat-source{font-size:.72rem;color:var(--text-muted);opacity:.7;line-height:1.5;margin-top:.5rem;padding:0 .2rem}
+
+    /* WHY */
+    .why{padding:6rem 2.5rem;background:var(--white)}
+    .why-inner{max-width:1100px;margin:0 auto}
+    .section-tag{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--maya);margin-bottom:1rem}
+    .section-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400;color:var(--sapphire);letter-spacing:-.02em;margin-bottom:1rem;max-width:580px}
+    .section-title strong{font-weight:700}
+    .section-desc{font-size:1rem;color:var(--text-muted);line-height:1.7;max-width:560px;margin-bottom:3.5rem}
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .why-card{padding:2rem;border-radius:12px;border:1px solid var(--cream-mid);background:var(--cream);transition:transform .2s,border-color .2s}
+    .why-card:hover{transform:translateY(-2px);border-color:rgba(79,197,255,.3)}
+    .why-icon{width:40px;height:40px;border-radius:10px;background:var(--maya-dim);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+    .why-icon svg{width:20px;height:20px;color:var(--maya)}
+    .why-card h3{font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--sapphire);margin-bottom:.5rem}
+    .why-card p{font-size:.88rem;color:var(--text-muted);line-height:1.65}
+
+    /* HOW */
+    .how{padding:6rem 2.5rem;background:var(--sapphire);color:var(--cream);position:relative;overflow:hidden}
+    .how::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(79,197,255,.06) 0%,transparent 70%);pointer-events:none}
+    .how-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+    .how .section-title{color:var(--white)}
+    .how .section-desc{color:rgba(248,247,244,.75)}
+    .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:3.5rem}
+    .step{padding:0 1rem}
+    .step-num{font-family:var(--font-serif);font-size:3rem;font-weight:700;color:rgba(79,197,255,.15);line-height:1;margin-bottom:.8rem}
+    .step h3{font-family:var(--font-serif);font-size:1.1rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
+    .step p{font-size:.88rem;color:rgba(248,247,244,.75);line-height:1.65}
+    .how-cta-wrap{text-align:center}
+    .how-cta{display:inline-flex;align-items:center;gap:.7rem;padding:1rem 2.5rem;background:var(--marigold);color:var(--sapphire);font-family:var(--font-sans);font-size:.95rem;font-weight:700;border:none;border-radius:8px;text-decoration:none;transition:all .25s;box-shadow:0 4px 24px rgba(255,174,0,.2)}
+    .how-cta:hover{background:var(--marigold-hover);transform:translateY(-2px);box-shadow:0 8px 36px rgba(255,174,0,.3)}
+    .how-cta svg{width:18px;height:18px}
+    .how-note{text-align:center;margin-top:1.5rem;font-size:.8rem;color:rgba(248,247,244,.6)}
+
+    /* TRUST */
+    .trust{padding:5rem 2.5rem;background:var(--cream)}
+    .trust-inner{max-width:800px;margin:0 auto;text-align:center}
+    .trust-badges{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+    .trust-badge{display:flex;flex-direction:column;align-items:center;gap:.6rem;max-width:180px}
+    .trust-badge-icon{width:44px;height:44px;border-radius:50%;background:var(--white);border:1px solid var(--cream-mid);display:flex;align-items:center;justify-content:center}
+    .trust-badge-icon svg{width:20px;height:20px;color:var(--sapphire)}
+    .trust-badge span{font-size:.82rem;color:var(--text-muted);line-height:1.5}
+
+    /* EMERGENCY */
+    .emergency{padding:2rem 2.5rem;background:var(--white);border-top:1px solid var(--cream-mid);border-bottom:1px solid var(--cream-mid)}
+    .emergency-inner{max-width:680px;margin:0 auto;text-align:center;font-size:.85rem;color:var(--text-muted);line-height:1.6}
+    .emergency-inner strong{color:var(--sapphire)}
+
+    /* FOOTER */
+    .footer{padding:3rem 2.5rem;background:var(--sapphire);text-align:center}
+    .footer-brand{font-family:var(--font-serif);font-size:.95rem;font-weight:600;color:rgba(248,247,244,.7);margin-bottom:.6rem}
+    .footer-main{font-size:.82rem;color:rgba(248,247,244,.4);line-height:1.8}
+    .footer-main a{color:rgba(248,247,244,.6);text-decoration:none;transition:color .2s}
+    .footer-main a:hover{color:var(--cream)}
+    .footer-divider{width:40px;height:1px;background:rgba(248,247,244,.1);margin:1.2rem auto}
+    .footer-credit{font-size:.72rem;color:rgba(248,247,244,.5);margin-top:.8rem}
+    .footer-credit a{color:rgba(248,247,244,.55)}
+    .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;flex-wrap:wrap}
+    .footer-link{font-size:.82rem;color:rgba(248,247,244,.6);text-decoration:none;transition:color .2s}
+    .footer-link:hover{color:var(--cream)}
+
+    /* MODALS */
+    .modal-overlay{position:fixed;inset:0;background:rgba(6,36,75,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+    .modal-overlay:target{opacity:1;pointer-events:auto}
+    .modal{background:var(--white);border-radius:14px;padding:2.5rem;max-width:560px;width:90%;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+    .modal h2{font-family:var(--font-serif);font-size:1.4rem;color:var(--sapphire);margin-bottom:1.2rem}
+    .modal p{font-size:.92rem;color:var(--text-muted);line-height:1.7;margin-bottom:.8rem}
+    .modal p strong{color:var(--sapphire)}
+    .modal a{color:var(--maya);text-decoration:underline}
+    .modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.6rem;color:var(--text-muted);cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+    .modal-close:hover{background:var(--cream-mid)}
+
+    /* MOBILE */
+    .mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:.4rem}
+    .mobile-toggle span{display:block;width:20px;height:2px;background:var(--sapphire);margin:4px 0;transition:.3s}
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:1fr;gap:3rem}
+      .hero-visual{order:-1}
+      .why-grid,.how-steps{grid-template-columns:1fr}
+    }
+    @media(max-width:640px){
+      .nav{padding:.9rem 1.2rem}
+      .nav-right{display:none}
+      .nav-right.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--cream);padding:1.2rem;border-bottom:1px solid var(--cream-mid);box-shadow:0 8px 24px rgba(0,0,0,.06);gap:.8rem}
+      .mobile-toggle{display:block}
+      .hero{padding:6rem 1.2rem 3rem;min-height:auto}
+      .hero h1{font-size:1.9rem}
+      .hero-meta{flex-direction:column;gap:1rem}
+      .why,.how,.trust{padding:3.5rem 1.2rem}
+      .trust-badges{gap:1.5rem}
+    }
+
+    /* ANIMATION */
+    /* SKIP LINK */
+    .skip-link{position:absolute;top:-100%;left:1rem;background:var(--sapphire);color:var(--white);padding:.6rem 1.2rem;border-radius:6px;font-size:.85rem;font-weight:600;z-index:999;text-decoration:none;transition:top .2s}
+    .skip-link:focus{top:1rem}
+
+    /* ANIMATION */
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .reveal{opacity:0;animation:fadeIn .6s ease forwards}
+    .reveal-d1{animation-delay:.1s}.reveal-d2{animation-delay:.2s}.reveal-d3{animation-delay:.3s}.reveal-d4{animation-delay:.4s}.reveal-d5{animation-delay:.5s}
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;animation:none}}
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Preskočiť na obsah</a>
+
+  <nav class="nav" id="nav">
+    <a href="/" class="nav-left">
+      <img src="/logos/Logo_HSF_Color_Inverted_RGB.png" alt="Healthy Future of Slovakia" style="height:36px;width:auto;">
+    </a>
+    <button class="mobile-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-right">
+      <a href="#preco" class="nav-link">Prečo</a>
+      <a href="#ako" class="nav-link">Ako to funguje</a>
+    </div>
+  </nav>
+
+  <main id="main">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <span class="hero-tag reveal reveal-d1">Iniciatíva pre lepšie zdravotníctvo</span>
+        <h1 class="reveal reveal-d2">Keď doma niekto ochorie, nemali by ste zostať <strong>sami v neistote.</strong></h1>
+        <p class="hero-text reveal reveal-d3">Povedzte nám, kde vás systém podržal a kde vás nechal samých. Z vašich skúseností skladáme obraz toho, čo treba zmeniť — aby bolo v ťažkej chvíli viac jasnosti, férovosti a ľudskosti.</p>
+        <a href="https://feedback.healthy-future.sk/" class="hero-cta reveal reveal-d4">
+          Napísať svoj príbeh
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
+        </a>
+        <div class="hero-microcopy reveal reveal-d4">Anonymný formulár v 7 krátkych obrazovkách. Bez registrácie.</div>
+        <div class="hero-trust-strip reveal reveal-d5">
+          <span>Nezávislá iniciatíva odborníkov</span>
+          <span class="trust-sep">·</span>
+          <span>Bez registrácie a bez osobných údajov</span>
+          <span class="trust-sep">·</span>
+          <a href="#trust">Ako nakladáme s príbehmi ↓</a>
+        </div>
+        <div class="hero-meta reveal reveal-d5">
+          <div class="hero-meta-item"><strong>Anonymne</strong>Nepýtame meno ani rodné číslo</div>
+          <div class="hero-meta-item"><strong>5–10 minút</strong>Štruktúrovaný formulár</div>
+          <div class="hero-meta-item"><strong>Aj dobrá skúsenosť pomáha</strong>Pozitívna aj negatívna</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="stat-card reveal reveal-d2">
+          <div class="stat-num"><span class="accent">−</span>3,5 roka <span class="tag">menej</span></div>
+          <div class="stat-label">Stredná dĺžka života oproti západnej Európe</div>
+        </div>
+        <div class="stat-card reveal reveal-d3">
+          <div class="stat-num"><span class="accent">+</span>219 dní <span class="tag">čakania</span></div>
+          <div class="stat-label">Na prístup k novým liekom oproti zvyšku Európy</div>
+        </div>
+        <div class="stat-card highlight reveal reveal-d4">
+          <div class="stat-num">5–6× <span class="tag">pomalší</span></div>
+          <div class="stat-label">Pokrok zdravotného systému oproti regionálnym partnerom</div>
+        </div>
+        <div class="stat-source reveal reveal-d5">Zdroj: OECD Health at a Glance 2023, EFPIA W.A.I.T. Indicator 2023, Health Consumer Powerhouse Euro Health Consumer Index</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" id="preco">
+    <div class="why-inner">
+      <div class="section-tag">Prečo na vašej skúsenosti záleží</div>
+      <h2 class="section-title">Expertné dáta nestačia. Potrebujeme <strong>reálne príbehy</strong></h2>
+      <p class="section-desc">Pracujeme s odborníkmi na tom, aby sa zdravotníctvo zmenilo. Analytické dáta máme. Chýba nám to, čo štatistiky neukazujú: vaša osobná skúsenosť.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></svg></div>
+          <h3>Identifikujete systémové zlyhania</h3>
+          <p>Vaše príbehy odhaľujú problémy, ktoré sa neobjavujú v číslach — čakacie doby, komunikáciu, ľudský prístup. To sú veci, ktoré treba zmeniť.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Váš hlas má váhu</h3>
+          <p>Vaše skúsenosti pomáhajú tým, ktorí pracujú na zmene. Reálne príbehy občanov sú najsilnejší argument pre lepšie zdravotníctvo.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <h3>Pomáhate merať kvalitu</h3>
+          <p>Hodnotíte lekárov, sestry, komunikáciu a ľudskosť na škále 1–5. Tieto dáta mapujú kvalitu starostlivosti naprieč celým Slovenskom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="ako">
+    <div class="how-inner">
+      <div class="section-tag">Ako to funguje</div>
+      <h2 class="section-title">Tri kroky. <strong>Žiadna registrácia.</strong></h2>
+      <p class="section-desc">Formulár má sedem krátkych obrazoviek zoskupených do troch fáz. Vyberáte z možností, hodnotíte na škálach a napíšete svoj príbeh vlastnými slovami.</p>
+      <div class="how-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Odsúhlaste spracovanie</h3>
+          <p>Krátky informovaný súhlas. Žiadne meno, žiadna registrácia. Len potvrdenie, že rozumiete, ako s údajmi naložíme.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Opíšte svoju skúsenosť</h3>
+          <p>Kto bol pacientom, kde sa to stalo, o aký typ starostlivosti šlo. Potom vlastnými slovami napíšte, čo sa stalo.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Ohodnoťte a odošlite</h3>
+          <p>Hodnotenie lekárov, sestier, komunikácie a ľudskosti na škále 1–5. Skontrolujete súhrn a odošlete.</p>
+        </div>
+      </div>
+      <div class="how-cta-wrap">
+        <a href="https://feedback.healthy-future.sk/" class="how-cta">
+          Začať — zaberie to 5–10 minút
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
+        </a>
+        <p class="how-note">Vašu skúsenosť spracujeme anonymne a použijeme len v súhrnnej podobe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="trust-inner">
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <span>Anonymné a šifrované. Žiadne osobné údaje.</span>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <span>Nezávislý think-tank. Žiadna politická strana.</span>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <span>GDPR súlad. Kontakt: gdpr@healthy-future.sk</span>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <span>Údaje uchovávame len počas trvania projektu, potom ich vymažeme.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="emergency">
+    <div class="emergency-inner">
+      <strong>Dôležité:</strong> Tento portál nie je náhradou za akútnu lekársku pomoc. Ak potrebujete pomoc, volajte <strong>155</strong> (záchranná služba) alebo <strong>112</strong> (tiesňová linka).
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <img src="/logos/Logo_HSF_White_RGB.png" alt="Healthy Future of Slovakia" style="height:44px;width:auto;margin:0 auto 1.2rem;">
+    <div class="footer-brand">Zdravá budúcnosť Slovenska</div>
+    <div class="footer-main">
+      <strong style="color:rgba(248,247,244,.85);font-weight:600">o.z. Fórum Budúcnosti Slovenska</strong><br>
+      Nezávislá občianska iniciatíva
+    </div>
+    <div class="footer-links">
+      <a href="#o-iniciative" class="footer-link">O iniciatíve</a>
+      <a href="#ochrana-sukromia" class="footer-link">Ochrana súkromia</a>
+      <a href="mailto:reforma@healthy-future.sk" class="footer-link">Kontakt</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-main">
+      <a href="https://healthy-future.sk">healthy-future.sk</a> · <a href="mailto:reforma@healthy-future.sk">reforma@healthy-future.sk</a>
+    </div>
+    <div class="footer-credit">Powered by <a href="https://instarea.com" target="_blank" rel="noopener">instarea</a></div>
+  </footer>
+
+  <!-- Modal: O iniciatíve -->
+  <div class="modal-overlay" id="o-iniciative" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modal-about-title">
+      <button class="modal-close" aria-label="Zavrieť">&times;</button>
+      <h2 id="modal-about-title">O iniciatíve</h2>
+      <p>Zdravá budúcnosť Slovenska je iniciatíva občianskeho združenia Fórum Budúcnosti Slovenska (Future Slovakia Forum, o.z.). Sme skupina odborníkov, ktorá chce zlepšiť zdravotníctvo na Slovensku na základe reálnych dát a skúseností občanov.</p>
+      <p>Veríme, že hlas pacientov a ich blízkych je najsilnejší argument pre systémové zmeny. Preto zbierame vaše príbehy — anonymne, bezpečne a s rešpektom.</p>
+      <p>Kontakt: <a href="mailto:reforma@healthy-future.sk">reforma@healthy-future.sk</a></p>
+    </div>
+  </div>
+
+  <!-- Modal: Ochrana súkromia -->
+  <div class="modal-overlay" id="ochrana-sukromia" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modal-privacy-title">
+      <button class="modal-close" aria-label="Zavrieť">&times;</button>
+      <h2 id="modal-privacy-title">Ochrana súkromia</h2>
+      <p><strong>Kto spracúva vaše údaje:</strong> Fórum Budúcnosti Slovenska, o.z. (IČO: 56046260)</p>
+      <p><strong>Aké údaje zbierame:</strong> Vaše odpovede vo formulári sú anonymné. Nepýtame meno, rodné číslo ani iné priamo identifikujúce údaje.</p>
+      <p><strong>Účel spracovania:</strong> Analýza skúseností občanov so zdravotnou starostlivosťou na Slovensku za účelom zlepšenia systému.</p>
+      <p><strong>Kto má prístup:</strong> K údajom má prístup výlučne analytický tím o.z. Fórum Budúcnosti Slovenska. Údaje neposkytujeme tretím stranám.</p>
+      <p><strong>Uchovávanie:</strong> Údaje uchovávame len počas trvania projektu. Po jeho ukončení budú bezpečne vymazané.</p>
+      <p><strong>Vaše práva:</strong> Máte právo na informácie o spracovaní vašich údajov. Kontaktujte nás na <a href="mailto:gdpr@healthy-future.sk">gdpr@healthy-future.sk</a>.</p>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',window.scrollY>20)});
+
+    // Mobile menu toggle with aria-expanded
+    const menuToggle=document.getElementById('menu-toggle');
+    const navRight=document.querySelector('.nav-right');
+    menuToggle.addEventListener('click',()=>{
+      const open=navRight.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded',open);
+    });
+
+    // Modal close buttons
+    document.querySelectorAll('.modal-close').forEach(btn=>{
+      btn.addEventListener('click',()=>{history.pushState(null,null,' ')});
+    });
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+      overlay.addEventListener('click',e=>{if(e.target===overlay)history.pushState(null,null,' ')});
+    });
+  </script>
+</body>
+</html>
