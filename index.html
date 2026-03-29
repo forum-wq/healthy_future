@@ -137,7 +137,7 @@
 
     /* MODALS */
     .modal-overlay{position:fixed;inset:0;background:rgba(6,36,75,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
-    .modal-overlay:target{opacity:1;pointer-events:auto}
+    .modal-overlay.active{opacity:1;pointer-events:auto}
     .modal{background:var(--white);border-radius:14px;padding:2.5rem;max-width:560px;width:90%;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.15)}
     .modal h2{font-family:var(--font-serif);font-size:1.4rem;color:var(--sapphire);margin-bottom:1.2rem}
     .modal p{font-size:.92rem;color:var(--text-muted);line-height:1.7;margin-bottom:.8rem}
@@ -195,7 +195,7 @@
     </div>
   </nav>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
 
   <section class="hero">
     <div class="hero-inner">
@@ -207,7 +207,7 @@
           Napísať svoj príbeh
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
         </a>
-        <div class="hero-microcopy reveal reveal-d4">Anonymný formulár v 7 krátkych obrazovkách. Bez registrácie.</div>
+        <div class="hero-microcopy reveal reveal-d4">Anonymný formulár v 6 krátkych obrazovkách. Bez registrácie.</div>
         <div class="hero-trust-strip reveal reveal-d5">
           <span>Nezávislá iniciatíva odborníkov</span>
           <span class="trust-sep">·</span>
@@ -296,7 +296,7 @@
     </div>
   </section>
 
-  <section class="trust">
+  <section class="trust" id="trust">
     <div class="trust-inner">
       <div class="trust-badges">
         <div class="trust-badge">
@@ -348,7 +348,7 @@
 
   <!-- Modal: O iniciatíve -->
   <div class="modal-overlay" id="o-iniciative" aria-hidden="true">
-    <div class="modal" role="dialog" aria-labelledby="modal-about-title">
+    <div class="modal" role="dialog" aria-labelledby="modal-about-title" tabindex="-1">
       <button class="modal-close" aria-label="Zavrieť">&times;</button>
       <h2 id="modal-about-title">O iniciatíve</h2>
       <p>Zdravá budúcnosť Slovenska je iniciatíva občianskeho združenia Fórum Budúcnosti Slovenska (Future Slovakia Forum, o.z.). Sme skupina odborníkov, ktorá chce zlepšiť zdravotníctvo na Slovensku na základe reálnych dát a skúseností občanov.</p>
@@ -359,7 +359,7 @@
 
   <!-- Modal: Ochrana súkromia -->
   <div class="modal-overlay" id="ochrana-sukromia" aria-hidden="true">
-    <div class="modal" role="dialog" aria-labelledby="modal-privacy-title">
+    <div class="modal" role="dialog" aria-labelledby="modal-privacy-title" tabindex="-1">
       <button class="modal-close" aria-label="Zavrieť">&times;</button>
       <h2 id="modal-privacy-title">Ochrana súkromia</h2>
       <p><strong>Kto spracúva vaše údaje:</strong> Fórum Budúcnosti Slovenska, o.z. (IČO: 56046260)</p>
@@ -382,13 +382,47 @@
       menuToggle.setAttribute('aria-expanded',open);
     });
 
-    // Modal close buttons
-    document.querySelectorAll('.modal-close').forEach(btn=>{
-      btn.addEventListener('click',()=>{history.pushState(null,null,' ')});
+    // Modal helpers
+    function openModal(overlay){
+      if(!overlay)return;
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden','false');
+      overlay.querySelector('.modal').focus();
+    }
+    function closeModal(overlay){
+      if(!overlay)return;
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden','true');
+      history.replaceState(null,'',window.location.pathname);
+    }
+
+    // Open modal via footer links (intercept click instead of relying on :target)
+    document.querySelectorAll('a[href="#o-iniciative"],a[href="#ochrana-sukromia"]').forEach(link=>{
+      link.addEventListener('click',e=>{
+        e.preventDefault();
+        const id=link.getAttribute('href').substring(1);
+        openModal(document.getElementById(id));
+      });
     });
-    // Close modal on overlay click
+
+    // Close on × button
+    document.querySelectorAll('.modal-close').forEach(btn=>{
+      btn.addEventListener('click',()=>closeModal(btn.closest('.modal-overlay')));
+    });
+
+    // Close on overlay click
     document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-      overlay.addEventListener('click',e=>{if(e.target===overlay)history.pushState(null,null,' ')});
+      overlay.addEventListener('click',e=>{
+        if(e.target===overlay)closeModal(overlay);
+      });
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'){
+        const open=document.querySelector('.modal-overlay.active');
+        if(open)closeModal(open);
+      }
     });
   </script>
 </body>
