@@ -57,6 +57,15 @@
     .hero-cta svg{width:18px;height:18px;transition:transform .2s}
     .hero-cta:hover svg{transform:translateX(3px)}
     .hero-microcopy{font-size:.82rem;color:var(--text-muted);margin-top:.8rem}
+    /* STORY COUNTER */
+    .story-counter{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.4rem;padding:.7rem 1.3rem;background:var(--white);border:1px solid var(--cream-mid);border-radius:10px;box-shadow:0 2px 12px rgba(6,36,75,.04)}
+    .story-counter-pulse{width:10px;height:10px;border-radius:50%;background:var(--maya);position:relative;flex-shrink:0}
+    .story-counter-pulse::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:rgba(79,197,255,.3);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:0;transform:scale(1.8)}}
+    .story-counter-num{font-family:var(--font-serif);font-size:1.5rem;font-weight:700;color:var(--sapphire);letter-spacing:-.02em;line-height:1}
+    .story-counter-label{font-size:.8rem;color:var(--text-muted);line-height:1.35}
+    @media(prefers-reduced-motion:reduce){.story-counter-pulse::after{animation:none;opacity:.3}}
+
     .hero-trust-strip{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.78rem;color:var(--text-muted);margin-top:1rem}
     .hero-trust-strip a{color:var(--maya);text-decoration:none;font-weight:600;transition:color .2s}
     .hero-trust-strip a:hover{color:var(--sapphire)}
@@ -152,7 +161,7 @@
     .mobile-toggle span{display:block;width:20px;height:2px;background:var(--sapphire);margin:4px 0;transition:.3s}
     @media(max-width:900px){
       .hero-inner{grid-template-columns:1fr;gap:3rem}
-      .hero-visual{order:-1}
+      .hero-visual{order:1}
       .why-grid,.how-steps{grid-template-columns:1fr}
     }
     @media(max-width:640px){
@@ -209,6 +218,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
         </a>
         <div class="hero-microcopy reveal reveal-d4">Anonymný formulár v 6 krátkych obrazovkách. Bez registrácie.</div>
+        <div class="story-counter reveal reveal-d4">
+          <span class="story-counter-pulse"></span>
+          <span class="story-counter-num" id="story-count">18</span>
+          <span class="story-counter-label">už odovzdaných príbehov<br>od pacientov a ich blízkych</span>
+        </div>
         <div class="hero-trust-strip reveal reveal-d5">
           <span>Nezávislá iniciatíva odborníkov</span>
           <span class="trust-sep">·</span>
@@ -425,6 +439,19 @@
         if(open)closeModal(open);
       }
     });
+
+    // Live story count
+    (function(){
+      const el=document.getElementById('story-count');
+      if(!el)return;
+      fetch('https://feedback.healthy-future.sk/api/count')
+        .then(r=>{if(!r.ok)throw r;return r.json()})
+        .then(data=>{
+          const n=Number(data.count);
+          if(n>0)el.textContent=n.toLocaleString('sk-SK');
+        })
+        .catch(()=>{/* keep fallback value */});
+    })();
   </script>
 </body>
 </html>
