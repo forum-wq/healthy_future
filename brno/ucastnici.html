@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kto príde? — Slovensko, ako ho vidia tí, čo ho riadili | Future Slovakia Forum</title>
+<meta name="description" content="Pozrite si, kto sa registruje na diskusiu Slovensko, ako ho vidia tí, čo ho riadili — univerzity, fakulty a o čo je najväčší záujem.">
+<meta name="robots" content="noindex, follow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; base-uri 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --cyan:#7fa88e;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --font:'Inter Tight',system-ui,sans-serif;
+
+    /* Segment palette */
+    --c1:#7fa88e;   /* cyan */
+    --c2:#c25b5b;   /* coral burgundy (Brno primary) */
+    --c3:#d4856a;   /* terracotta (Olomouc) */
+    --c4:#7bd389;   /* green */
+    --c5:#b88bff;   /* violet */
+    --c6:#9fb0c7;   /* gray */
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* Gradient strip top */
+  body::before{
+    content:'';position:fixed;top:0;left:0;right:0;height:4px;z-index:10;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+
+  .container{max-width:1040px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+
+  /* Top nav */
+  .topnav{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    margin-bottom:2.5rem;flex-wrap:wrap;
+  }
+  .back-link{
+    font-size:13px;font-weight:500;color:var(--text-secondary);
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+    padding:8px 14px;border:1px solid var(--border-soft);border-radius:8px;
+    transition:border-color .2s,color .2s;
+  }
+  .back-link:hover{border-color:var(--cyan);color:var(--cyan)}
+  .brand-logo{height:28px;width:auto;display:block;opacity:0.9}
+
+  /* Hero */
+  .hero{text-align:center;margin-bottom:3.5rem}
+  .hero-eyebrow{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--cyan);margin-bottom:14px;
+    padding-bottom:10px;border-bottom:2px solid rgba(127,168,142,0.30);
+  }
+  .hero h1{
+    font-size:clamp(28px,4.2vw,44px);font-weight:900;letter-spacing:-1px;
+    line-height:1.06;margin-bottom:10px;
+  }
+  .hero .sub{font-size:15px;color:var(--text-secondary);max-width:640px;margin:0 auto}
+
+  /* Hero counter */
+  .counter-card{
+    max-width:480px;margin:2rem auto 0;
+    background:linear-gradient(135deg,rgba(127,168,142,0.12),rgba(194,91,91,0.10));
+    border:1px solid var(--border-soft);border-radius:18px;
+    padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;
+  }
+  .counter-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+  .counter-num{
+    font-size:clamp(64px,12vw,96px);font-weight:900;line-height:1;
+    background:linear-gradient(135deg,var(--cyan),var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    letter-spacing:-2px;
+  }
+  .counter-lbl{font-size:15px;color:var(--text-secondary);margin-top:8px;font-weight:500}
+  .counter-cap{
+    display:inline-block;margin-top:14px;font-size:11px;font-weight:600;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--text-muted);
+    background:rgba(255,255,255,0.04);padding:5px 12px;border-radius:100px;
+  }
+
+  /* Section */
+  .section{margin-bottom:3rem}
+  .section-head{margin-bottom:1.5rem}
+  .section-label{
+    font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:6px;
+  }
+  .section-head h2{
+    font-size:clamp(20px,2.4vw,26px);font-weight:800;letter-spacing:-0.5px;
+  }
+  .section-head .hint{font-size:13px;color:var(--text-muted);margin-top:4px}
+
+  /* Charts row */
+  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  @media (max-width:720px){.charts-row{grid-template-columns:1fr}}
+
+  .chart-card{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:16px;
+    padding:1.75rem;
+  }
+  .chart-card h3{
+    font-size:16px;font-weight:700;margin-bottom:1.25rem;letter-spacing:-0.3px;
+  }
+  .chart-card h3 .muted{color:var(--text-muted);font-weight:500;font-size:13px;margin-left:6px}
+
+  .pie-wrap{
+    display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;
+    position:relative;
+  }
+  .pie{
+    width:180px;height:180px;border-radius:50%;
+    background:conic-gradient(var(--text-muted) 0 360deg);
+    position:relative;
+    transition:transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .pie::after{
+    content:'';position:absolute;inset:30px;border-radius:50%;
+    background:var(--bg-primary);
+    box-shadow:inset 0 0 0 1px var(--border-soft);
+  }
+  .pie-center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    text-align:center;pointer-events:none;
+  }
+  .pie-center .num{font-size:28px;font-weight:800;color:var(--text-primary);line-height:1}
+  .pie-center .lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+
+  .legend{display:flex;flex-direction:column;gap:8px}
+  .legend-item{
+    display:flex;align-items:center;gap:10px;font-size:13px;padding:6px 0;
+  }
+  .legend-dot{
+    width:12px;height:12px;border-radius:3px;flex-shrink:0;
+  }
+  .legend-name{flex:1;color:var(--text-secondary);font-weight:500}
+  .legend-pct{font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
+  .legend-count{font-size:11px;color:var(--text-muted);margin-left:4px;font-weight:500}
+
+  /* Bar list */
+  .bar-list{display:flex;flex-direction:column;gap:10px}
+  .bar-item{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:10px;
+    padding:12px 16px;
+    display:grid;grid-template-columns:1fr auto;gap:10px 14px;align-items:center;
+  }
+  .bar-name{font-size:14px;font-weight:600;color:var(--text-primary);min-width:0}
+  .bar-name .uni-tag{display:block;font-size:11px;color:var(--text-muted);font-weight:500;margin-top:2px}
+  .bar-count{
+    font-size:13px;font-weight:700;color:var(--cyan);
+    background:rgba(127,168,142,0.12);padding:3px 10px;border-radius:100px;
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .bar-track{
+    grid-column:1 / -1;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;background:linear-gradient(90deg,var(--cyan),var(--accent));border-radius:3px;
+    width:0;transition:width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Empty state */
+  .empty{
+    text-align:center;padding:3rem 1rem;color:var(--text-muted);font-size:14px;
+    background:var(--card-bg);border:1px dashed var(--border-soft);border-radius:12px;
+  }
+  .empty .big{font-size:44px;margin-bottom:12px;opacity:0.4;font-weight:900;color:var(--text-muted)}
+
+  /* Loading */
+  .loading{text-align:center;padding:4rem 1rem;color:var(--text-muted);font-size:14px}
+  .loading::after{
+    content:'';display:inline-block;width:4px;height:4px;border-radius:50%;
+    background:var(--cyan);margin-left:8px;
+    animation:blink 1s infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  /* CTA */
+  .cta-bottom{
+    margin-top:4rem;padding:2rem;text-align:center;
+    background:linear-gradient(135deg,rgba(127,168,142,0.10),rgba(194,91,91,0.08));
+    border:1px solid var(--border-soft);border-radius:18px;
+  }
+  .cta-bottom h3{font-size:20px;font-weight:800;margin-bottom:8px;letter-spacing:-0.3px}
+  .cta-bottom p{color:var(--text-secondary);font-size:14px;margin-bottom:1.25rem;max-width:480px;margin-left:auto;margin-right:auto}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:10px;padding:14px 32px;
+    background:var(--accent);color:var(--bg-primary);font-size:15px;font-weight:700;
+    border-radius:10px;text-decoration:none;transition:transform .15s,background .2s;font-family:var(--font);
+  }
+  .btn-primary:hover{background:#a84a4a;transform:translateY(-1px)}
+  .btn-primary svg{width:18px;height:18px;stroke:var(--bg-primary);fill:none;stroke-width:2.5}
+
+  .updated{font-size:11px;color:var(--text-muted);text-align:center;margin-top:2rem;letter-spacing:0.06em}
+  .live-dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;background:#7bd389;
+    margin-right:6px;vertical-align:middle;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+  @media(max-width:600px){
+    .container{padding:1.5rem 1rem 3rem}
+    .chart-card{padding:1.25rem}
+    .pie{width:150px;height:150px}
+    .pie::after{inset:25px}
+    .pie-center .num{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="topnav">
+    <a href="index.html" class="back-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Späť na podujatie
+    </a>
+    <img src="logo-fsf.png" alt="Future Slovakia Forum" class="brand-logo" width="98" height="28">
+  </nav>
+
+  <header class="hero">
+    <div class="hero-eyebrow">Brno • 6. mája 2026</div>
+    <h1>Kto príde do Trojky?</h1>
+    <p class="sub">Aktuálny prehľad registrácií na diskusiu Slovensko, ako ho vidia tí, čo ho riadili.</p>
+    <div class="counter-card">
+      <div class="counter-num" id="total">—</div>
+      <div class="counter-lbl">registrovaných účastníkov</div>
+      <div class="counter-cap" id="cap">0 / 70 miest</div>
+    </div>
+  </header>
+
+  <div id="content" style="display:none">
+
+    <section class="section">
+      <div class="charts-row">
+
+        <div class="chart-card">
+          <h3>Rozdelenie účastníkov</h3>
+          <div class="pie-wrap">
+            <div class="pie" id="statusPie"></div>
+            <div class="pie-center">
+              <div class="num" id="statusTotal">—</div>
+              <div class="lbl">spolu</div>
+            </div>
+          </div>
+          <div class="legend" id="statusLegend"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Najväčší záujem <span class="muted">o témy</span></h3>
+          <div class="pie-wrap">
+            <div class="pie" id="interestsPie"></div>
+            <div class="pie-center">
+              <div class="num" id="interestsTotal">—</div>
+              <div class="lbl">hlasov</div>
+            </div>
+          </div>
+          <div class="legend" id="interestsLegend"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-label">Univerzity</div>
+        <h2>Odkiaľ prídu?</h2>
+        <p class="hint" id="uniHint"></p>
+      </div>
+      <div class="bar-list" id="uniList"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-label">Fakulty</div>
+        <h2>Top fakulty</h2>
+        <p class="hint" id="facHint"></p>
+      </div>
+      <div class="bar-list" id="facList"></div>
+    </section>
+
+    <div class="updated" id="updated"><span class="live-dot"></span><span id="updatedTxt">Aktualizované</span></div>
+
+  </div>
+
+  <div id="loading" class="loading">Načítavam aktuálne dáta</div>
+
+  <div class="cta-bottom">
+    <h3>Ešte ste sa nezaregistrovali?</h3>
+    <p>Kavárna Trojka má kapacitu 70 miest. Registrácia je nutná, ďakujeme.</p>
+    <a href="registracia.html" class="btn-primary">
+      Registrovať sa
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <footer style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border-soft);font-size:12px;color:var(--text-muted);text-align:center;line-height:1.8">
+    Organizátor: <a href="https://future-slovakia.eu" target="_blank" rel="noopener" style="color:#7fa88e;text-decoration:none">Future Slovakia Forum</a> · Lokálna koordinácia: Linda Veverková (MUNI Brno)<br>
+    Kontakt: <a href="mailto:linda.veverkova@future-slovakia.eu" style="color:#7fa88e;text-decoration:none">linda.veverkova@future-slovakia.eu</a> · <a href="mailto:studenti@future-slovakia.eu" style="color:#7fa88e;text-decoration:none">studenti@future-slovakia.eu</a>
+  </footer>
+
+</div>
+
+<script>
+// TODO: Dávid — vlož Brno GAS deployment URL sem (pozri GAS_TEMPLATE.md).
+const API = 'REPLACE_ME_BRNO_GAS_DEPLOYMENT_URL';
+const CAPACITY = 70;
+
+const STATUS_LABEL = { student:'Študenti', absolvent:'Absolventi', verejnost:'Verejnosť' };
+const STATUS_COLOR = { student:'var(--c1)', absolvent:'var(--c2)', verejnost:'var(--c6)' };
+
+const INTEREST_LABEL = {
+  zdravotnictvo:'Zdravotníctvo',
+  skolstvo:'Školstvo a vzdelávanie',
+  financie:'Reforma verejných financií',
+  decentralizacia:'Decentralizácia',
+  ine:'Iné témy'
+};
+const INTEREST_PALETTE = ['var(--c1)','var(--c3)','var(--c2)','var(--c4)','var(--c5)','var(--c6)'];
+
+function esc(s){ const d=document.createElement('div'); d.textContent=String(s||''); return d.innerHTML; }
+
+function animateNumber(el, to){
+  const start = 0, dur = 900, t0 = performance.now();
+  function step(t){
+    const p = Math.min(1, (t - t0) / dur);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(start + (to - start) * eased);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function renderPie(el, segments){
+  // segments: [{value, color}, ...]
+  const total = segments.reduce((s, x) => s + x.value, 0);
+  if (total === 0){
+    el.style.background = 'conic-gradient(rgba(255,255,255,0.06) 0 360deg)';
+    return;
+  }
+  let acc = 0;
+  const stops = segments.map(s => {
+    const from = (acc / total) * 360;
+    acc += s.value;
+    const to = (acc / total) * 360;
+    return `${s.color} ${from.toFixed(2)}deg ${to.toFixed(2)}deg`;
+  });
+  el.style.background = `conic-gradient(${stops.join(', ')})`;
+}
+
+function renderLegend(el, items, total){
+  el.innerHTML = items.map(it => {
+    const pct = total ? Math.round((it.value / total) * 100) : 0;
+    return `<div class="legend-item">
+      <span class="legend-dot" style="background:${it.color}"></span>
+      <span class="legend-name">${esc(it.label)}</span>
+      <span class="legend-pct">${pct}%<span class="legend-count">(${it.value})</span></span>
+    </div>`;
+  }).join('');
+}
+
+function renderBars(el, items, maxShow = 10){
+  if (!items.length){
+    el.innerHTML = `<div class="empty"><div class="big">—</div>Zatiaľ bez dát</div>`;
+    return;
+  }
+  const shown = items.slice(0, maxShow);
+  const max = shown[0].count || 1;
+  el.innerHTML = shown.map(it => `
+    <div class="bar-item">
+      <div class="bar-name">${esc(it.name)}${it.sub ? `<span class="uni-tag">${esc(it.sub)}</span>` : ''}</div>
+      <div class="bar-count">${it.count}</div>
+      <div class="bar-track"><div class="bar-fill" data-w="${(it.count / max * 100).toFixed(1)}"></div></div>
+    </div>
+  `).join('');
+  // Animate bars
+  requestAnimationFrame(() => {
+    el.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+  });
+}
+
+function renderAll(data){
+  const total = data.total || 0;
+
+  // Counter
+  animateNumber(document.getElementById('total'), total);
+  document.getElementById('cap').textContent = `${total} / ${CAPACITY} miest`;
+
+  // Status pie
+  const statusItems = ['student', 'absolvent', 'verejnost'].map(k => ({
+    key: k, label: STATUS_LABEL[k], color: STATUS_COLOR[k],
+    value: (data.status && data.status[k]) || 0
+  }));
+  const statusTotal = statusItems.reduce((s, x) => s + x.value, 0);
+  renderPie(document.getElementById('statusPie'), statusItems.map(i => ({ value: i.value, color: i.color })));
+  renderLegend(document.getElementById('statusLegend'), statusItems, statusTotal);
+  document.getElementById('statusTotal').textContent = statusTotal;
+
+  // Interests pie
+  const rawInt = data.interests || {};
+  const knownKeys = Object.keys(INTEREST_LABEL).filter(k => rawInt[k]);
+  // Bucket any unknown keys (stale/diacritic variants) into a single "Iné"
+  let otherCount = 0;
+  Object.keys(rawInt).forEach(k => {
+    if (!INTEREST_LABEL.hasOwnProperty(k)) otherCount += (rawInt[k] || 0);
+  });
+  const interestItems = knownKeys.map((k, i) => ({
+    key: k,
+    label: INTEREST_LABEL[k],
+    color: INTEREST_PALETTE[i % INTEREST_PALETTE.length],
+    value: rawInt[k] || 0
+  }));
+  if (otherCount > 0) {
+    interestItems.push({
+      key: 'ine', label: 'Iné',
+      color: INTEREST_PALETTE[interestItems.length % INTEREST_PALETTE.length],
+      value: otherCount
+    });
+  }
+  interestItems.sort((a, b) => b.value - a.value);
+  const interestTotal = interestItems.reduce((s, x) => s + x.value, 0);
+  if (interestItems.length === 0 || interestTotal === 0){
+    document.getElementById('interestsPie').style.background = 'conic-gradient(rgba(255,255,255,0.06) 0 360deg)';
+    document.getElementById('interestsLegend').innerHTML = '<div style="font-size:13px;color:var(--text-muted);text-align:center;padding:12px 0">Zatiaľ bez hlasov</div>';
+  } else {
+    renderPie(document.getElementById('interestsPie'), interestItems.map(i => ({ value: i.value, color: i.color })));
+    renderLegend(document.getElementById('interestsLegend'), interestItems, interestTotal);
+  }
+  document.getElementById('interestsTotal').textContent = interestTotal;
+
+  // Universities
+  const unis = (data.universities || []).map(u => ({ name: u.name, count: u.count }));
+  renderBars(document.getElementById('uniList'), unis, 12);
+  document.getElementById('uniHint').textContent = unis.length
+    ? `${unis.length} rôznych univerzít`
+    : 'Zatiaľ žiadne registrácie študentov';
+
+  // Faculties
+  const facs = (data.faculties || []).map(f => ({ name: f.name, sub: f.university, count: f.count }));
+  renderBars(document.getElementById('facList'), facs, 10);
+  document.getElementById('facHint').textContent = facs.length
+    ? `Top ${Math.min(facs.length, 10)} fakúlt podľa počtu registrácií`
+    : '';
+
+  // Updated — label reflects fetch time, not server-side update
+  document.getElementById('updatedTxt').textContent =
+    'Načítané ' + new Date().toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' });
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+}
+
+async function load(){
+  try{
+    const res = await fetch(API + '?action=stats', { cache: 'no-store' });
+    const data = await res.json();
+    if (data && typeof data.total === 'number'){
+      renderAll(data);
+    } else {
+      throw new Error('Bad payload');
+    }
+  } catch(err){
+    document.getElementById('loading').innerHTML =
+      '<div style="color:var(--text-muted)">Dáta zatiaľ nie sú k dispozícii. Registrácia práve beží — skúste to o chvíľu.</div>';
+  }
+}
+
+load();
+setInterval(load, 60000); // auto-refresh each minute
+</script>
+
+</body>
+</html>

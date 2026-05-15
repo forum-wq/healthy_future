@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard záujmu o partnerstvo · Future Slovakia Forum</title>
+<meta name="description" content="Agregovaný verejný dashboard záujmu o partnerstvo s Future Slovakia Forum. Bez osobných údajov — iba štatistiky.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Dashboard záujmu o partnerstvo · Future Slovakia Forum">
+<meta property="og:description" content="Agregovaný verejný dashboard záujmu o partnerstvo s Future Slovakia Forum.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://healthy-future.sk/partneri-zmeny/dashboard.html">
+<meta property="og:image" content="https://healthy-future.sk/partneri-zmeny/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sk_SK">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://healthy-future.sk/partneri-zmeny/dashboard.html">
+<link rel="icon" type="image/png" href="logo-fsf.png">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://healthy-future.sk https://future-slovakia.eu; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --cyan:#7fa88e;
+    --yellow:#f2b705;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --font:'Inter Tight',system-ui,sans-serif;
+
+    /* Segment palette */
+    --c1:#7fa88e;
+    --c2:#c25b5b;
+    --c3:#d4856a;
+    --c4:#7bd389;
+    --c5:#b88bff;
+    --c6:#9fb0c7;
+    --c7:#f2b705;
+    --c8:#5fb6d6;
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:'';position:fixed;top:0;left:0;right:0;height:4px;z-index:10;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  .container{max-width:1080px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+
+  /* Top nav */
+  .topnav{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    margin-bottom:2.5rem;flex-wrap:wrap;
+  }
+  .back-link{
+    font-size:13px;font-weight:500;color:var(--text-secondary);
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+    padding:8px 14px;border:1px solid var(--border-soft);border-radius:8px;
+    transition:border-color .2s,color .2s;
+  }
+  .back-link:hover{border-color:var(--cyan);color:var(--cyan)}
+  .back-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5}
+  .brand-logo{height:30px;width:auto;display:block;opacity:0.9}
+
+  /* Hero */
+  .hero{text-align:center;margin-bottom:3rem}
+  .hero-eyebrow{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.22em;
+    text-transform:uppercase;color:var(--cyan);margin-bottom:14px;
+    padding-bottom:10px;border-bottom:2px solid rgba(127,168,142,0.30);
+  }
+  .hero h1{
+    font-size:clamp(28px,4.4vw,44px);font-weight:900;letter-spacing:-1px;
+    line-height:1.06;margin-bottom:14px;
+  }
+  .hero .sub{font-size:15px;color:var(--text-secondary);max-width:680px;margin:0 auto;line-height:1.6}
+
+  /* Privacy note */
+  .privacy-note{
+    max-width:680px;margin:18px auto 0;
+    padding:12px 18px;
+    background:rgba(127,168,142,0.06);
+    border:1px solid rgba(127,168,142,0.18);
+    border-radius:10px;
+    font-size:13px;color:var(--text-secondary);line-height:1.6;
+  }
+
+  /* Counter card */
+  .counter-card{
+    max-width:520px;margin:2.5rem auto 0;
+    background:linear-gradient(135deg,rgba(127,168,142,0.12),rgba(194,91,91,0.10));
+    border:1px solid var(--border-soft);border-radius:20px;
+    padding:2.4rem 1.5rem;text-align:center;position:relative;overflow:hidden;
+  }
+  .counter-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+  .counter-num{
+    font-size:clamp(64px,12vw,96px);font-weight:900;line-height:1;
+    background:linear-gradient(135deg,var(--cyan),var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    letter-spacing:-2px;
+  }
+  .counter-lbl{font-size:15px;color:var(--text-secondary);margin-top:8px;font-weight:500}
+
+  /* Mini counters */
+  .mini-counters{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:14px;
+    margin:2rem 0 3rem;
+  }
+  @media (max-width:960px){
+    .mini-counters{grid-template-columns:repeat(3,1fr)}
+  }
+  .mini-card{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:12px;
+    padding:18px 16px;text-align:center;
+  }
+  .mini-num{
+    font-size:28px;font-weight:900;color:var(--text-primary);
+    line-height:1;margin-bottom:6px;letter-spacing:-0.5px;
+    font-variant-numeric:tabular-nums;
+  }
+  .mini-lbl{
+    font-size:11px;font-weight:600;color:var(--text-muted);
+    letter-spacing:0.08em;text-transform:uppercase;line-height:1.4;
+  }
+
+  /* Money progress (optional, SHOW_PUBLIC_MONEY) */
+  .money-card{
+    background:linear-gradient(135deg,rgba(242,183,5,0.10),rgba(127,168,142,0.10));
+    border:1px solid var(--border-soft);border-radius:16px;
+    padding:1.5rem;margin-bottom:3rem;
+  }
+  .money-card h3{
+    font-size:14px;font-weight:700;color:var(--yellow);
+    letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;
+  }
+  .money-bar{
+    height:10px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;
+    margin-bottom:12px;
+  }
+  .money-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--yellow),var(--cyan));
+    border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+  .money-stats{
+    display:flex;justify-content:space-between;font-size:13px;color:var(--text-secondary);
+    flex-wrap:wrap;gap:8px;
+  }
+  .money-stats strong{color:var(--text-primary);font-weight:700}
+
+  .money-disabled-note{
+    background:var(--card-bg);border:1px dashed var(--border-soft);
+    border-radius:12px;padding:16px 18px;margin-bottom:3rem;
+    font-size:13.5px;color:var(--text-muted);line-height:1.6;
+    text-align:center;
+  }
+
+  /* Section */
+  .section{margin-bottom:3rem}
+  .section-head{margin-bottom:1.5rem}
+  .section-label{
+    font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:6px;
+  }
+  .section-head h2{
+    font-size:clamp(20px,2.4vw,26px);font-weight:800;letter-spacing:-0.5px;
+  }
+
+  /* Charts grid */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  @media (max-width:720px){.charts-grid{grid-template-columns:1fr}}
+
+  .chart-card{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:16px;
+    padding:1.6rem;
+  }
+  .chart-card h3{
+    font-size:15px;font-weight:700;margin-bottom:1.25rem;letter-spacing:-0.3px;
+  }
+
+  .pie-wrap{
+    display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;
+    position:relative;
+  }
+  .pie{
+    width:170px;height:170px;border-radius:50%;
+    background:conic-gradient(rgba(255,255,255,0.06) 0 360deg);
+    position:relative;
+    transition:transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .pie::after{
+    content:'';position:absolute;inset:28px;border-radius:50%;
+    background:var(--bg-primary);
+    box-shadow:inset 0 0 0 1px var(--border-soft);
+  }
+  .pie-center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    text-align:center;pointer-events:none;
+  }
+  .pie-center .num{font-size:24px;font-weight:800;color:var(--text-primary);line-height:1;font-variant-numeric:tabular-nums}
+  .pie-center .lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+
+  .legend{display:flex;flex-direction:column;gap:6px}
+  .legend-item{
+    display:flex;align-items:center;gap:10px;font-size:13px;padding:5px 0;
+  }
+  .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .legend-name{flex:1;color:var(--text-secondary);font-weight:500;line-height:1.4}
+  .legend-pct{font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
+  .legend-count{font-size:11px;color:var(--text-muted);margin-left:4px;font-weight:500}
+
+  /* Bar list */
+  .bar-list{display:flex;flex-direction:column;gap:10px}
+  .bar-item{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:10px;
+    padding:12px 16px;
+    display:grid;grid-template-columns:1fr auto;gap:10px 14px;align-items:center;
+  }
+  .bar-name{font-size:14px;font-weight:600;color:var(--text-primary);min-width:0;line-height:1.4}
+  .bar-count{
+    font-size:13px;font-weight:700;color:var(--cyan);
+    background:rgba(127,168,142,0.12);padding:3px 10px;border-radius:100px;
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .bar-track{
+    grid-column:1 / -1;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;background:linear-gradient(90deg,var(--cyan),var(--accent));border-radius:3px;
+    width:0;transition:width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Empty / loading */
+  .empty{
+    text-align:center;padding:2rem 1rem;color:var(--text-muted);font-size:14px;
+    background:var(--card-bg);border:1px dashed var(--border-soft);border-radius:12px;
+  }
+  .loading{text-align:center;padding:4rem 1rem;color:var(--text-muted);font-size:14px}
+  .loading::after{
+    content:'';display:inline-block;width:4px;height:4px;border-radius:50%;
+    background:var(--cyan);margin-left:8px;
+    animation:blink 1s infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  /* CTA */
+  .cta-bottom{
+    margin-top:4rem;padding:2.2rem 2rem;text-align:center;
+    background:linear-gradient(135deg,rgba(127,168,142,0.10),rgba(194,91,91,0.10));
+    border:1px solid var(--border-soft);border-radius:18px;
+  }
+  .cta-bottom h3{font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-0.3px}
+  .cta-bottom p{color:var(--text-secondary);font-size:15px;margin-bottom:1.4rem;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.6}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:10px;padding:14px 32px;
+    background:var(--accent);color:#fff;font-size:15px;font-weight:700;
+    border-radius:10px;text-decoration:none;transition:transform .15s,background .2s;font-family:var(--font);
+  }
+  .btn-primary:hover{background:#a84a4a;transform:translateY(-1px)}
+  .btn-primary svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5}
+
+  .updated{font-size:11px;color:var(--text-muted);text-align:center;margin-top:2rem;letter-spacing:0.06em}
+  .live-dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;background:#7bd389;
+    margin-right:6px;vertical-align:middle;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+  footer.site-footer{
+    margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border-soft);
+    font-size:12px;color:var(--text-muted);text-align:center;line-height:1.8;
+  }
+  footer.site-footer a{color:var(--cyan);text-decoration:none}
+  footer.site-footer a:hover{text-decoration:underline}
+
+  @media(max-width:720px){
+    .mini-counters{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .container{padding:1.5rem 1rem 3rem}
+    .chart-card{padding:1.25rem}
+    .pie{width:150px;height:150px}
+    .pie::after{inset:25px}
+    .pie-center .num{font-size:20px}
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="topnav">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Späť na iniciatívu
+    </a>
+    <img src="logo-fsf.png" alt="Future Slovakia Forum" class="brand-logo" width="105" height="30">
+  </nav>
+
+  <header class="hero">
+    <div class="hero-eyebrow">Agregovaný dashboard partnerstiev</div>
+    <h1>Kto sa hlási k partnerstvu?</h1>
+    <p class="sub">
+      Agregovaný prehľad záujmu o podporu Future Slovakia Forum. Nezobrazujeme osobné údaje — iba verejné štatistiky.
+    </p>
+    <div class="privacy-note">
+      Bez mien, e-mailov, organizácií a konkrétnych súm. Iba agregovaný záujem o typ podpory.
+    </div>
+
+    <div class="counter-card">
+      <div class="counter-num" id="total">—</div>
+      <div class="counter-lbl" id="counterLbl">záujemcov o partnerstvo</div>
+    </div>
+  </header>
+
+  <div id="content" style="display:none">
+
+    <!-- Mini counters -->
+    <div class="mini-counters">
+      <div class="mini-card">
+        <div class="mini-num" id="miniTotal">—</div>
+        <div class="mini-lbl">Záujemcovia celkom</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-num" id="miniIndividual">—</div>
+        <div class="mini-lbl">Individuálni donori</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-num" id="miniFirmy">—</div>
+        <div class="mini-lbl">Firmy / CSR</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-num" id="miniBridges">—</div>
+        <div class="mini-lbl">Prepojenia na donorov</div>
+      </div>
+      <div class="mini-card">
+        <div class="mini-num" id="miniCalls">—</div>
+        <div class="mini-lbl">Záujem o call</div>
+      </div>
+    </div>
+
+    <!-- Money block (optional) -->
+    <div id="moneyBlock"></div>
+
+    <!-- Calls -->
+    <div class="section">
+      <div class="section-head">
+        <div class="section-label">Záujem o úvodný rozhovor</div>
+        <h2 id="callsHead">— ľudí chce úvodný call</h2>
+      </div>
+    </div>
+
+    <!-- Charts row 1 -->
+    <section class="section">
+      <div class="section-head">
+        <div class="section-label">Typ partnerstva a forma podpory</div>
+        <h2>Kto a ako sa chce zapojiť</h2>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Typ partnerstva</h3>
+          <div class="pie-wrap">
+            <div class="pie" id="typePie"></div>
+            <div class="pie-center">
+              <div class="num" id="typeTotal">—</div>
+              <div class="lbl">spolu</div>
+            </div>
+          </div>
+          <div class="legend" id="typeLegend"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Forma podpory</h3>
+          <div class="pie-wrap">
+            <div class="pie" id="formPie"></div>
+            <div class="pie-center">
+              <div class="num" id="formTotal">—</div>
+              <div class="lbl">odpovedí</div>
+            </div>
+          </div>
+          <div class="legend" id="formLegend"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts row 2: amounts + interests -->
+    <section class="section">
+      <div class="section-head">
+        <div class="section-label">Sumy a podporované oblasti</div>
+        <h2>Aké pásma a aké aktivity ľudia označujú</h2>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Orientačná výška podpory</h3>
+          <div class="bar-list" id="amountList"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Čo chcú ľudia podporiť</h3>
+          <div class="bar-list" id="interestsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verticals -->
+    <section class="section">
+      <div class="section-head">
+        <div class="section-label">Preferované reformné vertikály</div>
+        <h2>O ktoré témy je najväčší záujem</h2>
+      </div>
+      <div class="bar-list" id="verticalsList"></div>
+    </section>
+
+    <!-- Countries (optional, only if data) -->
+    <section class="section" id="countriesSection" style="display:none">
+      <div class="section-head">
+        <div class="section-label">Mesto / krajina</div>
+        <h2>Top 10 lokácií</h2>
+      </div>
+      <div class="bar-list" id="countriesList"></div>
+    </section>
+
+    <div class="updated"><span class="live-dot"></span><span id="updatedTxt">Aktualizované</span></div>
+
+  </div>
+
+  <div id="loading" class="loading">Načítavam aktuálne dáta</div>
+
+  <div class="cta-bottom">
+    <h3>Chcete sa pridať?</h3>
+    <p>Staňte sa partnerom zmeny, budúcnosti a prosperity.</p>
+    <a href="registracia.html" class="btn-primary">
+      Odoslať záujem
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+
+  <footer class="site-footer">
+    Future Slovakia Forum · Fórum Budúcnosti Slovenska, o.z. · IČO: 56046260<br>
+    <a href="mailto:forum@future-slovakia.eu">forum@future-slovakia.eu</a> ·
+    <a href="mailto:david.boruta@future-slovakia.eu">david.boruta@future-slovakia.eu</a> ·
+    <a href="https://www.future-slovakia.eu" target="_blank" rel="noopener">www.future-slovakia.eu</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  Dashboard config
+  // ═══════════════════════════════════════════════════════════════════
+  const API = 'REPLACE_WITH_PARTNERI_GAS_URL';
+  const SHOW_PUBLIC_MONEY = false;   // ak true a GAS vracia confirmedTotal, zobrazí sa progress bar
+  const BRIDGE_GOAL = 20000;         // € — cieľ bridge funding (iba pri SHOW_PUBLIC_MONEY = true)
+
+  const TYPE_LABEL = {
+    individualny_donor: 'Individuálny donor',
+    firma_csr: 'Firma / CSR',
+    nadacia_grant: 'Nadácia / grant',
+    diaspora: 'Slovenská diaspora',
+    otvaram_dvere: 'Prepojenie na donorov',
+    rozhovor: 'Najprv rozhovor'
+  };
+  const FORM_LABEL = {
+    jednorazovy_dar: 'Jednorazový dar',
+    pravidelna_podpora: 'Pravidelná podpora',
+    firemne_partnerstvo: 'Firemné partnerstvo',
+    grant_institucionalna: 'Grant / inštitucionálne',
+    prepojenie: 'Prepojenie na partnera',
+    neviem: 'Ešte neviem'
+  };
+  const AMOUNT_LABEL = {
+    do_100: 'do 100 €',
+    '100_500': '100 – 500 €',
+    '600_mesiac': '600 € (mesiac juniora)',
+    '1000_3500': '1 000 – 3 500 €',
+    '3500_brief': '3 500 € (policy brief)',
+    '5000_10000': '5 000 – 10 000 €',
+    '20000_bridge': '20 000 € (bridge funding)',
+    viac_20000: 'viac ako 20 000 €',
+    neuvadzam: 'nechce uviesť'
+  };
+  const SUPPORT_LABEL = {
+    mesiac_juniora: 'Mesiac práce juniora',
+    policy_brief: 'Policy brief',
+    okruhly_stol: 'Okrúhly stôl / balík',
+    bridge_funding: 'Bridge funding',
+    vyskumne_timy: 'Študentské tímy',
+    fundraising_intel: 'Fundraising intelligence',
+    komunikacia: 'Digitálna komunikácia',
+    core_kapacita: 'Core kapacita',
+    rozhovor: 'Chcú rozhovor'
+  };
+  const VERTICAL_LABEL = {
+    zdravotnictvo: 'Zdravotníctvo',
+    skolstvo: 'Školstvo',
+    verejne_financie: 'Verejné financie',
+    decentralizacia: 'Decentralizácia',
+    core: 'Cross-cutting / core',
+    nechavam_fsf: 'Nechávajú na FSF'
+  };
+
+  const PALETTE = ['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)','var(--c7)','var(--c8)'];
+
+  function esc(s){ const d=document.createElement('div'); d.textContent=String(s==null?'':s); return d.innerHTML; }
+  function formatEur(n){
+    if (typeof n !== 'number' || isNaN(n)) return '—';
+    return new Intl.NumberFormat('sk-SK', { style:'currency', currency:'EUR', maximumFractionDigits:0 }).format(n);
+  }
+
+  function animateNumber(el, to){
+    const start = 0, dur = 800, t0 = performance.now();
+    function step(t){
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(start + (to - start) * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function renderPie(el, segments){
+    const total = segments.reduce(function(s, x){ return s + x.value; }, 0);
+    if (total === 0){
+      el.style.background = 'conic-gradient(rgba(255,255,255,0.06) 0 360deg)';
+      return;
+    }
+    let acc = 0;
+    const stops = segments.map(function(s){
+      const from = (acc / total) * 360;
+      acc += s.value;
+      const to = (acc / total) * 360;
+      return s.color + ' ' + from.toFixed(2) + 'deg ' + to.toFixed(2) + 'deg';
+    });
+    el.style.background = 'conic-gradient(' + stops.join(', ') + ')';
+  }
+
+  function renderLegend(el, items, total){
+    if (!items.length || total === 0){
+      el.innerHTML = '<div style="font-size:13px;color:var(--text-muted);text-align:center;padding:10px 0">Zatiaľ bez dát</div>';
+      return;
+    }
+    el.innerHTML = items.map(function(it){
+      const pct = total ? Math.round((it.value / total) * 100) : 0;
+      return '<div class="legend-item">'
+        + '<span class="legend-dot" style="background:' + it.color + '"></span>'
+        + '<span class="legend-name">' + esc(it.label) + '</span>'
+        + '<span class="legend-pct">' + pct + '%<span class="legend-count">(' + it.value + ')</span></span>'
+        + '</div>';
+    }).join('');
+  }
+
+  function renderBars(el, items, maxShow){
+    maxShow = maxShow || 10;
+    if (!items.length){
+      el.innerHTML = '<div class="empty">Zatiaľ bez dát.</div>';
+      return;
+    }
+    const shown = items.slice(0, maxShow);
+    const max = shown[0].count || 1;
+    el.innerHTML = shown.map(function(it){
+      return '<div class="bar-item">'
+        + '<div class="bar-name">' + esc(it.name) + '</div>'
+        + '<div class="bar-count">' + it.count + '</div>'
+        + '<div class="bar-track"><div class="bar-fill" data-w="' + (it.count / max * 100).toFixed(1) + '"></div></div>'
+        + '</div>';
+    }).join('');
+    requestAnimationFrame(function(){
+      el.querySelectorAll('.bar-fill').forEach(function(b){ b.style.width = b.dataset.w + '%'; });
+    });
+  }
+
+  /**
+   * Normalize API "list" payloads to a flat array of {key, name, count}.
+   * Accepts either an array of {name, count} OR an object map { key: count }.
+   * Map keys are translated via labelMap when provided.
+   */
+  function normalizeList(raw, labelMap){
+    if (!raw) return [];
+    if (Array.isArray(raw)){
+      return raw
+        .filter(function(x){ return x && typeof x.count === 'number'; })
+        .map(function(x){
+          const key = String(x.key || x.name || '');
+          const label = (labelMap && labelMap[key]) || x.name || key;
+          return { key: key, name: label, count: x.count };
+        })
+        .sort(function(a, b){ return b.count - a.count; });
+    }
+    if (typeof raw === 'object'){
+      return Object.keys(raw)
+        .map(function(k){
+          const label = (labelMap && labelMap[k]) || k;
+          return { key: k, name: label, count: raw[k] || 0 };
+        })
+        .filter(function(x){ return x.count > 0; })
+        .sort(function(a, b){ return b.count - a.count; });
+    }
+    return [];
+  }
+
+  function renderAll(data){
+    const total = data.total || 0;
+
+    // Counter
+    animateNumber(document.getElementById('total'), total);
+    document.getElementById('counterLbl').textContent =
+      total === 1 ? 'záujemca o partnerstvo' : 'záujemcov o partnerstvo';
+
+    // Partner types — full list for mini counters and pie
+    const types = normalizeList(data.partnerTypes, TYPE_LABEL);
+    const typeMap = {};
+    types.forEach(function(t){ typeMap[t.key] = t.count; });
+
+    document.getElementById('miniTotal').textContent = total;
+    document.getElementById('miniIndividual').textContent = typeMap['individualny_donor'] || 0;
+    document.getElementById('miniFirmy').textContent = typeMap['firma_csr'] || 0;
+    document.getElementById('miniBridges').textContent = typeMap['otvaram_dvere'] || 0;
+
+    // Calls
+    const calls = data.wantsCallCount || 0;
+    document.getElementById('miniCalls').textContent = calls;
+    document.getElementById('callsHead').textContent =
+      calls === 0 ? 'Zatiaľ nikto nepožiadal o úvodný rozhovor.'
+      : calls === 1 ? '1 človek chce úvodný call.'
+      : calls + ' ľudí chce úvodný call.';
+
+    // Money block
+    const moneyBlock = document.getElementById('moneyBlock');
+    if (SHOW_PUBLIC_MONEY && typeof data.confirmedTotal === 'number'){
+      const pct = Math.min(100, Math.round((data.confirmedTotal / BRIDGE_GOAL) * 100));
+      moneyBlock.innerHTML =
+        '<div class="money-card">'
+        + '<h3>Bridge funding · cieľ ' + formatEur(BRIDGE_GOAL) + '</h3>'
+        + '<div class="money-bar"><div class="money-fill" data-w="' + pct + '"></div></div>'
+        + '<div class="money-stats">'
+        + '<span>Potvrdené alebo prisľúbené: <strong>' + formatEur(data.confirmedTotal) + '</strong>'
+        + (typeof data.confirmedCount === 'number' ? ' (' + data.confirmedCount + ' partnerov)' : '') + '</span>'
+        + '<span>' + pct + '% cieľa</span>'
+        + '</div>'
+        + '</div>';
+      requestAnimationFrame(function(){
+        const f = moneyBlock.querySelector('.money-fill');
+        if (f) f.style.width = f.dataset.w + '%';
+      });
+    } else {
+      moneyBlock.innerHTML =
+        '<div class="money-disabled-note">'
+        + 'Finančné údaje nezverejňujeme individuálne. Dashboard ukazuje iba agregovaný záujem o typ podpory.'
+        + '</div>';
+    }
+
+    // Type pie
+    const typeItems = types.map(function(t, i){
+      return { value: t.count, color: PALETTE[i % PALETTE.length], label: t.name };
+    });
+    const typeTotal = typeItems.reduce(function(s, x){ return s + x.value; }, 0);
+    renderPie(document.getElementById('typePie'), typeItems);
+    renderLegend(document.getElementById('typeLegend'), typeItems, typeTotal);
+    document.getElementById('typeTotal').textContent = typeTotal;
+
+    // Form pie
+    const forms = normalizeList(data.supportForms, FORM_LABEL);
+    const formItems = forms.map(function(f, i){
+      return { value: f.count, color: PALETTE[i % PALETTE.length], label: f.name };
+    });
+    const formTotal = formItems.reduce(function(s, x){ return s + x.value; }, 0);
+    renderPie(document.getElementById('formPie'), formItems);
+    renderLegend(document.getElementById('formLegend'), formItems, formTotal);
+    document.getElementById('formTotal').textContent = formTotal;
+
+    // Amount bars
+    const amounts = normalizeList(data.amountBands, AMOUNT_LABEL);
+    renderBars(document.getElementById('amountList'), amounts);
+
+    // Interests bars
+    const interests = normalizeList(data.interests, SUPPORT_LABEL);
+    renderBars(document.getElementById('interestsList'), interests);
+
+    // Verticals bars
+    const verticals = normalizeList(data.verticals, VERTICAL_LABEL);
+    renderBars(document.getElementById('verticalsList'), verticals);
+
+    // Countries — privacy guard:
+    //   - only show locations when there are >=5 total responses overall
+    //   - only individual locations with >=2 entries (prevents identifying a
+    //     single person via a unique city/country)
+    const countries = normalizeList(data.countries).filter(function(x){ return x.count >= 2; });
+    if (total >= 5 && countries.length){
+      document.getElementById('countriesSection').style.display = 'block';
+      renderBars(document.getElementById('countriesList'), countries, 10);
+    } else {
+      document.getElementById('countriesSection').style.display = 'none';
+    }
+
+    // Updated
+    const updatedTxt = document.getElementById('updatedTxt');
+    if (data.updated){
+      try{
+        const d = new Date(data.updated);
+        updatedTxt.textContent = 'Server-side update ' + d.toLocaleTimeString('sk-SK', { hour:'2-digit', minute:'2-digit' });
+      } catch(e){
+        updatedTxt.textContent = 'Načítané ' + new Date().toLocaleTimeString('sk-SK', { hour:'2-digit', minute:'2-digit' });
+      }
+    } else {
+      updatedTxt.textContent = 'Načítané ' + new Date().toLocaleTimeString('sk-SK', { hour:'2-digit', minute:'2-digit' });
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  }
+
+  async function load(){
+    if (API.indexOf('REPLACE_') === 0){
+      document.getElementById('loading').innerHTML =
+        '<div style="color:var(--text-muted)">Dashboard zatiaľ nie je pripojený k serveru. Vlož GAS URL do dashboard.html.</div>';
+      return;
+    }
+    try{
+      const res = await fetch(API + '?action=stats', { cache: 'no-store' });
+      const data = await res.json();
+      if (data && data.ok && typeof data.total === 'number'){
+        renderAll(data);
+      } else {
+        throw new Error('Bad payload');
+      }
+    } catch(err){
+      document.getElementById('loading').innerHTML =
+        '<div style="color:var(--text-muted)">Dáta zatiaľ nie sú k dispozícii. Skúste to o chvíľu.</div>';
+    }
+  }
+
+  load();
+  setInterval(load, 60000);
+})();
+</script>
+
+</body>
+</html>

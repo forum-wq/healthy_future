@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin dashboard — Brno | FSF</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; base-uri 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --cyan:#7fa88e;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --font:'Inter Tight',system-ui,sans-serif;
+
+    --c1:#7fa88e;   /* cyan */
+    --c2:#c25b5b;   /* coral burgundy (Brno primary) */
+    --c3:#d4856a;   /* terracotta (Olomouc) */
+    --c4:#7bd389;   /* green */
+    --c5:#b88bff;   /* violet */
+    --c6:#9fb0c7;   /* gray */
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  body::before{
+    content:'';position:fixed;top:0;left:0;right:0;height:4px;z-index:10;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+
+  .container{max-width:1120px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+
+  /* ═══ HEADER ═══ */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:1rem;margin-bottom:2rem;
+  }
+  .header-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .header-logo{height:28px;width:auto;display:block;opacity:0.9;flex-shrink:0}
+  h1{font-size:clamp(18px,2.2vw,24px);font-weight:700;letter-spacing:-0.02em}
+  .event-badge{
+    display:inline-block;background:rgba(194,91,91,0.18);color:var(--accent);
+    font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;
+    letter-spacing:0.04em;margin-left:8px;vertical-align:middle;
+  }
+  .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .countdown-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 12px;
+    background:rgba(127,168,142,0.10);
+    border:1px solid rgba(127,168,142,0.22);
+    border-radius:100px;
+    font-size:11px;font-weight:600;letter-spacing:0.04em;
+    color:var(--cyan);font-variant-numeric:tabular-nums;
+  }
+  .countdown-pill::before{
+    content:'';width:5px;height:5px;border-radius:50%;
+    background:var(--cyan);opacity:0.8;
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
+  .refresh-btn{
+    background:none;border:1px solid var(--border-soft);color:var(--text-secondary);
+    padding:8px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px;
+    transition:border-color .2s,color .2s,background .2s;
+  }
+  .refresh-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(194,91,91,0.08)}
+  #logoutBtn:hover{border-color:#e85454;color:#e85454;background:rgba(232,84,84,0.06)}
+
+  /* ═══ HERO COUNTER ═══ */
+  .counter-card{
+    background:linear-gradient(135deg,rgba(127,168,142,0.12),rgba(194,91,91,0.10));
+    border:1px solid var(--border-soft);border-radius:18px;
+    padding:2rem 1.75rem;text-align:center;position:relative;overflow:hidden;
+    margin-bottom:2.5rem;
+  }
+  .counter-card::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));
+  }
+  .counter-num{
+    font-size:clamp(58px,10vw,84px);font-weight:900;line-height:1;
+    background:linear-gradient(135deg,var(--cyan),var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    letter-spacing:-2px;
+  }
+  .counter-lbl{font-size:14px;color:var(--text-secondary);margin-top:8px;font-weight:500}
+  .counter-pills{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:8px;margin-top:16px;
+  }
+  .meta-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 12px;font-size:11px;font-weight:600;letter-spacing:0.06em;
+    text-transform:uppercase;color:var(--text-muted);
+    background:rgba(255,255,255,0.04);border-radius:100px;
+  }
+  .meta-pill strong{color:var(--text-secondary);font-weight:700;letter-spacing:0}
+  .meta-pill.cap strong{color:var(--accent)}
+
+  /* ═══ SECTION LABELS ═══ */
+  .section{margin-bottom:2.75rem}
+  .section-head{margin-bottom:1.25rem}
+  .section-label{
+    font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:6px;
+  }
+  .section-head h2{font-size:clamp(18px,2vw,22px);font-weight:800;letter-spacing:-0.4px}
+  .section-head .hint{font-size:13px;color:var(--text-muted);margin-top:4px}
+
+  /* ═══ CHARTS ROW ═══ */
+  .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+  @media (max-width:720px){.charts-row{grid-template-columns:1fr}}
+  .chart-card{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:16px;
+    padding:1.75rem;
+  }
+  .chart-card h3{
+    font-size:15px;font-weight:700;margin-bottom:1.25rem;letter-spacing:-0.2px;
+  }
+  .chart-card h3 .muted{color:var(--text-muted);font-weight:500;font-size:13px;margin-left:6px}
+
+  .pie-wrap{
+    display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;
+    position:relative;
+  }
+  .pie{
+    width:180px;height:180px;border-radius:50%;
+    background:conic-gradient(rgba(255,255,255,0.06) 0 360deg);
+    position:relative;
+    transition:transform .6s cubic-bezier(.4,0,.2,1);
+  }
+  .pie::after{
+    content:'';position:absolute;inset:30px;border-radius:50%;
+    background:var(--bg-primary);
+    box-shadow:inset 0 0 0 1px var(--border-soft);
+  }
+  .pie-center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    text-align:center;pointer-events:none;
+  }
+  .pie-center .num{font-size:26px;font-weight:800;color:var(--text-primary);line-height:1}
+  .pie-center .lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+
+  .legend{display:flex;flex-direction:column;gap:6px}
+  .legend-item{display:flex;align-items:center;gap:10px;font-size:13px;padding:5px 0}
+  .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+  .legend-name{flex:1;color:var(--text-secondary);font-weight:500}
+  .legend-pct{font-weight:700;color:var(--text-primary);font-variant-numeric:tabular-nums}
+  .legend-count{font-size:11px;color:var(--text-muted);margin-left:4px;font-weight:500}
+  .legend-empty{font-size:13px;color:var(--text-muted);text-align:center;padding:12px 0}
+
+  /* ═══ BAR LISTS ═══ */
+  .bar-list{display:flex;flex-direction:column;gap:10px}
+  .bar-item{
+    background:var(--card-bg);border:1px solid var(--border-soft);border-radius:10px;
+    padding:12px 16px;
+    display:grid;grid-template-columns:1fr auto;gap:10px 14px;align-items:center;
+  }
+  .bar-name{font-size:14px;font-weight:600;color:var(--text-primary);min-width:0;line-height:1.35}
+  .bar-name .uni-tag{
+    display:block;font-size:11px;color:var(--text-muted);font-weight:500;margin-top:2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .bar-count{
+    font-size:13px;font-weight:700;color:var(--cyan);
+    background:rgba(127,168,142,0.12);padding:3px 10px;border-radius:100px;
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .bar-track{
+    grid-column:1 / -1;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;background:linear-gradient(90deg,var(--cyan),var(--accent));border-radius:3px;
+    width:0;transition:width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ═══ TABLE ═══ */
+  .table-meta{font-size:13px;color:var(--text-muted);margin-bottom:1rem}
+  .table-meta strong{color:var(--text-secondary);font-weight:600}
+  .table-wrap{
+    overflow-x:auto;border:1px solid var(--border-soft);border-radius:12px;
+    background:var(--card-bg);
+  }
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead{background:rgba(255,255,255,0.03)}
+  th{
+    text-align:left;padding:14px 16px;font-weight:700;
+    font-size:11px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--text-muted);border-bottom:1px solid var(--border-soft);white-space:nowrap;
+  }
+  th.num{text-align:right;width:56px}
+  td{
+    padding:13px 16px;border-bottom:1px solid var(--border-soft);
+    color:var(--text-secondary);vertical-align:top;
+  }
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr{transition:background .15s}
+  tbody tr:hover td{background:rgba(194,91,91,0.06)}
+  td.num{text-align:right;color:var(--text-muted);font-variant-numeric:tabular-nums;font-size:12px}
+  td.name{color:var(--text-primary);font-weight:600;white-space:nowrap}
+  td.email{
+    font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    font-size:12px;font-weight:400;color:var(--text-secondary);
+  }
+  td.interests{
+    max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    font-size:13px;
+  }
+
+  .status-pill{
+    display:inline-block;font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:100px;
+    letter-spacing:0.04em;white-space:nowrap;
+  }
+  .status-pill.student{background:rgba(127,168,142,0.14);color:var(--cyan)}
+  .status-pill.absolvent{background:rgba(194,91,91,0.16);color:var(--accent)}
+  .status-pill.verejnost{background:rgba(159,176,199,0.14);color:var(--text-secondary)}
+  .status-pill.none{background:rgba(255,255,255,0.04);color:var(--text-muted)}
+
+  /* ═══ EMPTY / LOADING / UPDATED ═══ */
+  .empty{text-align:center;padding:4rem 1rem;color:var(--text-muted)}
+  .empty p{font-size:14px}
+  .loading{text-align:center;padding:4rem;color:var(--text-muted);font-size:14px}
+
+  .updated{
+    font-size:11px;color:var(--text-muted);text-align:center;
+    margin-top:2rem;letter-spacing:0.06em;
+  }
+  .live-dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;background:#7bd389;
+    margin-right:6px;vertical-align:middle;animation:pulse 2s infinite;
+  }
+
+  /* ═══ LOGIN ═══ */
+  .login-card{
+    width:100%;max-width:360px;text-align:center;
+    background:var(--card-bg);border:1px solid var(--border-soft);
+    border-radius:16px;padding:2rem 1.75rem;
+  }
+  .login-card h1{margin-bottom:1.5rem;font-size:18px;font-weight:700}
+  .login-card input{
+    width:100%;padding:12px 16px;border-radius:8px;
+    border:1px solid var(--border-soft);background:rgba(255,255,255,0.04);
+    color:var(--text-primary);font:inherit;font-size:15px;margin-bottom:12px;
+    outline:none;transition:border-color .15s,background .15s;
+  }
+  .login-card input:focus{border-color:var(--accent);background:rgba(255,255,255,0.07)}
+  .login-card button{
+    width:100%;padding:12px;border-radius:8px;border:none;
+    background:var(--accent);color:var(--bg-primary);font:inherit;font-weight:700;
+    font-size:15px;cursor:pointer;transition:background .2s,transform .1s;
+  }
+  .login-card button:hover{background:#a84a4a;transform:translateY(-1px)}
+  .login-err{color:#e85454;font-size:13px;margin-top:10px;display:none}
+
+  /* ═══ RESPONSIVE ═══ */
+  @media(max-width:600px){
+    .container{padding:1.5rem 1rem 3rem}
+    .counter-card{padding:1.5rem 1rem}
+    .chart-card{padding:1.25rem}
+    .pie{width:150px;height:150px}
+    .pie::after{inset:25px}
+    .pie-center .num{font-size:22px}
+    th,td{padding:10px 12px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginScreen" class="container" style="display:flex;align-items:center;justify-content:center;min-height:100vh">
+  <div class="login-card">
+    <h1>Dashboard — prístup</h1>
+    <form id="loginForm" novalidate>
+      <input type="password" id="pwInput" placeholder="Heslo" autocomplete="current-password">
+      <button type="submit">Prihlásiť</button>
+      <p id="loginError" class="login-err">Nesprávne heslo</p>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD (hidden until login) ═══ -->
+<div class="container" id="dashContent" style="display:none">
+
+  <header>
+    <div class="header-left">
+      <img src="logo-fsf.png" alt="Future Slovakia Forum" class="header-logo" width="98" height="28">
+      <h1>Registrácie — Brno 6.5.2026 <span class="event-badge">Kavárna Trojka</span></h1>
+    </div>
+    <div class="header-right">
+      <span class="countdown-pill" id="logoutCountdown" style="visibility:hidden">Odhlásenie za 15:00</span>
+      <button type="button" class="refresh-btn" id="refreshBtn">Obnoviť</button>
+      <button type="button" class="refresh-btn" id="logoutBtn">Odhlásiť</button>
+    </div>
+  </header>
+
+  <!-- Hero counter -->
+  <div class="counter-card">
+    <div class="counter-num" id="totalCount">—</div>
+    <div class="counter-lbl">registrovaných účastníkov</div>
+    <div class="counter-pills">
+      <span class="meta-pill cap"><strong id="capText">0 / 70</strong> miest</span>
+      <span class="meta-pill">Posledná <strong id="lastRegTime">—</strong> <span id="lastRegName" style="color:var(--text-secondary)"></span></span>
+    </div>
+  </div>
+
+  <!-- Donut charts -->
+  <section class="section">
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3>Rozdelenie účastníkov</h3>
+        <div class="pie-wrap">
+          <div class="pie" id="statusPie"></div>
+          <div class="pie-center">
+            <div class="num" id="statusTotal">—</div>
+            <div class="lbl">spolu</div>
+          </div>
+        </div>
+        <div class="legend" id="statusLegend"></div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Najväčší záujem <span class="muted">o témy</span></h3>
+        <div class="pie-wrap">
+          <div class="pie" id="interestsPie"></div>
+          <div class="pie-center">
+            <div class="num" id="interestsTotal">—</div>
+            <div class="lbl">hlasov</div>
+          </div>
+        </div>
+        <div class="legend" id="interestsLegend"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Universities -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-label">Univerzity</div>
+      <h2>Odkiaľ prídu</h2>
+      <p class="hint" id="uniHint">—</p>
+    </div>
+    <div class="bar-list" id="uniList"></div>
+  </section>
+
+  <!-- Faculties -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-label">Fakulty</div>
+      <h2>Top fakulty</h2>
+      <p class="hint" id="facHint">—</p>
+    </div>
+    <div class="bar-list" id="facList"></div>
+  </section>
+
+  <!-- Registrations table -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-label">Zoznam registrácií</div>
+      <h2>Kto sa zaregistroval</h2>
+    </div>
+    <p class="table-meta">Zoradené abecedne podľa priezviska · <strong id="tableCount">0</strong> záznamov</p>
+    <div class="table-wrap">
+      <div class="loading" id="loading">Načítavam...</div>
+      <table id="regTable" style="display:none">
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Meno</th>
+            <th>Status</th>
+            <th>Email</th>
+            <th>Univerzita</th>
+            <th>Fakulta</th>
+            <th>Odbor</th>
+            <th>Záujmy</th>
+            <th>Čas</th>
+          </tr>
+        </thead>
+        <tbody id="regBody"></tbody>
+      </table>
+      <div class="empty" id="emptyState" style="display:none">
+        <p>Zatiaľ žiadne registrácie</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="updated"><span class="live-dot"></span><span id="updatedAt">—</span></div>
+
+  <footer style="margin-top:2.5rem;padding-top:1.25rem;border-top:1px solid var(--border-soft);font-size:11px;color:var(--text-muted);text-align:center;line-height:1.7">
+    Lokálna koordinácia: Linda Veverková (MUNI Brno) · Kontakt: <a href="mailto:linda.veverkova@future-slovakia.eu" style="color:#7fa88e;text-decoration:none">linda.veverkova@future-slovakia.eu</a> · <a href="mailto:studenti@future-slovakia.eu" style="color:#7fa88e;text-decoration:none">studenti@future-slovakia.eu</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ══════════════════════════════════════════════════════════════════
+  // Apps Script endpoint. /exec alone returns {error:"forbidden"} — we
+  // must never call it without either ?action=stats|count, or ?key=<tok>.
+  // ══════════════════════════════════════════════════════════════════
+  // TODO: Dávid — vlož Brno GAS deployment URL sem (pozri GAS_TEMPLATE.md).
+  const API = 'REPLACE_ME_BRNO_GAS_DEPLOYMENT_URL';
+
+  const TOKEN_KEY = 'admin_token';
+  const EXPIRES_KEY = 'admin_token_expires';
+  const IDLE_LOGOUT_MS = 15 * 60 * 1000; // 15 minutes
+
+  const INTEREST_LABEL = {
+    zdravotnictvo: 'Zdravotníctvo',
+    skolstvo: 'Školstvo a vzdelávanie',
+    financie: 'Reforma verejných financií',
+    decentralizacia: 'Decentralizácia',
+    ine: 'Iné témy'
+  };
+  const INTEREST_PALETTE = ['var(--c1)','var(--c3)','var(--c2)','var(--c4)','var(--c5)','var(--c6)'];
+  const STATUS_LABEL = { student: 'Študent', absolvent: 'Absolvent', verejnost: 'Verejnosť', none: '—' };
+  const STATUS_COLOR = {
+    student: 'var(--c1)',
+    absolvent: 'var(--c2)',
+    verejnost: 'var(--c6)'
+  };
+
+  // ── Slovak-first field picker ────────────────────────────────────
+  function pick(reg, canonical, aliases) {
+    if (reg == null) return '';
+    if (reg[canonical] != null && reg[canonical] !== '') return reg[canonical];
+    if (aliases) {
+      for (let i = 0; i < aliases.length; i++) {
+        const v = reg[aliases[i]];
+        if (v != null && v !== '') return v;
+      }
+    }
+    return '';
+  }
+
+  function lastName(meno) {
+    // "Ján Novák" → "Novák"; "Anna-Mária Kováčová" → "Kováčová"
+    const parts = String(meno || '').trim().split(/\s+/);
+    return parts.length > 1 ? parts[parts.length - 1] : (parts[0] || '');
+  }
+
+  // ── Session helpers ──────────────────────────────────────────────
+  function hasValidToken() {
+    const t = sessionStorage.getItem(TOKEN_KEY);
+    const exp = +sessionStorage.getItem(EXPIRES_KEY);
+    return !!(t && exp && exp > Date.now());
+  }
+  function saveToken(token, ttlSec) {
+    sessionStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.setItem(EXPIRES_KEY, String(Date.now() + (ttlSec > 0 ? ttlSec : 3600) * 1000));
+  }
+  function clearToken() {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(EXPIRES_KEY);
+  }
+
+  // ── Overlay control ──────────────────────────────────────────────
+  const loginScreen = document.getElementById('loginScreen');
+  const dashContent = document.getElementById('dashContent');
+  const loginForm = document.getElementById('loginForm');
+  const pwInput = document.getElementById('pwInput');
+  const loginError = document.getElementById('loginError');
+
+  function showLogin(reason) {
+    dashContent.style.display = 'none';
+    loginScreen.style.display = 'flex';
+    if (reason) {
+      loginError.textContent = reason;
+      loginError.style.display = 'block';
+    } else {
+      loginError.style.display = 'none';
+    }
+    try { pwInput.focus(); } catch (e) {}
+  }
+  function showDash() {
+    loginScreen.style.display = 'none';
+    dashContent.style.display = 'block';
+  }
+
+  // ── Login submit: POST JSON body with text/plain (CORS-simple) ───
+  loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const pw = pwInput.value;
+    if (!pw) return;
+    loginError.style.display = 'none';
+    try {
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ __action: 'auth', password: pw })
+      });
+      let data = null;
+      try { data = await res.json(); } catch (err) { /* ignore */ }
+      if (data && data.token) {
+        saveToken(data.token, +data.expiresInSeconds || 3600);
+        pwInput.value = '';
+        showDash();
+        resetIdleTimer();
+        loadData();
+      } else {
+        loginError.textContent = 'Nesprávne heslo.';
+        loginError.style.display = 'block';
+        // Per spec: do NOT clear pwInput — let user correct the input.
+        try { pwInput.focus(); pwInput.select(); } catch (err) {}
+      }
+    } catch (err) {
+      loginError.textContent = 'Chyba pripojenia. Skúste znova.';
+      loginError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('refreshBtn').addEventListener('click', function () {
+    if (hasValidToken()) loadData();
+    else showLogin('Relácia vypršala. Prihláste sa znova.');
+  });
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    clearToken();
+    clearIdleTimer();
+    hideCountdown();
+    showLogin('');
+  });
+
+  // ── Idle timer + visual countdown ────────────────────────────────
+  let idleTimerId = null;
+  let lastActivityTs = 0;
+  const countdownEl = document.getElementById('logoutCountdown');
+
+  function hideCountdown() { countdownEl.style.visibility = 'hidden'; }
+  function updateCountdown() {
+    if (!hasValidToken() || lastActivityTs === 0) { hideCountdown(); return; }
+    countdownEl.style.visibility = 'visible';
+    const remaining = IDLE_LOGOUT_MS - (Date.now() - lastActivityTs);
+    if (remaining <= 0) { countdownEl.textContent = 'Odhlasujem…'; return; }
+    const m = Math.floor(remaining / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
+    countdownEl.textContent = 'Odhlásenie za ' + m + ':' + String(s).padStart(2, '0');
+  }
+  function resetIdleTimer() {
+    clearIdleTimer();
+    lastActivityTs = Date.now();
+    idleTimerId = setTimeout(function () {
+      clearToken();
+      hideCountdown();
+      showLogin('Odhlásené pre neaktivitu.');
+    }, IDLE_LOGOUT_MS);
+    updateCountdown();
+  }
+  function clearIdleTimer() {
+    if (idleTimerId) { clearTimeout(idleTimerId); idleTimerId = null; }
+  }
+  document.addEventListener('mousemove', function () { if (hasValidToken()) resetIdleTimer(); }, { passive: true });
+  document.addEventListener('keydown',   function () { if (hasValidToken()) resetIdleTimer(); }, { passive: true });
+  setInterval(updateCountdown, 1000);
+
+  // ── DOM helpers (XSS-safe: textContent / createElement only) ─────
+  function cell(tag, text, className) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text !== undefined && text !== null) el.textContent = String(text);
+    return el;
+  }
+  function safeUrl(s) {
+    if (typeof s !== 'string' || !s) return null;
+    const t = s.trim();
+    if (!/^https?:\/\//i.test(t)) return null;
+    try { new URL(t); return t; } catch (e) { return null; }
+  }
+
+  // ── Status classifier ────────────────────────────────────────────
+  function statusOf(r) {
+    const s = String(pick(r, 'status', ['stav', 'typ']) || '').toLowerCase();
+    if (s === 'absolvent') return 'absolvent';
+    if (s === 'verejnost' || s === 'verejnosť' || s === 'ine' || s === 'iné') return 'verejnost';
+    if (s === 'student' || s === 'študent') return 'student';
+    return pick(r, 'univerzita', ['university']) ? 'student' : 'none';
+  }
+
+  // ── Renderers: donut, legend, bar list ───────────────────────────
+  function renderPie(el, segments) {
+    const total = segments.reduce(function (s, x) { return s + (x.value || 0); }, 0);
+    if (total === 0) {
+      el.style.background = 'conic-gradient(rgba(255,255,255,0.06) 0 360deg)';
+      return;
+    }
+    let acc = 0;
+    const stops = segments.filter(function (s) { return s.value > 0; }).map(function (s) {
+      const from = (acc / total) * 360;
+      acc += s.value;
+      const to = (acc / total) * 360;
+      return s.color + ' ' + from.toFixed(2) + 'deg ' + to.toFixed(2) + 'deg';
+    });
+    el.style.background = 'conic-gradient(' + stops.join(', ') + ')';
+  }
+  function renderLegend(el, items, total) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    if (!items.length || total === 0) {
+      el.appendChild(cell('div', 'Zatiaľ bez hlasov', 'legend-empty'));
+      return;
+    }
+    items.forEach(function (it) {
+      const pct = Math.round((it.value / total) * 100);
+      const row = cell('div', null, 'legend-item');
+      const dot = cell('span', null, 'legend-dot');
+      dot.style.background = it.color;
+      row.appendChild(dot);
+      row.appendChild(cell('span', it.label, 'legend-name'));
+      const pctWrap = cell('span', null, 'legend-pct');
+      pctWrap.textContent = pct + '%';
+      const cnt = cell('span', '(' + it.value + ')', 'legend-count');
+      pctWrap.appendChild(cnt);
+      row.appendChild(pctWrap);
+      el.appendChild(row);
+    });
+  }
+  function renderBars(el, items, maxShow, emptyText) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+    if (!items.length) {
+      el.appendChild(cell('div', emptyText || 'Zatiaľ bez dát', 'legend-empty'));
+      return;
+    }
+    const shown = items.slice(0, maxShow);
+    const max = shown[0].count || 1;
+    shown.forEach(function (it) {
+      const wrap = cell('div', null, 'bar-item');
+      const name = cell('div', null, 'bar-name');
+      name.textContent = it.name;
+      if (it.sub) {
+        const tag = cell('span', it.sub, 'uni-tag');
+        name.appendChild(tag);
+      }
+      wrap.appendChild(name);
+      wrap.appendChild(cell('div', String(it.count), 'bar-count'));
+      const track = cell('div', null, 'bar-track');
+      const fill = cell('div', null, 'bar-fill');
+      track.appendChild(fill);
+      wrap.appendChild(track);
+      el.appendChild(wrap);
+      // Animate after layout
+      requestAnimationFrame(function () {
+        fill.style.width = (it.count / max * 100).toFixed(1) + '%';
+      });
+    });
+  }
+
+  // ── Data loader ──────────────────────────────────────────────────
+  async function loadData() {
+    const loading = document.getElementById('loading');
+    const table = document.getElementById('regTable');
+    const empty = document.getElementById('emptyState');
+    loading.style.display = 'block';
+    table.style.display = 'none';
+    empty.style.display = 'none';
+
+    if (!hasValidToken()) {
+      clearToken();
+      showLogin('Relácia vypršala. Prihláste sa znova.');
+      return;
+    }
+    const token = sessionStorage.getItem(TOKEN_KEY);
+
+    let json = null;
+    try {
+      const res = await fetch(API + '?key=' + encodeURIComponent(token), { cache: 'no-store' });
+      json = await res.json();
+    } catch (err) {
+      loading.textContent = 'Chyba pri načítaní dát.';
+      return;
+    }
+    if (!json || json.error === 'forbidden') {
+      clearToken();
+      showLogin('Relácia vypršala. Prihláste sa znova.');
+      return;
+    }
+
+    const regs = Array.isArray(json.registrations) ? json.registrations : [];
+
+    // Hero counter + meta pills
+    document.getElementById('totalCount').textContent = regs.length;
+    document.getElementById('capText').textContent = regs.length + ' / 70';
+
+    // Last registration (by arrival order — server returns in insertion order)
+    const lastRegTime = document.getElementById('lastRegTime');
+    const lastRegName = document.getElementById('lastRegName');
+    if (regs.length > 0) {
+      const last = regs[regs.length - 1];
+      const ts = pick(last, 'timestamp', []);
+      const d = ts ? new Date(ts) : null;
+      lastRegTime.textContent = (d && !isNaN(d.getTime()))
+        ? (d.toLocaleDateString('sk-SK') + ' ' + d.toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' }))
+        : '—';
+      const nm = pick(last, 'meno', ['name']);
+      lastRegName.textContent = nm ? ' · ' + nm : '';
+    } else {
+      lastRegTime.textContent = '—';
+      lastRegName.textContent = '';
+    }
+
+    // ── Status donut ──
+    const counts = { student: 0, absolvent: 0, verejnost: 0, none: 0 };
+    regs.forEach(function (r) { counts[statusOf(r)]++; });
+    const statusItems = [
+      { key: 'student',    label: STATUS_LABEL.student,    color: STATUS_COLOR.student,    value: counts.student },
+      { key: 'absolvent',  label: STATUS_LABEL.absolvent,  color: STATUS_COLOR.absolvent,  value: counts.absolvent },
+      { key: 'verejnost',  label: STATUS_LABEL.verejnost,  color: STATUS_COLOR.verejnost,  value: counts.verejnost + counts.none }
+    ];
+    const statusTotal = statusItems.reduce(function (s, x) { return s + x.value; }, 0);
+    renderPie(document.getElementById('statusPie'), statusItems.map(function (i) { return { value: i.value, color: i.color }; }));
+    renderLegend(document.getElementById('statusLegend'), statusItems, statusTotal);
+    document.getElementById('statusTotal').textContent = statusTotal;
+
+    // ── Interests donut ──
+    const rawInt = {};
+    regs.forEach(function (r) {
+      const s = pick(r, 'záujmy', ['zaujmy', 'interests']);
+      if (!s) return;
+      String(s).split(',').forEach(function (k) {
+        const key = String(k || '').trim().toLowerCase();
+        if (key) rawInt[key] = (rawInt[key] || 0) + 1;
+      });
+    });
+    // Keep known keys in canonical order; bucket unknowns as "Iné".
+    const knownKeys = Object.keys(INTEREST_LABEL).filter(function (k) { return rawInt[k]; });
+    let otherCount = 0;
+    Object.keys(rawInt).forEach(function (k) {
+      if (!INTEREST_LABEL.hasOwnProperty(k)) otherCount += rawInt[k];
+    });
+    const interestItems = knownKeys.map(function (k, i) {
+      return {
+        key: k, label: INTEREST_LABEL[k],
+        color: INTEREST_PALETTE[i % INTEREST_PALETTE.length],
+        value: rawInt[k] || 0
+      };
+    });
+    if (otherCount > 0) {
+      interestItems.push({
+        key: 'ine', label: 'Iné',
+        color: INTEREST_PALETTE[interestItems.length % INTEREST_PALETTE.length],
+        value: otherCount
+      });
+    }
+    interestItems.sort(function (a, b) { return b.value - a.value; });
+    const interestTotal = interestItems.reduce(function (s, x) { return s + x.value; }, 0);
+    renderPie(document.getElementById('interestsPie'), interestItems.map(function (i) { return { value: i.value, color: i.color }; }));
+    renderLegend(document.getElementById('interestsLegend'), interestItems, interestTotal);
+    document.getElementById('interestsTotal').textContent = interestTotal;
+
+    // ── Universities bar list (top 12, all statuses with uni set) ──
+    const uniCounts = {};
+    regs.forEach(function (r) {
+      const u = pick(r, 'univerzita', ['university']);
+      if (u) uniCounts[u] = (uniCounts[u] || 0) + 1;
+    });
+    const uniItems = Object.keys(uniCounts)
+      .map(function (name) { return { name: name, count: uniCounts[name] }; })
+      .sort(function (a, b) { return b.count - a.count; });
+    renderBars(document.getElementById('uniList'), uniItems, 12, 'Zatiaľ žiadne registrácie s univerzitou');
+    document.getElementById('uniHint').textContent = uniItems.length
+      ? (uniItems.length + ' rôznych univerzít')
+      : '—';
+
+    // ── Faculties bar list (top 10) ──
+    const facKeys = {};
+    regs.forEach(function (r) {
+      const fac = pick(r, 'fakulta', ['faculty']);
+      if (!fac) return;
+      const uni = pick(r, 'univerzita', ['university']);
+      const k = fac + '|||' + (uni || '');
+      facKeys[k] = (facKeys[k] || 0) + 1;
+    });
+    const facItems = Object.keys(facKeys).map(function (k) {
+      const parts = k.split('|||');
+      return { name: parts[0], sub: parts[1] || '', count: facKeys[k] };
+    }).sort(function (a, b) { return b.count - a.count; });
+    renderBars(document.getElementById('facList'), facItems, 10, 'Zatiaľ žiadne registrácie s fakultou');
+    document.getElementById('facHint').textContent = facItems.length
+      ? ('Top ' + Math.min(facItems.length, 10) + ' fakúlt podľa počtu registrácií')
+      : '—';
+
+    // ── Table (sorted alphabetically by last name, SK collation) ──
+    renderTable(regs);
+
+    document.getElementById('updatedAt').textContent =
+      'Načítané ' + new Date().toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ── Table renderer: sort by last name, DOM-constructed, XSS-safe ──
+  function renderTable(regs) {
+    const loading = document.getElementById('loading');
+    const table = document.getElementById('regTable');
+    const empty = document.getElementById('emptyState');
+    const tbody = document.getElementById('regBody');
+    while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+
+    document.getElementById('tableCount').textContent = regs.length;
+
+    loading.style.display = 'none';
+    if (regs.length === 0) { empty.style.display = 'block'; return; }
+
+    // Sort a COPY so stats/last-registration (which depend on arrival order) stay untouched.
+    const sortedRegs = regs.slice().sort(function (a, b) {
+      const la = lastName(pick(a, 'meno', ['name']));
+      const lb = lastName(pick(b, 'meno', ['name']));
+      return la.localeCompare(lb, 'sk', { sensitivity: 'base' });
+    });
+
+    sortedRegs.forEach(function (r, i) {
+      const tr = document.createElement('tr');
+      const st = statusOf(r);
+      const ts = pick(r, 'timestamp', []);
+      const d = ts ? new Date(ts) : null;
+      const timeStr = (d && !isNaN(d.getTime()))
+        ? (d.toLocaleDateString('sk-SK') + ' ' + d.toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' }))
+        : '';
+
+      tr.appendChild(cell('td', String(i + 1), 'num'));
+      tr.appendChild(cell('td', pick(r, 'meno', ['name']), 'name'));
+
+      const stTd = document.createElement('td');
+      const pill = document.createElement('span');
+      pill.className = 'status-pill ' + st;
+      pill.textContent = STATUS_LABEL[st] || '—';
+      stTd.appendChild(pill);
+      tr.appendChild(stTd);
+
+      tr.appendChild(cell('td', pick(r, 'email', []), 'email'));
+      tr.appendChild(cell('td', pick(r, 'univerzita', ['university'])));
+      tr.appendChild(cell('td', pick(r, 'fakulta', ['faculty'])));
+      tr.appendChild(cell('td', pick(r, 'odbor', [])));
+
+      const intTd = cell('td', pick(r, 'záujmy', ['zaujmy', 'interests']), 'interests');
+      intTd.title = pick(r, 'záujmy', ['zaujmy', 'interests']);
+      tr.appendChild(intTd);
+
+      tr.appendChild(cell('td', timeStr));
+      tbody.appendChild(tr);
+    });
+    table.style.display = 'table';
+  }
+
+  // ══════════════════════════════════════════════════════════════════
+  // Bootstrap — login overlay is the default state via inline CSS.
+  // Only a valid, non-expired token reveals the dash and triggers fetch.
+  // No network call happens before login.
+  // ══════════════════════════════════════════════════════════════════
+  if (hasValidToken()) {
+    showDash();
+    resetIdleTimer();
+    loadData();
+  } else {
+    clearToken();
+    showLogin('');
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registrácia — Slovensko, ako ho vidia tí, čo ho riadili | Future Slovakia Forum</title>
+<meta name="description" content="Registrácia na diskusiu Slovensko, ako ho vidia tí, čo ho riadili. Streda 6. mája 2026, 17:00, Kavárna Trojka, Brno. Bezplatná účasť, povinná registrácia.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://healthy-future.sk/brno/registracia.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://healthy-future.sk; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --accent-hover:#a84a4a;
+    --btn-text:#0a1628;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --font:'Inter Tight',system-ui,sans-serif;
+    --input-bg:rgba(255,255,255,0.06);
+    --input-border:rgba(255,255,255,0.12);
+    --error:#e85454;
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  /* ═══ HEADER ═══ */
+  .header{
+    position:relative;overflow:hidden;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .header::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,#7fa88e,var(--accent));z-index:3;
+  }
+  .header-inner{
+    max-width:720px;margin:0 auto;padding:48px 32px 40px;
+    position:relative;z-index:1;
+  }
+  .header-logo{height:40px;width:auto;margin-bottom:28px;display:block}
+  .header-tag{
+    font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:#7fa88e;margin-bottom:16px;
+    padding-bottom:12px;
+    border-bottom:2px solid rgba(127,168,142,0.30);
+    display:inline-block;
+  }
+  .header h1{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;line-height:1.08;letter-spacing:-1px;
+    margin-bottom:12px;
+  }
+  .header-sub{
+    font-size:15px;font-weight:400;color:var(--text-secondary);
+    line-height:1.5;margin-bottom:20px;
+  }
+  .header-meta{
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .header-meta span{font-size:14px;font-weight:600;color:var(--accent)}
+  .header-meta .venue{color:var(--text-secondary);font-weight:500}
+
+  /* ═══ FORM ═══ */
+  .form-section{
+    max-width:720px;margin:0 auto;padding:48px 32px 64px;
+  }
+  .form-section h2{
+    font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:#7fa88e;margin-bottom:32px;
+    padding-bottom:12px;
+    border-bottom:2px solid rgba(127,168,142,0.25);
+    display:inline-block;
+  }
+
+  .field{margin-bottom:24px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .field label{
+    display:block;font-size:13px;font-weight:600;
+    color:var(--text-primary);margin-bottom:8px;
+    letter-spacing:0.2px;
+  }
+  .field label .req{color:var(--accent);margin-left:2px}
+  .field label .optional{color:var(--text-muted);font-weight:400;font-size:11px;margin-left:4px}
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea{
+    width:100%;
+    padding:14px 16px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    color:var(--text-primary);
+    font-family:var(--font);
+    font-size:15px;font-weight:400;
+    transition:border-color 0.2s,background 0.2s;
+    outline:none;
+    -webkit-appearance:none;
+  }
+  input::placeholder,textarea::placeholder{color:var(--text-muted);font-weight:400}
+  input:focus,select:focus,textarea:focus{
+    border-color:var(--accent);
+    background:rgba(255,255,255,0.08);
+  }
+  select{
+    cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239fb0c7' stroke-width='2'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:40px;
+  }
+  select option{background:var(--bg-secondary);color:var(--text-primary)}
+  textarea{resize:vertical;min-height:88px}
+
+  /* Radio group */
+  .radio-group{display:flex;flex-direction:column;gap:10px}
+  .radio-item{
+    display:flex;align-items:center;gap:12px;
+    cursor:pointer;
+    padding:12px 14px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .radio-item:hover{border-color:rgba(194,91,91,0.30);background:rgba(255,255,255,0.06)}
+  .radio-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .radio-item input[type="radio"]{
+    width:18px;height:18px;flex-shrink:0;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .radio-item span{font-size:14px;font-weight:500;color:var(--text-secondary)}
+  .radio-item.checked span{color:var(--text-primary)}
+
+  /* Checkboxes */
+  .checkbox-group{display:flex;flex-direction:column;gap:10px}
+  .checkbox-item{
+    display:flex;align-items:center;gap:12px;
+    cursor:pointer;
+    padding:10px 14px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .checkbox-item:hover{border-color:rgba(194,91,91,0.30);background:rgba(255,255,255,0.06)}
+  .checkbox-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .checkbox-item.disabled{opacity:0.5;cursor:not-allowed}
+  .checkbox-item input[type="checkbox"]{
+    width:20px;height:20px;flex-shrink:0;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .checkbox-item span{font-size:14px;font-weight:400;color:var(--text-secondary)}
+  .checkbox-item.checked span{color:var(--text-primary)}
+  .checkbox-limit-note{
+    font-size:12px;color:var(--text-muted);margin-top:8px;
+  }
+
+  /* Divider */
+  .form-divider{
+    border:none;border-top:1px solid var(--border-soft);
+    margin:32px 0;
+  }
+
+  /* GDPR */
+  .gdpr-box{
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:16px;
+  }
+  .gdpr-toggle{
+    display:flex;align-items:center;justify-content:space-between;
+    cursor:pointer;gap:12px;
+  }
+  .gdpr-toggle span{font-size:13px;font-weight:600;color:var(--text-secondary)}
+  .gdpr-toggle svg{width:16px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:2;
+    transition:transform 0.2s;flex-shrink:0}
+  .gdpr-toggle.open svg{transform:rotate(180deg)}
+  .gdpr-text{
+    display:none;
+    margin-top:16px;padding-top:16px;
+    border-top:1px solid var(--border-soft);
+    font-size:12px;font-weight:400;color:var(--text-muted);line-height:1.7;
+  }
+  .gdpr-text.show{display:block}
+  .consent-item{
+    display:flex;align-items:flex-start;gap:12px;
+    cursor:pointer;
+    padding:12px 16px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s;
+  }
+  .consent-item:hover{border-color:rgba(194,91,91,0.30)}
+  .consent-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .consent-item input[type="checkbox"]{
+    width:20px;height:20px;flex-shrink:0;margin-top:1px;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .consent-item span{font-size:13px;font-weight:500;color:var(--text-secondary);line-height:1.5}
+  .consent-item.checked span{color:var(--text-primary)}
+  .field.invalid .consent-item{border-color:var(--error)}
+
+  /* Submit */
+  .submit-group{
+    display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+    margin-top:36px;
+  }
+  .btn-submit{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 44px;
+    background:var(--accent);color:#fff;
+    font-size:16px;font-weight:700;font-family:var(--font);
+    border:none;border-radius:8px;cursor:pointer;
+    transition:background 0.2s,transform 0.15s;
+    letter-spacing:0.2px;
+  }
+  .btn-submit:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+  .btn-submit svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
+  .submit-note{font-size:12px;color:var(--text-muted);font-weight:400}
+
+  /* State panels (success, full, error) */
+  .state-panel{
+    display:none;
+    text-align:center;padding:80px 32px;
+  }
+  .state-panel.show{display:block}
+  .state-panel h2{font-size:28px;font-weight:800;margin-bottom:12px;color:var(--text-primary)}
+  .state-panel p{font-size:16px;font-weight:400;color:var(--text-secondary);line-height:1.6;max-width:520px;margin:0 auto}
+  .state-icon{
+    width:64px;height:64px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 24px;
+  }
+  .state-icon.ok{background:rgba(194,91,91,0.18)}
+  .state-icon.full{background:rgba(232,84,84,0.14)}
+  .state-icon.err{background:rgba(232,84,84,0.14)}
+  .state-icon svg{width:32px;height:32px;fill:none;stroke-width:2.5}
+  .state-icon.ok svg{stroke:var(--accent)}
+  .state-icon.full svg{stroke:var(--error)}
+  .state-icon.err svg{stroke:var(--error)}
+  .state-actions{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px;
+  }
+  .state-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 28px;border-radius:8px;text-decoration:none;
+    font-size:14px;font-weight:600;font-family:var(--font);
+    transition:background 0.2s,transform 0.15s;cursor:pointer;border:none;
+  }
+  .state-btn.primary{background:var(--accent);color:#fff}
+  .state-btn.primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .state-btn.secondary{background:rgba(194,91,91,0.18);color:var(--accent)}
+  .state-btn.secondary:hover{background:rgba(194,91,91,0.26)}
+
+  /* Errors */
+  .field-error{font-size:12px;color:var(--error);margin-top:6px;display:none}
+  .field.invalid input,
+  .field.invalid select,
+  .field.invalid textarea{border-color:var(--error)}
+  .field.invalid .field-error{display:block}
+
+  /* Footer */
+  .form-footer{
+    border-top:1px solid var(--border-soft);
+    padding:32px;
+    max-width:720px;margin:0 auto;
+  }
+  .form-footer p{
+    font-size:12px;font-weight:400;color:var(--text-muted);line-height:1.7;
+    text-align:center;
+  }
+  .form-footer a{color:#7fa88e;text-decoration:none}
+  .form-footer a:hover{text-decoration:underline}
+
+  @media(max-width:640px){
+    .header-inner,.form-section,.form-footer{padding-left:20px;padding-right:20px}
+    .field-row{grid-template-columns:1fr}
+  }
+
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <img src="logo-fsf.png" alt="Future Slovakia Forum" class="header-logo" width="140" height="40">
+    <div class="header-tag">Brno • 6. mája 2026</div>
+    <h1>Registrácia</h1>
+    <p class="header-sub">Bezplatná účasť. Vyplňte, prosím, formulár pred podujatím.</p>
+    <div class="header-meta">
+      <span>streda 6. mája 2026 • 17:00</span>
+      <span class="venue">Kavárna Trojka • Dominikánská 9 • Brno</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ FORM ═══ -->
+<div class="form-section" id="formSection">
+  <h2>Vaše údaje</h2>
+
+  <form id="regForm" novalidate>
+
+    <!-- Meno + Priezvisko -->
+    <div class="field-row">
+      <div class="field">
+        <label for="meno">Meno<span class="req">*</span></label>
+        <input type="text" id="meno" name="meno" required placeholder="Jana" autocomplete="given-name">
+        <div class="field-error">Zadajte meno.</div>
+      </div>
+      <div class="field">
+        <label for="priezvisko">Priezvisko<span class="req">*</span></label>
+        <input type="text" id="priezvisko" name="priezvisko" required placeholder="Nováková" autocomplete="family-name">
+        <div class="field-error">Zadajte priezvisko.</div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+      <label for="email">E-mail<span class="req">*</span></label>
+      <input type="email" id="email" name="email" required placeholder="vas@email.com" autocomplete="email">
+      <div class="field-error">Zadajte platnú e-mailovú adresu.</div>
+    </div>
+
+    <!-- Mobil (optional) -->
+    <div class="field">
+      <label for="mobil">Mobil<span class="optional">(voliteľné)</span></label>
+      <input type="tel" id="mobil" name="mobil" placeholder="+421 ..." autocomplete="tel">
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- Status -->
+    <div class="field" id="statusField">
+      <label>Som<span class="req">*</span></label>
+      <div class="radio-group" role="radiogroup" aria-label="Status">
+        <label class="radio-item">
+          <input type="radio" name="status" value="student" required>
+          <span>Študent(ka)</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="status" value="absolvent">
+          <span>Absolvent(ka)</span>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="status" value="ine">
+          <span>Iné</span>
+        </label>
+      </div>
+      <div class="field-error">Vyberte jednu z možností.</div>
+    </div>
+
+    <!-- Univerzita + Fakulta (conditional — only for student/absolvent) -->
+    <div id="uniFacWrap" style="display:none">
+      <div class="field">
+        <label for="univerzita">Univerzita<span class="req">*</span></label>
+        <select id="univerzita" name="univerzita">
+          <option value="" disabled selected>— vyberte —</option>
+          <option value="Masarykova univerzita (MUNI)">Masarykova univerzita (MUNI)</option>
+          <option value="Vysoké učení technické v Brně (VUT)">Vysoké učení technické v Brně (VUT)</option>
+          <option value="Mendelova univerzita v Brně (MENDELU)">Mendelova univerzita v Brně (MENDELU)</option>
+          <option value="Veterinární univerzita Brno (VETUNI)">Veterinární univerzita Brno (VETUNI)</option>
+          <option value="Janáčkova akademie múzických umění (JAMU)">Janáčkova akademie múzických umění (JAMU)</option>
+          <option value="Iná česká univerzita">Iná česká univerzita</option>
+          <option value="Iná slovenská univerzita">Iná slovenská univerzita</option>
+        </select>
+        <div class="field-error">Vyberte univerzitu.</div>
+      </div>
+
+      <div class="field">
+        <label for="fakulta">Fakulta / odbor<span class="req">*</span></label>
+        <input type="text" id="fakulta" name="fakulta" placeholder="Napr. Lekárska fakulta, všeobecné lekárstvo">
+        <div class="field-error">Zadajte fakultu alebo odbor.</div>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- Záujmy (max 2) -->
+    <div class="field">
+      <label>O čo sa najviac zaujímam<span class="optional">(nepovinné, max. 2)</span></label>
+      <div class="checkbox-group" id="zaujmyGroup">
+        <label class="checkbox-item">
+          <input type="checkbox" name="zaujmy" value="zdravotnictvo">
+          <span>Zdravotníctvo</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="zaujmy" value="skolstvo">
+          <span>Školstvo a vzdelávanie</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="zaujmy" value="financie">
+          <span>Reforma verejných financií</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="zaujmy" value="decentralizacia">
+          <span>Decentralizácia</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="zaujmy" value="ine">
+          <span>Iné</span>
+        </label>
+      </div>
+      <p class="checkbox-limit-note" id="zaujmyLimit">Vyberte maximálne 2 témy.</p>
+    </div>
+
+    <!-- Motivácia -->
+    <div class="field">
+      <label for="motivacia">Krátko o sebe / motivácia<span class="optional">(nepovinné)</span></label>
+      <textarea id="motivacia" name="motivacia" placeholder="Voliteľné — poteší"></textarea>
+    </div>
+
+    <!-- Národnosť -->
+    <div class="field">
+      <label for="narodnost">Národnosť<span class="req">*</span></label>
+      <select id="narodnost" name="narodnost" required>
+        <option value="" disabled selected>— vyberte —</option>
+        <option value="SK">Slovenská</option>
+        <option value="CZ">Česká</option>
+        <option value="ine">Iná</option>
+      </select>
+      <div class="field-error">Vyberte národnosť.</div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- GDPR Consent -->
+    <div class="field" id="gdprField">
+      <label>Súhlas so spracovaním osobných údajov<span class="req">*</span></label>
+      <div class="gdpr-box">
+        <div class="gdpr-toggle" id="gdprToggle">
+          <span>Zobraziť podmienky spracovania osobných údajov</span>
+          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="gdpr-text" id="gdprText">
+          <p>Súhlasím so spracovaním uvedených osobných údajov pre účely organizácie podujatia a komunikácie zo strany <strong>Future Slovakia Forum</strong>, v súlade s Nariadením EÚ 2016/679 (GDPR). Údaje sú spracované výlučne pre tieto účely, neposkytujú sa tretím stranám a uchovávame ich len po dobu nevyhnutnú na organizáciu podujatia a spätnú väzbu.</p>
+          <p style="margin-top:8px">Súhlas môžete kedykoľvek odvolať na e-mailovej adrese <strong>studenti@future-slovakia.eu</strong>.</p>
+        </div>
+      </div>
+      <label class="consent-item" id="consentItem">
+        <input type="checkbox" id="gdprConsent" name="gdpr" value="ano" required>
+        <span>Súhlasím so spracovaním osobných údajov podľa vyššie uvedených podmienok.</span>
+      </label>
+      <div class="field-error">Pre registráciu je potrebný súhlas so spracovaním osobných údajov.</div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-group">
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Odoslať registráciu
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <span class="submit-note">Odoslaním formulára súhlasíte so spracovaním osobných údajov.</span>
+    </div>
+  </form>
+</div>
+
+<!-- ═══ CAPACITY FULL ═══ -->
+<div class="state-panel" id="fullMsg">
+  <div class="state-icon full">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+  </div>
+  <h2>Kapacita naplnená</h2>
+  <p>Registrácia je momentálne uzavretá — Kavárna Trojka má kapacitu 70 miest a všetky sú obsadené. Ak máte záujem o náhradné miesto v prípade odhlásenia, napíšte nám na <a href="mailto:studenti@future-slovakia.eu" style="color:var(--accent)">studenti@future-slovakia.eu</a>.</p>
+  <div class="state-actions">
+    <a href="index.html" class="state-btn secondary">← Späť na podujatie</a>
+    <a href="ucastnici.html" class="state-btn secondary">Kto sa registroval →</a>
+  </div>
+</div>
+
+<!-- ═══ SUCCESS ═══ -->
+<div class="state-panel" id="successMsg">
+  <div class="state-icon ok">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2>Ďakujeme za registráciu!</h2>
+  <p style="font-size:20px;font-weight:700;color:var(--accent);margin:12px auto 16px">streda 6. mája 2026 • 17:00</p>
+  <p>Kavárna Trojka • Dominikánská 9 • Brno</p>
+  <p style="margin-top:14px">Tešíme sa, že prídete. Potvrdenie sme odoslali na váš e‑mail — ak ho nevidíte do pár minút, skontrolujte spam.</p>
+  <div class="state-actions">
+    <a href="index.html" class="state-btn secondary">← Späť na podujatie</a>
+    <a href="ucastnici.html" class="state-btn secondary">Kto už je registrovaný →</a>
+  </div>
+</div>
+
+<!-- ═══ ERROR ═══ -->
+<div class="state-panel" id="errorMsg">
+  <div class="state-icon err">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  </div>
+  <h2>Niečo sa pokazilo</h2>
+  <p>Skúste to prosím znova, alebo nám napíšte na <a href="mailto:studenti@future-slovakia.eu" style="color:var(--accent)">studenti@future-slovakia.eu</a> — pomôžeme vám s registráciou ručne.</p>
+  <div class="state-actions">
+    <button type="button" class="state-btn primary" id="errorRetryBtn">Skúsiť znova</button>
+    <a href="index.html" class="state-btn secondary">← Späť na podujatie</a>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="form-footer">
+  <p>
+    Organizátor: <a href="https://future-slovakia.eu" target="_blank" rel="noopener">Future Slovakia Forum</a><br>
+    Lokálna koordinácia: Linda Veverková (MUNI Brno)<br>
+    Kontakt: <a href="mailto:linda.veverkova@future-slovakia.eu">linda.veverkova@future-slovakia.eu</a> · <a href="mailto:studenti@future-slovakia.eu">studenti@future-slovakia.eu</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  Brno GAS endpoint. Dávid: vlož URL nového Brno deploymentu.
+  //  Viď GAS_TEMPLATE.md v tomto adresári (Krok 5).
+  // ═══════════════════════════════════════════════════════════════════
+  const GAS_URL_BRNO = 'REPLACE_ME_BRNO_GAS_DEPLOYMENT_URL';
+  const CAPACITY = 70;  // Kavárna Trojka — potvrdená kapacita sály
+  const MAX_ZAUJMY = 2;
+
+  // Client-side capacity gate je bypassable cez priame API volania.
+  // Server-side validácia v doPost() je v GAS_TEMPLATE.md povinná.
+
+  const formSection = document.getElementById('formSection');
+  const fullMsg = document.getElementById('fullMsg');
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg = document.getElementById('errorMsg');
+  const form = document.getElementById('regForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  function showOnly(el){
+    [formSection, fullMsg, successMsg, errorMsg].forEach(function(n){
+      if (n === el) n.classList.add('show'); else n.classList.remove('show');
+    });
+    // formSection uses display:block by default (not .show class), so toggle explicitly
+    formSection.style.display = (el === formSection) ? '' : 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Capacity pre-check on page load (non-blocking) ──────────────────
+  async function checkCapacity(){
+    if (GAS_URL_BRNO.indexOf('REPLACE_ME') === 0) return; // no endpoint yet
+    try {
+      const res = await fetch(GAS_URL_BRNO + '?action=count', { cache: 'no-store' });
+      const data = await res.json();
+      if (data && typeof data.count === 'number' && data.count >= CAPACITY) {
+        showOnly(fullMsg);
+      }
+    } catch (err) {
+      // silent — form still works, server enforces gate on submit
+    }
+  }
+  checkCapacity();
+
+  // ── Radio status toggle — show/hide univerzita + fakulta ───────────
+  const uniFacWrap = document.getElementById('uniFacWrap');
+  const univerzita = document.getElementById('univerzita');
+  const fakulta = document.getElementById('fakulta');
+
+  function applyStatus(){
+    const checked = form.querySelector('input[name="status"]:checked');
+    const s = checked ? checked.value : '';
+    const isAcademic = (s === 'student' || s === 'absolvent');
+    uniFacWrap.style.display = isAcademic ? '' : 'none';
+    univerzita.required = isAcademic;
+    fakulta.required = isAcademic;
+    if (!isAcademic) {
+      univerzita.closest('.field').classList.remove('invalid');
+      fakulta.closest('.field').classList.remove('invalid');
+    }
+  }
+  form.querySelectorAll('input[name="status"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      // visual state for radio-item
+      form.querySelectorAll('.radio-item').forEach(function(el){
+        el.classList.remove('checked');
+      });
+      if (r.checked) r.closest('.radio-item').classList.add('checked');
+      document.getElementById('statusField').classList.remove('invalid');
+      applyStatus();
+    });
+  });
+
+  // ── Checkbox styling + max-2 enforcement ───────────────────────────
+  const zaujmyBoxes = Array.from(document.querySelectorAll('input[name="zaujmy"]'));
+  const zaujmyLimit = document.getElementById('zaujmyLimit');
+
+  function updateZaujmy(){
+    const checkedCount = zaujmyBoxes.filter(function(b){ return b.checked; }).length;
+    zaujmyBoxes.forEach(function(b){
+      const item = b.closest('.checkbox-item');
+      if (b.checked) {
+        item.classList.add('checked');
+        item.classList.remove('disabled');
+      } else {
+        item.classList.remove('checked');
+        if (checkedCount >= MAX_ZAUJMY) {
+          item.classList.add('disabled');
+          b.disabled = true;
+        } else {
+          item.classList.remove('disabled');
+          b.disabled = false;
+        }
+      }
+    });
+    if (checkedCount >= MAX_ZAUJMY) {
+      zaujmyLimit.textContent = 'Maximum dosiahnutý — odznačte niektorú voľbu pre zmenu.';
+      zaujmyLimit.style.color = 'var(--accent)';
+    } else {
+      zaujmyLimit.textContent = 'Vyberte maximálne ' + MAX_ZAUJMY + ' témy.';
+      zaujmyLimit.style.color = '';
+    }
+  }
+  zaujmyBoxes.forEach(function(b){
+    b.addEventListener('change', updateZaujmy);
+  });
+
+  // ── GDPR toggle + consent ──────────────────────────────────────────
+  document.getElementById('gdprToggle').addEventListener('click', function(){
+    const text = document.getElementById('gdprText');
+    const toggle = document.getElementById('gdprToggle');
+    text.classList.toggle('show');
+    toggle.classList.toggle('open');
+    toggle.querySelector('span').textContent = text.classList.contains('show')
+      ? 'Skryť podmienky spracovania osobných údajov'
+      : 'Zobraziť podmienky spracovania osobných údajov';
+  });
+  document.getElementById('gdprConsent').addEventListener('change', function(){
+    document.getElementById('consentItem').classList.toggle('checked', this.checked);
+    if (this.checked) document.getElementById('gdprField').classList.remove('invalid');
+  });
+
+  // ── Submit handler ─────────────────────────────────────────────────
+  document.getElementById('errorRetryBtn').addEventListener('click', function(){
+    showOnly(formSection);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Odoslať registráciu <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+  });
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    // Clear prior errors
+    form.querySelectorAll('.field').forEach(function(f){ f.classList.remove('invalid'); });
+
+    const meno = document.getElementById('meno');
+    const priezvisko = document.getElementById('priezvisko');
+    const email = document.getElementById('email');
+    const mobil = document.getElementById('mobil');
+    const motivacia = document.getElementById('motivacia');
+    const narodnost = document.getElementById('narodnost');
+    const gdpr = document.getElementById('gdprConsent');
+    const statusEl = form.querySelector('input[name="status"]:checked');
+
+    let valid = true;
+
+    if (!meno.value.trim()) { meno.closest('.field').classList.add('invalid'); valid = false; }
+    if (!priezvisko.value.trim()) { priezvisko.closest('.field').classList.add('invalid'); valid = false; }
+    if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.closest('.field').classList.add('invalid'); valid = false;
+    }
+    if (!statusEl) { document.getElementById('statusField').classList.add('invalid'); valid = false; }
+    const isAcademic = statusEl && (statusEl.value === 'student' || statusEl.value === 'absolvent');
+    if (isAcademic) {
+      if (!univerzita.value) { univerzita.closest('.field').classList.add('invalid'); valid = false; }
+      if (!fakulta.value.trim()) { fakulta.closest('.field').classList.add('invalid'); valid = false; }
+    }
+    if (!narodnost.value) { narodnost.closest('.field').classList.add('invalid'); valid = false; }
+    if (!gdpr.checked) { document.getElementById('gdprField').classList.add('invalid'); valid = false; }
+
+    if (!valid) {
+      const firstErr = form.querySelector('.field.invalid');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Build payload matching GAS_TEMPLATE schema
+    const zaujmy = zaujmyBoxes.filter(function(b){ return b.checked; }).map(function(b){ return b.value; });
+    const payload = {
+      meno: meno.value.trim(),
+      priezvisko: priezvisko.value.trim(),
+      email: email.value.trim(),
+      mobil: mobil.value.trim(),
+      status: statusEl ? statusEl.value : '',
+      univerzita: isAcademic ? univerzita.value : '',
+      fakulta: isAcademic ? fakulta.value.trim() : '',
+      zaujmy: zaujmy,
+      motivacia: motivacia.value.trim(),
+      narodnost: narodnost.value,
+      gdpr: !!gdpr.checked,
+      user_agent: (navigator.userAgent || '').slice(0, 200)
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Odosielam...';
+
+    if (GAS_URL_BRNO.indexOf('REPLACE_ME') === 0) {
+      alert('Formulár zatiaľ nie je pripojený k serveru (GAS_URL_BRNO placeholder). Napíšte nám na linda.veverkova@future-slovakia.eu (alebo studenti@future-slovakia.eu) — registrujeme vás ručne.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Odoslať registráciu <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+      return;
+    }
+
+    try {
+      const res = await fetch(GAS_URL_BRNO, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      let data = null;
+      try { data = await res.json(); } catch (err) { /* ignore */ }
+
+      if (data && data.error === 'capacity_full') {
+        showOnly(fullMsg);
+        return;
+      }
+      if (data && data.error === 'already_registered') {
+        alert('Na tento e-mail je už registrácia zaevidovaná. Ak ide o omyl, napíšte nám na linda.veverkova@future-slovakia.eu.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Odoslať registráciu <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        return;
+      }
+      if (data && data.ok) {
+        showOnly(successMsg);
+        return;
+      }
+      // Unknown error
+      showOnly(errorMsg);
+    } catch (err) {
+      showOnly(errorMsg);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

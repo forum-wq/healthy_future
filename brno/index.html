@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slovensko, ako ho vidia tí, čo ho riadili — diskusia v Brne 6. mája 2026 | Future Slovakia Forum</title>
+<meta name="description" content="Tri perspektívy z prvej ruky — diplomacia, samospráva, zdravotníctvo. Wlachovský, Kollár, Mišík. Streda 6. 5. 2026, 17:00, Kavárna Trojka, Brno.">
+<meta property="og:title" content="Slovensko, ako ho vidia tí, čo ho riadili">
+<meta property="og:description" content="Diplomat, primátor, health economist v Brne. Wlachovský, Kollár, Mišík. 6.5.2026, 17:00, Kavárna Trojka.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://healthy-future.sk/brno/">
+<meta property="og:image" content="https://healthy-future.sk/brno/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sk_SK">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Slovensko, ako ho vidia tí, čo ho riadili">
+<meta name="twitter:image" content="https://healthy-future.sk/brno/og-image.png">
+<link rel="canonical" href="https://healthy-future.sk/brno/">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://healthy-future.sk; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --bg-overlay:rgba(10,22,40,0.84);
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --accent-hover:#a84a4a;
+    --btn-text:#0a1628;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --font:'Inter Tight',system-ui,sans-serif;
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  /* ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ */
+  .hero{
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,#7fa88e,var(--accent));z-index:3;
+  }
+  .hero-bg{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    opacity:0.07;pointer-events:none;z-index:0;
+  }
+  .hero-overlay{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(180deg,var(--bg-primary) 0%,rgba(10,22,40,0.6) 50%,var(--bg-primary) 100%);
+    pointer-events:none;z-index:1;
+  }
+  .hero-inner{
+    max-width:1080px;margin:0 auto;padding:72px 48px 64px;
+    position:relative;z-index:2;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    width:100%;
+  }
+
+  /* Hero left — text block */
+  .hero-left{max-width:520px}
+  .hero-logo{
+    height:48px;width:auto;margin-bottom:40px;display:block;
+  }
+  .hero-tag{
+    font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:#7fa88e;margin-bottom:20px;
+    padding-bottom:16px;
+    border-bottom:2px solid rgba(127,168,142,0.30);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(38px,5.5vw,60px);
+    font-weight:900;line-height:1.02;
+    letter-spacing:-1.5px;
+    margin-bottom:20px;
+    color:var(--text-primary);
+  }
+  .hero-sub{
+    font-size:clamp(16px,1.8vw,19px);font-weight:400;
+    color:var(--text-secondary);line-height:1.55;
+    margin-bottom:36px;
+  }
+  .hero-meta{
+    display:flex;flex-direction:column;gap:6px;
+    margin-bottom:36px;
+  }
+  .hero-meta-line{
+    font-size:15px;font-weight:600;
+    color:var(--accent);
+    letter-spacing:0.3px;
+  }
+  .hero-meta-line.venue{
+    color:var(--text-secondary);font-weight:500;
+  }
+  .hero-cta-group{
+    display:flex;flex-direction:column;gap:10px;
+    align-items:flex-start;
+  }
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 40px;
+    background:var(--accent);color:var(--btn-text);
+    font-size:16px;font-weight:700;font-family:var(--font);
+    border:none;border-radius:8px;text-decoration:none;cursor:pointer;
+    transition:background 0.2s,transform 0.15s;
+    letter-spacing:0.2px;
+  }
+  .btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .btn-primary svg{width:18px;height:18px;stroke:var(--btn-text);fill:none;stroke-width:2.5}
+  .hero-micro{
+    font-size:12px;font-weight:500;color:var(--text-muted);
+    line-height:1.6;
+  }
+
+  /* Hero right — Praha illustration */
+  .hero-illustration{
+    position:absolute;top:0;right:0;bottom:0;width:55%;
+    z-index:1;pointer-events:none;
+    overflow:hidden;
+  }
+  .hero-illustration img{
+    width:100%;height:100%;
+    object-fit:cover;object-position:center center;
+    opacity:0.17;
+  }
+  .hero-illustration::before{
+    content:'';position:absolute;top:0;left:0;bottom:0;width:50%;
+    background:linear-gradient(90deg,var(--bg-primary) 0%,transparent 100%);
+    z-index:1;
+  }
+  .hero-illustration::after{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(180deg,rgba(10,22,40,0.4) 0%,transparent 30%,transparent 70%,rgba(10,22,40,0.4) 100%);
+    z-index:1;
+  }
+
+  /* ═══════════════════════════════════════
+     SECTION COMMON
+     ═══════════════════════════════════════ */
+  .section-wrap{
+    max-width:1080px;margin:0 auto;padding:80px 48px;
+  }
+  .section-label{
+    font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:#7fa88e;margin-bottom:32px;
+    padding-bottom:14px;
+    border-bottom:2px solid rgba(127,168,142,0.25);
+    display:inline-block;
+  }
+  .section-bg{
+    background:var(--bg-secondary);
+    border-top:1px solid var(--border-soft);
+    border-bottom:1px solid var(--border-soft);
+  }
+
+  /* ═══════════════════════════════════════
+     SPEAKERS FULL
+     ═══════════════════════════════════════ */
+  .speakers-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  @media(max-width:900px){
+    .speakers-grid{grid-template-columns:1fr;gap:24px}
+  }
+  .speaker-card{
+    background:var(--card-bg);
+    border:1px solid var(--border-soft);
+    border-radius:14px;padding:40px 32px;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
+    transition:border-color 0.3s,background 0.3s;
+  }
+  .speaker-card:hover{
+    border-color:rgba(194,91,91,0.25);
+    background:rgba(255,255,255,0.05);
+  }
+  .speaker-photo{
+    width:200px;height:200px;border-radius:50%;
+    object-fit:cover;object-position:center top;
+    border:3px solid var(--accent);
+    margin-bottom:20px;background:var(--bg-secondary);
+  }
+  .speaker-name{font-size:22px;font-weight:700;margin-bottom:4px}
+  .speaker-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:14px;letter-spacing:0.5px}
+  .speaker-bio{font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.7;max-width:420px}
+
+  /* ═══════════════════════════════════════
+     REGISTRATION CTA
+     ═══════════════════════════════════════ */
+  .cta-section{position:relative;overflow:hidden}
+  .cta-section .cta-bg{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    opacity:0.04;pointer-events:none;
+  }
+  .cta-inner{
+    max-width:1080px;margin:0 auto;padding:72px 48px;
+    display:flex;align-items:center;justify-content:space-between;gap:48px;
+    flex-wrap:wrap;position:relative;z-index:1;
+  }
+  .cta-left{flex:1;min-width:300px}
+  .cta-left h2{font-size:28px;font-weight:800;margin-bottom:10px}
+  .cta-left p{font-size:15px;font-weight:400;color:var(--text-secondary);line-height:1.6;margin-bottom:6px;max-width:480px}
+  .cta-note{
+    display:flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--text-muted);margin-top:12px;
+  }
+  .cta-note svg{width:16px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:2;flex-shrink:0}
+  .cta-right{
+    display:flex;align-items:center;gap:32px;flex-shrink:0;
+  }
+  .qr-block{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  .qr-wrap{
+    width:88px;height:88px;background:white;border-radius:6px;padding:5px;
+  }
+  .qr-wrap img{width:100%;height:100%;object-fit:contain}
+  .qr-caption{font-size:10px;font-weight:500;color:var(--text-muted);letter-spacing:0.5px}
+
+  /* ═══════════════════════════════════════
+     ABOUT
+     ═══════════════════════════════════════ */
+  .about-lead{
+    font-size:18px;font-weight:400;color:var(--text-secondary);
+    line-height:1.75;max-width:700px;margin-bottom:40px;
+  }
+  .about-lead strong{color:var(--text-primary);font-weight:600}
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  }
+  .about-card{
+    border-left:3px solid var(--accent);
+    padding-left:20px;
+  }
+  .about-card h3{
+    font-size:15px;font-weight:700;color:var(--accent);margin-bottom:8px;
+  }
+  .about-card p{
+    font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.7;
+  }
+
+  /* ═══════════════════════════════════════
+     PRACTICAL INFO
+     ═══════════════════════════════════════ */
+  .practical-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .practical-item{
+    padding:28px 24px;background:var(--card-bg);
+    border:1px solid var(--border-soft);border-radius:12px;
+  }
+  .practical-item h4{
+    font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    color:#7fa88e;margin-bottom:10px;
+  }
+  .practical-item p{
+    font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.65;
+  }
+  .practical-item p strong{color:var(--text-primary);font-weight:600}
+
+  /* ═══════════════════════════════════════
+     KDE SA STRETNEME
+     ═══════════════════════════════════════ */
+  .venue-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;
+  }
+  .venue-card{
+    border-radius:12px;overflow:hidden;
+    border:1px solid var(--border-soft);
+    background:var(--card-bg);
+  }
+  .venue-card img{
+    width:100%;height:auto;display:block;
+  }
+  .venue-card-body{padding:20px}
+  .venue-card-body h4{
+    font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:6px;
+  }
+  .venue-card-body p{
+    font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.6;
+  }
+  .venue-link{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:10px;font-size:13px;font-weight:600;
+    color:var(--accent);text-decoration:none;
+  }
+  .venue-link:hover{text-decoration:underline}
+  .venue-link svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2}
+  @media(max-width:640px){
+    .venue-grid{grid-template-columns:1fr}
+  }
+
+  /* ═══════════════════════════════════════
+     ACKNOWLEDGMENT
+     ═══════════════════════════════════════ */
+  .ack-section{
+    border-top:1px solid var(--border-soft);
+    border-bottom:1px solid var(--border-soft);
+    background:var(--bg-secondary);
+  }
+  .ack-inner{
+    max-width:1080px;margin:0 auto;padding:56px 48px;
+  }
+  .ack-lead{
+    font-size:15px;font-weight:400;color:var(--text-secondary);line-height:1.7;
+    max-width:780px;margin-bottom:32px;
+  }
+  .ack-lead strong{color:var(--text-primary);font-weight:600}
+  .ack-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  }
+  .ack-card{
+    padding:24px;
+    border-left:3px solid var(--accent);
+    background:var(--card-bg);
+    border-radius:0 10px 10px 0;
+  }
+  .ack-card h4{
+    font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:4px;
+  }
+  .ack-card .ack-role{
+    font-size:12px;font-weight:600;color:var(--accent);margin-bottom:10px;
+    letter-spacing:0.3px;
+  }
+  .ack-card p{
+    font-size:13px;font-weight:400;color:var(--text-secondary);line-height:1.65;
+  }
+  .ack-card a{color:#7fa88e;text-decoration:none;font-weight:500}
+  .ack-card a:hover{text-decoration:underline}
+  @media(max-width:640px){
+    .ack-inner{padding:40px 24px}
+    .ack-grid{grid-template-columns:1fr}
+  }
+
+  /* ═══════════════════════════════════════
+     FOOTER / PARTNERS
+     ═══════════════════════════════════════ */
+  .footer{
+    border-top:1px solid var(--border-soft);
+  }
+  .footer-inner{
+    max-width:1080px;margin:0 auto;padding:56px 48px 44px;
+  }
+  .partners-label{
+    font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:var(--text-muted);margin-bottom:28px;
+  }
+  .partners-row{
+    display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-bottom:40px;
+  }
+  .partner-divider{width:1px;height:28px;background:var(--border-soft)}
+  .partner-uk{
+    background:rgba(255,255,255,0.88);border-radius:4px;padding:5px 8px;
+    display:inline-flex;align-items:center;
+  }
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;
+    padding-top:28px;border-top:1px solid var(--border-soft);
+  }
+  .footer-contact{font-size:13px;font-weight:400;color:var(--text-muted);line-height:1.7}
+  .footer-contact a{color:#7fa88e;text-decoration:none}
+  .footer-contact a:hover{text-decoration:underline}
+  .footer-brand{font-size:12px;font-weight:400;color:var(--text-muted)}
+  .footer-brand a{color:var(--text-secondary);text-decoration:none}
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — TABLET
+     ═══════════════════════════════════════ */
+  @media(max-width:900px){
+    .hero-inner{
+      padding:80px 32px 56px;
+    }
+    .hero-illustration{opacity:0.6}
+    .section-wrap{padding:64px 32px}
+    .cta-inner{padding:56px 32px}
+    .footer-inner{padding:48px 32px 36px}
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE — MOBILE
+     ═══════════════════════════════════════ */
+  @media(max-width:640px){
+    .hero-inner{
+      padding:56px 24px 40px;
+      gap:40px;
+    }
+    .hero-logo{height:40px;margin-bottom:28px}
+    .hero h1{margin-bottom:16px}
+    .hero-sub{margin-bottom:28px}
+    .hero-meta{margin-bottom:28px}
+    .hero-illustration{display:none}
+    .section-wrap{padding:56px 24px}
+    .speakers-grid{grid-template-columns:1fr;gap:24px}
+    .speaker-card{padding:32px 24px}
+    .speaker-photo{width:160px;height:160px}
+    .cta-inner{
+      flex-direction:column;text-align:center;
+      padding:48px 24px;gap:32px;
+    }
+    .cta-left p{max-width:100%}
+    .cta-note{justify-content:center}
+    .cta-right{flex-direction:column;align-items:center}
+    .about-grid{grid-template-columns:1fr;gap:24px}
+    .practical-grid{grid-template-columns:1fr;gap:16px}
+    .footer-inner{padding:40px 24px 32px}
+    .footer-bottom{flex-direction:column;align-items:center;text-align:center}
+  }
+
+  /* ═══════════════════════════════════════
+     A11Y — FOCUS STATES
+     ═══════════════════════════════════════ */
+  a:focus-visible,button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ═══════════════════════════════════════
+     SUBTLE ENTRANCE ANIMATIONS
+     ═══════════════════════════════════════ */
+  @media(prefers-reduced-motion:no-preference){
+    .hero-left{animation:fadeUp 0.7s ease-out both}
+    .speaker-card{animation:fadeUp 0.5s ease-out both}
+    .speaker-card:nth-child(2){animation-delay:0.1s}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+  <div class="hero-bg" role="presentation"></div>
+  <div class="hero-overlay" role="presentation"></div>
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <img src="logo-fsf.png" alt="Future Slovakia Forum" class="hero-logo" width="160" height="48">
+      <div class="hero-tag">Diskusia o budúcnosti Slovenska</div>
+      <h1>Slovensko,<br>ako ho vidia tí, čo ho riadili.</h1>
+      <p class="hero-sub">Tri perspektívy z prvej ruky — diplomacia, samospráva, zdravotníctvo.</p>
+      <div class="hero-meta">
+        <span class="hero-meta-line"><span style="font-weight:400;font-size:13px;color:var(--text-secondary)">streda</span> 6. mája 2026 • 17:00–19:00</span>
+        <span class="hero-meta-line venue">Kavárna Trojka • Dům pánů z&nbsp;Kunštátu • Dominikánská 9 • Brno</span>
+      </div>
+      <div class="hero-cta-group">
+        <a href="registracia.html" class="btn-primary" target="_blank" rel="noopener noreferrer">
+          Registrovať sa
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <span class="hero-micro">Bezplatná účasť · Po hlavnej časti presun do okolia na neformálny pokec</span>
+        <a href="ucastnici.html" class="hero-micro" style="display:inline-flex;align-items:center;gap:6px;color:var(--accent);text-decoration:none;margin-top:4px;font-weight:600">
+          Kto už je registrovaný →
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="hero-illustration" role="presentation">
+    <img src="Brno.png" alt="" loading="eager">
+  </div>
+</section>
+
+<!-- ════════════════════ SPEAKERS (full bios) ════════════════════ -->
+<section class="section-wrap">
+  <div class="section-label">Rečníci</div>
+  <div class="speakers-grid">
+    <div class="speaker-card">
+      <img class="speaker-photo" src="wlachovsky_portrait.png" alt="Miroslav Wlachovský" width="200" height="200" loading="lazy">
+      <div class="speaker-name">Miroslav Wlachovský</div>
+      <div class="speaker-title">Distinguished Fellow GLOBSEC</div>
+      <div class="speaker-bio">
+        Bývalý minister zahraničných vecí a európskych záležitostí SR (2023, vláda Ľudovíta Ódora). Kariérny diplomat s viac ako 25 rokmi v štátnej službe — veľvyslanec v Londýne (2011–2015) a Kodani (2018–2022), riaditeľ Odboru analýz a plánovania MZV, poradca premiérov Dzurindu, Hegera a Ódora. Od roku 2024 Distinguished Fellow v GLOBSEC, kde sa venuje hybridným hrozbám, strategickej komunikácii a postaveniu Slovenska v meniacom sa medzinárodnom prostredí. Autor podcastu Okno do sveta.
+      </div>
+    </div>
+    <div class="speaker-card">
+      <img class="speaker-photo" src="kollar_portrait.jpg" alt="Miroslav Kollár" width="200" height="200" loading="lazy">
+      <div class="speaker-name">Miroslav Kollár</div>
+      <div class="speaker-title">Riaditeľ KOM · člen Advisory Board FSF</div>
+      <div class="speaker-bio">
+        Bývalý primátor Hlohovca (2014–2022) a poslanec NR&nbsp;SR (2020–2023, Za ľudí). Predtým CEO a predseda predstavenstva agentúry SITA, predseda Rady RTVS a viceprezident Únie miest Slovenska (UMS). Dlhoročný spolupracovník IVO, spoluautor viac ako 40 publikácií o médiách a verejnej politike. Z politiky odišiel v roku 2023 s tým, že komunálna správa bola najproduktívnejšie obdobie jeho života. Dnes vedie Komunálne výskumné a poradenské centrum (KOM).
+      </div>
+    </div>
+    <div class="speaker-card">
+      <img class="speaker-photo" src="misik_portrait.jpg" alt="Matej Mišík" width="200" height="200" loading="lazy">
+      <div class="speaker-name">Matej Mišík</div>
+      <div class="speaker-title">Health economist · Masarykova univerzita</div>
+      <div class="speaker-bio">
+        Zdravotnícky ekonóm špecializujúci sa na dátovú analytiku a zdravotnú politiku. PhD researcher na Health Economics, Policy and Innovation Institute (HEPII) Masarykovej univerzity. Konzultant WHO pre kapitálové investície v ukrajinskom zdravotníctve. V rokoch 2020–2024 generálny riaditeľ Inštitútu zdravotných analýz na Ministerstve zdravotníctva SR — viedol návrh a implementáciu COVID Automatu. Bývalý člen dozorných rád NÚSCH a VÚSCH. Absolvent Tilburg University (MSc, Health Economics) a Vienna University of Economics.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ REGISTRATION ════════════════════ -->
+<section class="cta-section section-bg">
+  <div class="cta-bg" role="presentation"></div>
+  <div class="cta-inner">
+    <div class="cta-left">
+      <h2>Registrácia</h2>
+      <p>Kavárna Trojka má kapacitu 70 miest. Registrujte sa včas.</p>
+      <div class="cta-note">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Prosíme o presnosť — počty pomáhajú s prípravou priestoru a občerstvenia.
+      </div>
+    </div>
+    <div class="cta-right">
+      <a href="registracia.html" class="btn-primary" target="_blank" rel="noopener noreferrer">
+        Registrovať sa
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <div class="qr-block">
+        <div class="qr-wrap">
+          <img src="qr-brno.png" alt="QR kód na registráciu" width="88" height="88">
+        </div>
+        <span class="qr-caption">Skenuj a registruj sa</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ O ČOM TO BUDE ════════════════════ -->
+<section class="section-wrap">
+  <div class="section-label">O čom to bude</div>
+  <p class="about-lead">
+    Tri rôzne perspektívy na ten istý štát: zahraničná politika a bezpečnosť (Wlachovský), komunálna a regionálna správa (Kollár), zdravotnícka reforma (Mišík). Spoločné majú jedno — všetci traja stáli vo vnútri rozhodovania a teraz hovoria ako experti zvonku.
+  </p>
+  <p class="about-lead" style="margin-bottom:40px">
+    Diskusia pre tých, ktorí chcú rozumieť, ako sa robia rozhodnutia o smerovaní Slovenska v praxi — a kde sa do nich dá zapojiť počas štúdia v&nbsp;Česku.
+  </p>
+  <p style="font-size:14px;font-weight:400;color:var(--text-secondary);line-height:1.7">
+    Podujatie v rámci projektu Budúcnosť Slovenska študuje v&nbsp;ČR (Future Slovakia Forum) v spolupráci s brnianskou študentskou komunitou.
+  </p>
+</section>
+
+<!-- ════════════════════ PRAKTICKÉ INFORMÁCIE ════════════════════ -->
+<section class="section-bg">
+  <div class="section-wrap">
+    <div class="section-label">Praktické informácie</div>
+    <div class="practical-grid">
+      <div class="practical-item">
+        <h4>Doprava</h4>
+        <p>Tramvaj (šaliňa) — zastávky <strong>Šilingrovo náměstí</strong> (linky 5, 6, 12) alebo <strong>Česká</strong> (linky 1, 6, 9, 10). Z Hlavného nádražia tramvajou linkou 12 dve zastávky, alebo 12 minút pešo.</p>
+      </div>
+      <div class="practical-item">
+        <h4>Vstup</h4>
+        <p>Kavárna Trojka sídli <strong>na nádvorí Domu pánov z&nbsp;Kunštátu</strong>. Vchod je z Dominikánskej ulice cez priechod pod historickou bránou — potom doľava na nádvorí.</p>
+      </div>
+      <div class="practical-item">
+        <h4>Formát</h4>
+        <p>Krátke úvody všetkých troch rečníkov, <strong>moderovaná diskusia</strong> a otázky z publika. Po oficiálnej časti pokračujeme v podniku v okolí na neformálny pokec — presné miesto sa upresní v deň podujatia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ KDE SA STRETNEME ════════════════════ -->
+<section class="section-wrap">
+  <div class="section-label">Kde sa stretneme</div>
+  <div class="venue-grid">
+    <div class="venue-card">
+      <img src="mapa-trojka.png" alt="Mapa polohy Kavárna Trojka v centre Brna" loading="lazy">
+      <div class="venue-card-body">
+        <h4>Kavárna Trojka — Dominikánská 9</h4>
+        <p>V centre Brna na úpätí Špilberku, na nádvorí historického Domu pánov z&nbsp;Kunštátu. Tramvajové zastávky Šilingrovo náměstí (5, 6, 12) a Česká (1, 6, 9, 10) sú pár minút pešo.</p>
+        <button onclick="document.getElementById('routeModal').style.display='flex'" class="venue-link" style="background:none;border:none;cursor:pointer;padding:0;font:inherit">
+          Pešie trasy z Masarykovej univerzity
+          <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="venue-card">
+      <img src="vchod-trojka.jpg" alt="Vchod do Kavárny Trojka cez nádvorie Domu pánov z Kunštátu" loading="lazy">
+      <div class="venue-card-body">
+        <h4>Vchod cez nádvorie</h4>
+        <p>Z Dominikánskej ulice cez bránu Domu pánov z&nbsp;Kunštátu, potom doľava na nádvorí. Trojka je v zadnej časti komplexu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ POĎAKOVANIE ════════════════════ -->
+<section class="ack-section">
+  <div class="ack-inner">
+    <div class="section-label">Poďakovanie</div>
+    <p class="ack-lead" style="margin-bottom:0">
+      Ďakujeme <strong>Kavárne Trojka</strong> za poskytnutie priestoru v historickom Dome pánov z&nbsp;Kunštátu, ktorý umožňuje dôstojné prostredie pre verejnú diskusiu v centre Brna.
+    </p>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="partners-label">Organizátor</div>
+    <div class="partners-row">
+      <img src="logo-fsf.png" alt="Future Slovakia Forum" style="height:40px;width:auto;opacity:0.5">
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-contact">
+        Lokálna koordinácia: <strong>Linda Veverková</strong> (MUNI Brno)<br>
+        Kontakt: <a href="mailto:linda.veverkova@future-slovakia.eu">linda.veverkova@future-slovakia.eu</a> · <a href="mailto:studenti@future-slovakia.eu">studenti@future-slovakia.eu</a>
+      </div>
+      <div class="footer-brand">
+        Iniciatíva <a href="https://future-slovakia.eu">Future Slovakia Forum</a> · 2026
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Route modal -->
+<div id="routeModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:1rem">
+  <div style="position:relative;max-width:900px;width:100%">
+    <button onclick="document.getElementById('routeModal').style.display='none'" style="position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1" aria-label="Zavrieť">&times;</button>
+    <img src="pesi-trasa-trojka.png" alt="Tri alternatívne pešie trasy z Masarykovej univerzity ku Kavárne Trojka — 11, 12 a 13 minút (800–900 m)" style="width:100%;border-radius:8px">
+  </div>
+</div>
+
+</body>
+</html>

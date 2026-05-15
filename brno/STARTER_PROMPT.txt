@@ -1,0 +1,55 @@
+Ahoj Claude. Pracujeme na nasadení štyroch HTML súborov pre nový event Future Slovakia Forum v Brne (streda 6. mája 2026). Názov eventu je „Slovensko, ako ho vidia tí, čo ho riadili."
+
+Detailné podklady nájdeš v tomto adresári:
+
+- ZADANIE_CLAUDE_CODE.md   ← hlavná špecifikácia (struktura, tokens, postup, validačné kritériá)
+- CONTENT_TEXTS.md         ← všetky texty obsahu oddelené (hero, bios spíkrov, formulár, popisky)
+- GAS_TEMPLATE.md          ← Apps Script Code.gs šablóna pre Brno endpoint
+- README.md                ← (vytvor ako súčasť outputu pre Dávida)
+
+VZOROVÉ STRÁNKY (povinné fetchnúť pred prácou):
+- https://healthy-future.sk/diskusia/index.html        ← Praha — primárny vzor pre štruktúru a JS
+- https://healthy-future.sk/diskusia/registracia.html  ← Praha (teraz "uzavreté" — ty robíš aktívnu verziu)
+- https://healthy-future.sk/diskusia/ucastnici.html    ← Praha — verejný dashboard
+- https://healthy-future.sk/diskusia/dashboard.html    ← Praha — admin dashboard
+
+KĽÚČOVÝ PRÍSTUP: Brno = kópia Praha kódu so SUBSTITÚCIAMI. Štruktúra HTML, mená CSS tried, JS logika musia zostať identické. Mení sa iba:
+1. Dvojica farebných tokenov (--accent + sekundárna #4fc5ff → #7fa88e)
+2. Texty obsahu (z CONTENT_TEXTS.md)
+3. GAS endpoint URL (Brno bude mať vlastný — viď GAS_TEMPLATE.md)
+
+BRNO PALETA:
+- --accent: #c25b5b (coral burgundy — Praha mala #e8a849 amber)
+- --accent-hover: #a84a4a
+- Sekundárna (sage green): #7fa88e — všade kde Praha používala Maya blue #4fc5ff
+
+POSTUP:
+1. Načítaj si ZADANIE_CLAUDE_CODE.md a potvrď, že rozumieš štruktúre.
+2. Fetchni všetky 4 vzorové Praha stránky a prečítaj ich kód.
+3. Začni s index.html — najprv :root tokens, ukáž mi screenshot/preview, počkaj na feedback. Potom iteratívne dopĺňaj sekcie (hero → speakers → CTA → about → praktické → mapa → footer). Po každej sekcii mi ukáž preview.
+4. Potom registracia.html — najprv layout, potom forma, potom JS handler (fetch capacity → submit → success/error states).
+5. Potom ucastnici.html — token swap + obsah.
+6. Potom dashboard.html — token swap + obsah.
+7. Potom README.md s kompletným deployment guide pre Dávida (uploadovanie, GAS deploy, testovanie).
+
+ASSETY V TOMTO ADRESÁRI:
+- BRNO_watermark.png   → premenuj pri deployi na Brno.png
+- (portréty spíkrov dostaneš samostatne — Dávid ich uploadne ku tebe)
+
+ČO ZOSTÁVA JE TODO PRE DÁVIDA (nech v HTML zostanú jasné placeholdery):
+- mapa-trojka.png      (vygeneruje cez gen_map.py)
+- pesi-trasa-trojka.png (modal popup mapa)
+- vchod-trojka.jpg     (foto vchodu)
+- og-image.png         (1200×630 OG preview)
+- favicon.png
+- qr-code.png          (vygeneruje až po GAS deployi)
+- GAS_URL_BRNO         (Dávid vytvorí samostatný deployment podľa GAS_TEMPLATE.md)
+
+KAPACITA: 70 miest (potvrdená kapacita sály Kavárny Trojka). Použi v const CAPACITY vo všetkých 3 súboroch (registracia.html, ucastnici.html, dashboard.html) a v Code.gs.
+
+PREFERENCIE:
+- Iteratívny workflow s vizuálnou kontrolou (screenshot/preview pred ďalším krokom)
+- Slovenská typografia: vykanie, „úvodzovky", em-dash —, separátor • / ·
+- Zero-Guess: ak nieco nevieš, opýtaj sa alebo daj <!-- TODO: --> komentár, NEVYMÝŠĽAJ
+
+Začni načítaním ZADANIE_CLAUDE_CODE.md a fetchom vzorových stránok. Daj vedieť, keď si pripravený urobiť prvý preview.

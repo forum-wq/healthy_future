@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stať sa partnerom · Future Slovakia Forum</title>
+<meta name="description" content="Kontaktný formulár pre partnerov Future Slovakia Forum. Po vyplnení sa vám ozveme osobne a dohodneme vhodnú formu spolupráce.">
+<meta name="robots" content="noindex, follow">
+<meta property="og:title" content="Stať sa partnerom · Future Slovakia Forum">
+<meta property="og:description" content="Kontaktný formulár pre partnerov Future Slovakia Forum. Po vyplnení sa vám ozveme osobne a dohodneme vhodnú formu spolupráce.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://healthy-future.sk/partneri-zmeny/registracia.html">
+<meta property="og:image" content="https://healthy-future.sk/partneri-zmeny/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sk_SK">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://healthy-future.sk/partneri-zmeny/registracia.html">
+<link rel="icon" type="image/png" href="logo-fsf.png">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://healthy-future.sk https://future-slovakia.eu; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  :root{
+    --bg-primary:#0a1628;
+    --bg-secondary:#10233b;
+    --text-primary:#f5f7fb;
+    --text-secondary:#9fb0c7;
+    --text-muted:#7f8ea3;
+    --accent:#c25b5b;
+    --accent-hover:#a84a4a;
+    --cyan:#7fa88e;
+    --yellow:#f2b705;
+    --border-soft:rgba(255,255,255,0.10);
+    --card-bg:rgba(255,255,255,0.03);
+    --input-bg:rgba(255,255,255,0.06);
+    --input-border:rgba(255,255,255,0.12);
+    --error:#e85454;
+    --font:'Inter Tight',system-ui,sans-serif;
+  }
+
+  body{
+    font-family:var(--font);
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;
+  }
+
+  /* ─── Header ─── */
+  .header{
+    position:relative;overflow:hidden;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .header::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));z-index:3;
+  }
+  .header-inner{
+    max-width:760px;margin:0 auto;padding:56px 32px 40px;
+    position:relative;z-index:1;
+  }
+  .header-logo{height:40px;width:auto;margin-bottom:28px;display:block}
+  .header-tag{
+    font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--cyan);margin-bottom:16px;
+    padding-bottom:12px;
+    border-bottom:2px solid rgba(127,168,142,0.30);
+    display:inline-block;
+  }
+  .header h1{
+    font-size:clamp(28px,4vw,40px);
+    font-weight:900;line-height:1.08;letter-spacing:-1px;
+    margin-bottom:16px;
+  }
+  .header-sub{
+    font-size:15px;font-weight:400;color:var(--text-secondary);
+    line-height:1.6;margin-bottom:8px;
+  }
+  .header-note{
+    margin-top:18px;padding:14px 18px;
+    background:rgba(127,168,142,0.08);
+    border:1px solid rgba(127,168,142,0.20);
+    border-radius:10px;
+    font-size:13.5px;color:var(--text-secondary);line-height:1.6;
+  }
+  .header-back{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;color:var(--text-secondary);text-decoration:none;
+    padding:6px 0;margin-bottom:8px;
+  }
+  .header-back:hover{color:var(--cyan)}
+  .header-back svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5}
+
+  /* ─── Form ─── */
+  .form-section{
+    max-width:760px;margin:0 auto;padding:40px 32px 64px;
+  }
+  .section-block{
+    margin-bottom:36px;
+  }
+  .section-block-head{
+    font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--cyan);margin-bottom:20px;
+    padding-bottom:10px;
+    border-bottom:2px solid rgba(127,168,142,0.20);
+    display:inline-block;
+  }
+
+  .field{margin-bottom:22px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .field label{
+    display:block;font-size:13.5px;font-weight:600;
+    color:var(--text-primary);margin-bottom:8px;
+    letter-spacing:0.1px;
+  }
+  .field label .req{color:var(--accent);margin-left:2px}
+  .field label .optional{color:var(--text-muted);font-weight:400;font-size:11px;margin-left:4px}
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea{
+    width:100%;
+    padding:13px 15px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    color:var(--text-primary);
+    font-family:var(--font);
+    font-size:15px;font-weight:400;
+    transition:border-color 0.2s,background 0.2s;
+    outline:none;
+    -webkit-appearance:none;
+  }
+  input::placeholder,textarea::placeholder{color:var(--text-muted);font-weight:400}
+  input:focus,select:focus,textarea:focus{
+    border-color:var(--accent);
+    background:rgba(255,255,255,0.08);
+  }
+  select{
+    cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239fb0c7' stroke-width='2'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:40px;
+  }
+  select option{background:var(--bg-secondary);color:var(--text-primary)}
+  textarea{resize:vertical;min-height:96px}
+
+  /* Radio group */
+  .radio-group{display:flex;flex-direction:column;gap:8px}
+  .radio-item{
+    display:flex;align-items:center;gap:12px;
+    cursor:pointer;
+    padding:12px 14px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .radio-item:hover{border-color:rgba(194,91,91,0.30);background:rgba(255,255,255,0.06)}
+  .radio-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .radio-item input[type="radio"]{
+    width:18px;height:18px;flex-shrink:0;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .radio-item span{font-size:14.5px;font-weight:500;color:var(--text-secondary)}
+  .radio-item.checked span{color:var(--text-primary)}
+
+  /* Checkboxes */
+  .checkbox-group{display:flex;flex-direction:column;gap:8px}
+  .checkbox-item{
+    display:flex;align-items:center;gap:12px;
+    cursor:pointer;
+    padding:11px 14px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .checkbox-item:hover{border-color:rgba(194,91,91,0.30);background:rgba(255,255,255,0.06)}
+  .checkbox-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .checkbox-item.disabled{opacity:0.45;cursor:not-allowed}
+  .checkbox-item input[type="checkbox"]{
+    width:18px;height:18px;flex-shrink:0;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .checkbox-item span{font-size:14.5px;font-weight:400;color:var(--text-secondary)}
+  .checkbox-item.checked span{color:var(--text-primary)}
+  .checkbox-limit-note{
+    font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.5;
+  }
+
+  /* Single checkbox (call, anonymized) */
+  .single-check{
+    display:flex;align-items:flex-start;gap:12px;
+    cursor:pointer;
+    padding:14px 16px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s,background 0.2s;
+  }
+  .single-check:hover{border-color:rgba(127,168,142,0.30)}
+  .single-check.checked{border-color:var(--cyan);background:rgba(127,168,142,0.08)}
+  .single-check input[type="checkbox"]{
+    width:20px;height:20px;flex-shrink:0;margin-top:1px;
+    accent-color:var(--cyan);cursor:pointer;
+  }
+  .single-check span{font-size:14px;font-weight:500;color:var(--text-secondary);line-height:1.5}
+  .single-check.checked span{color:var(--text-primary)}
+
+  /* Divider */
+  .form-divider{
+    border:none;border-top:1px solid var(--border-soft);
+    margin:28px 0;
+  }
+
+  /* GDPR */
+  .gdpr-box{
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:16px;
+  }
+  .gdpr-toggle{
+    display:flex;align-items:center;justify-content:space-between;
+    cursor:pointer;gap:12px;
+    background:none;border:none;width:100%;text-align:left;color:inherit;padding:0;
+    font-family:var(--font);
+  }
+  .gdpr-toggle span{font-size:13px;font-weight:600;color:var(--text-secondary)}
+  .gdpr-toggle svg{width:16px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:2;
+    transition:transform 0.2s;flex-shrink:0}
+  .gdpr-toggle.open svg{transform:rotate(180deg)}
+  .gdpr-text{
+    display:none;
+    margin-top:14px;padding-top:14px;
+    border-top:1px solid var(--border-soft);
+    font-size:12.5px;font-weight:400;color:var(--text-muted);line-height:1.7;
+  }
+  .gdpr-text.show{display:block}
+  .consent-item{
+    display:flex;align-items:flex-start;gap:12px;
+    cursor:pointer;
+    padding:14px 16px;
+    background:var(--input-bg);
+    border:1px solid var(--input-border);
+    border-radius:8px;
+    transition:border-color 0.2s;
+  }
+  .consent-item:hover{border-color:rgba(194,91,91,0.30)}
+  .consent-item.checked{border-color:var(--accent);background:rgba(194,91,91,0.10)}
+  .consent-item input[type="checkbox"]{
+    width:20px;height:20px;flex-shrink:0;margin-top:1px;
+    accent-color:var(--accent);cursor:pointer;
+  }
+  .consent-item span{font-size:13.5px;font-weight:500;color:var(--text-secondary);line-height:1.5}
+  .consent-item.checked span{color:var(--text-primary)}
+  .field.invalid .consent-item{border-color:var(--error)}
+
+  /* Note above form */
+  .form-intro{
+    padding:16px 18px;
+    background:rgba(127,168,142,0.06);
+    border:1px solid rgba(127,168,142,0.18);
+    border-radius:10px;
+    font-size:14px;color:var(--text-secondary);line-height:1.65;
+    margin-bottom:32px;
+  }
+
+  /* Submit */
+  .submit-group{
+    display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+    margin-top:32px;
+  }
+  .btn-submit{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 40px;
+    background:var(--accent);color:#fff;
+    font-size:16px;font-weight:700;font-family:var(--font);
+    border:none;border-radius:8px;cursor:pointer;
+    transition:background 0.2s,transform 0.15s;
+    letter-spacing:0.2px;
+  }
+  .btn-submit:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+  .btn-submit svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5}
+  .submit-note{font-size:12px;color:var(--text-muted);font-weight:400}
+
+  /* State panels */
+  .state-panel{
+    display:none;
+    text-align:center;padding:80px 32px;
+    max-width:760px;margin:0 auto;
+  }
+  .state-panel.show{display:block}
+  .state-panel h2{font-size:28px;font-weight:800;margin-bottom:14px;color:var(--text-primary)}
+  .state-panel p{font-size:16px;font-weight:400;color:var(--text-secondary);line-height:1.6;max-width:560px;margin:0 auto}
+  .state-icon{
+    width:64px;height:64px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 24px;
+  }
+  .state-icon.ok{background:rgba(127,168,142,0.18)}
+  .state-icon.err{background:rgba(232,84,84,0.14)}
+  .state-icon svg{width:32px;height:32px;fill:none;stroke-width:2.5}
+  .state-icon.ok svg{stroke:var(--cyan)}
+  .state-icon.err svg{stroke:var(--error)}
+  .state-actions{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px;
+  }
+  .state-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 28px;border-radius:8px;text-decoration:none;
+    font-size:14px;font-weight:600;font-family:var(--font);
+    transition:background 0.2s,transform 0.15s;cursor:pointer;border:none;
+  }
+  .state-btn.primary{background:var(--accent);color:#fff}
+  .state-btn.primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .state-btn.secondary{
+    background:rgba(127,168,142,0.12);color:var(--cyan);
+    border:1px solid rgba(127,168,142,0.25);
+  }
+  .state-btn.secondary:hover{background:rgba(127,168,142,0.22)}
+
+  /* Errors */
+  .field-error{font-size:12px;color:var(--error);margin-top:6px;display:none}
+  .field.invalid input,
+  .field.invalid select,
+  .field.invalid textarea{border-color:var(--error)}
+  .field.invalid .field-error{display:block}
+  .field.invalid .radio-group,
+  .field.invalid .checkbox-group{outline:none}
+  .field.invalid .radio-item{border-color:var(--error)}
+
+  /* Footer */
+  .form-footer{
+    border-top:1px solid var(--border-soft);
+    padding:32px;
+    max-width:760px;margin:0 auto;
+  }
+  .form-footer p{
+    font-size:12px;font-weight:400;color:var(--text-muted);line-height:1.7;
+    text-align:center;
+  }
+  .form-footer a{color:var(--cyan);text-decoration:none}
+  .form-footer a:hover{text-decoration:underline}
+
+  @media(max-width:640px){
+    .header-inner,.form-section,.form-footer{padding-left:20px;padding-right:20px}
+    .field-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Späť na iniciatívu
+    </a>
+    <img src="logo-fsf.png" alt="Future Slovakia Forum" class="header-logo" width="140" height="40">
+    <div class="header-tag">Partneri zmeny · Future Slovakia Forum</div>
+    <h1>Stať sa partnerom</h1>
+    <p class="header-sub">
+      Krátky kontaktný formulár pre individuálnych donorov, firmy, CSR partnerov, nadácie, slovenskú diasporu a ľudí, ktorí vedia otvoriť dvere ďalším donorom.
+    </p>
+    <div class="header-note">
+      Toto nie je automatický darovací formulár. Po odoslaní sa vám ozveme osobne, aby sme dohodli zmysluplnú, transparentnú a reputačne čistú formu spolupráce.
+    </div>
+  </div>
+</header>
+
+<!-- ═══ FORM ═══ -->
+<div class="form-section" id="formSection">
+  <form id="regForm" novalidate>
+
+    <!-- ─── BLOK 1: Kontakt ─── -->
+    <div class="section-block">
+      <div class="section-block-head">1 · Kontakt</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="meno">Meno<span class="req">*</span></label>
+          <input type="text" id="meno" name="meno" required placeholder="Jana" autocomplete="given-name">
+          <div class="field-error">Zadajte meno.</div>
+        </div>
+        <div class="field">
+          <label for="priezvisko">Priezvisko<span class="req">*</span></label>
+          <input type="text" id="priezvisko" name="priezvisko" required placeholder="Nováková" autocomplete="family-name">
+          <div class="field-error">Zadajte priezvisko.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail<span class="req">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="vas@email.com" autocomplete="email">
+        <div class="field-error">Zadajte platnú e-mailovú adresu.</div>
+      </div>
+
+      <div class="field">
+        <label for="mobil">Mobil<span class="optional">(voliteľné)</span></label>
+        <input type="tel" id="mobil" name="mobil" placeholder="+421 ..." autocomplete="tel">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="organizacia">Organizácia / firma<span class="optional">(voliteľné)</span></label>
+          <input type="text" id="organizacia" name="organizacia" placeholder="Napr. firma, nadácia, OZ" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="mesto_krajina">Mesto / krajina<span class="optional">(voliteľné)</span></label>
+          <input type="text" id="mesto_krajina" name="mesto_krajina" placeholder="Napr. Bratislava, SK">
+        </div>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- ─── BLOK 2: Typ partnerstva ─── -->
+    <div class="section-block">
+      <div class="section-block-head">2 · Ako sa chcete zapojiť</div>
+
+      <div class="field" id="typField">
+        <label>Ako sa chcete zapojiť?<span class="req">*</span></label>
+        <div class="radio-group" role="radiogroup" aria-label="Typ partnerstva">
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="individualny_donor" required>
+            <span>Individuálny donor</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="firma_csr">
+            <span>Firma / CSR partner</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="nadacia_grant">
+            <span>Nadácia / grantový partner</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="diaspora">
+            <span>Slovenská diaspora</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="otvaram_dvere">
+            <span>Viem otvoriť dvere ďalším donorom</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="typ_partnerstva" value="rozhovor">
+            <span>Chcem sa najprv porozprávať</span>
+          </label>
+        </div>
+        <div class="field-error">Vyberte jednu z možností.</div>
+      </div>
+
+      <div class="field">
+        <label for="forma_podpory">Forma podpory<span class="optional">(voliteľné)</span></label>
+        <select id="forma_podpory" name="forma_podpory">
+          <option value="">— vyberte (voliteľné) —</option>
+          <option value="jednorazovy_dar">Jednorazový dar</option>
+          <option value="pravidelna_podpora">Pravidelná podpora</option>
+          <option value="firemne_partnerstvo">Firemné partnerstvo</option>
+          <option value="grant_institucionalna">Grant / inštitucionálna spolupráca</option>
+          <option value="prepojenie">Prepojenie na ďalšieho partnera</option>
+          <option value="neviem">Ešte neviem</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="financne_pasmo">Orientačná výška podpory<span class="optional">(voliteľné, nie záväzné)</span></label>
+        <select id="financne_pasmo" name="financne_pasmo">
+          <option value="">— vyberte (voliteľné) —</option>
+          <option value="do_100">do 100 €</option>
+          <option value="100_500">100 – 500 €</option>
+          <option value="600_mesiac">600 € — mesiac práce junior analytika</option>
+          <option value="1000_3500">1 000 – 3 500 €</option>
+          <option value="3500_brief">3 500 € — policy brief</option>
+          <option value="5000_10000">5 000 – 10 000 €</option>
+          <option value="20000_bridge">20 000 € — bridge funding</option>
+          <option value="viac_20000">viac ako 20 000 €</option>
+          <option value="neuvadzam">nechcem uvádzať</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- ─── BLOK 3: Čo chcete podporiť ─── -->
+    <div class="section-block">
+      <div class="section-block-head">3 · Čo chcete podporiť</div>
+
+      <div class="field">
+        <label>Čo by ste chceli podporiť?<span class="optional">(voliteľné, max. 4 možnosti)</span></label>
+        <div class="checkbox-group" id="supportGroup">
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="mesiac_juniora">
+            <span>Mesiac práce junior analytika — 600 €</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="policy_brief">
+            <span>Policy brief — 3 500 €</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="okruhly_stol">
+            <span>Expertný okrúhly stôl / reformný balík — 5 000 – 10 000 €</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="bridge_funding">
+            <span>Bridge funding FSF — 20 000 €</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="vyskumne_timy">
+            <span>Študentské výskumné tímy od jesene 2026</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="fundraising_intel">
+            <span>Fundraising intelligence</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="komunikacia">
+            <span>Digitálna komunikácia a explainery</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="core_kapacita">
+            <span>Core kapacita FSF</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="support_items" value="rozhovor">
+            <span>Ešte neviem, chcem sa porozprávať</span>
+          </label>
+        </div>
+        <p class="checkbox-limit-note" id="supportLimit">Vyberte maximálne 4 možnosti.</p>
+      </div>
+
+      <div class="field">
+        <label for="preferred_vertical">Preferovaná reformná vertikála<span class="optional">(voliteľné)</span></label>
+        <select id="preferred_vertical" name="preferred_vertical">
+          <option value="">— vyberte (voliteľné) —</option>
+          <option value="zdravotnictvo">Zdravotníctvo</option>
+          <option value="skolstvo">Školstvo</option>
+          <option value="verejne_financie">Verejné financie</option>
+          <option value="decentralizacia">Decentralizácia a verejná správa</option>
+          <option value="core">Cross-cutting / core kapacita</option>
+          <option value="nechavam_fsf">Nechám na FSF</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- ─── BLOK 4: Správa a preferencie ─── -->
+    <div class="section-block">
+      <div class="section-block-head">4 · Správa a preferencie</div>
+
+      <div class="field">
+        <label class="single-check" id="callItem">
+          <input type="checkbox" id="wants_call" name="wants_call" value="ano">
+          <span>Chcem úvodný rozhovor / call — preferujem osobné prepojenie pred e-mailom.</span>
+        </label>
+      </div>
+
+      <div class="field">
+        <label for="sprava">Krátka správa<span class="optional">(voliteľné)</span></label>
+        <textarea id="sprava" name="sprava" placeholder="Napíšte nám, ako sa chcete zapojiť, koho viete prepojiť alebo čo vás zaujíma."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="single-check" id="publicNoteItem">
+          <input type="checkbox" id="public_note_allowed" name="public_note_allowed" value="ano">
+          <span>Súhlasím, aby FSF mohlo anonymizovane použiť môj typ podpory v agregovaných štatistikách.</span>
+        </label>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- ─── BLOK 5: GDPR ─── -->
+    <div class="section-block">
+      <div class="section-block-head">5 · Súhlas</div>
+
+      <div class="field" id="gdprField">
+        <label>Súhlas so spracovaním osobných údajov<span class="req">*</span></label>
+        <div class="gdpr-box">
+          <button type="button" class="gdpr-toggle" id="gdprToggle" aria-expanded="false">
+            <span>Zobraziť podmienky spracovania osobných údajov</span>
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="gdpr-text" id="gdprText">
+            <p>Súhlasím so spracovaním uvedených osobných údajov pre účely kontaktovania vo veci partnerstva a podpory <strong>Future Slovakia Forum</strong>, v súlade s Nariadením EÚ 2016/679 (GDPR). Údaje sú spracované výlučne pre tieto účely, neposkytujú sa tretím stranám a uchovávame ich len po dobu nevyhnutnú na vyhodnotenie a koordináciu partnerstva.</p>
+            <p style="margin-top:8px">Súhlas môžete kedykoľvek odvolať na e-mailovej adrese <strong>forum@future-slovakia.eu</strong> alebo <strong>david.boruta@future-slovakia.eu</strong>.</p>
+          </div>
+        </div>
+        <label class="consent-item" id="consentItem">
+          <input type="checkbox" id="gdprConsent" name="gdpr" value="ano" required>
+          <span>Súhlasím so spracovaním osobných údajov na účely kontaktovania vo veci partnerstva a podpory Future Slovakia Forum.</span>
+        </label>
+        <div class="field-error">Pre odoslanie je potrebný súhlas so spracovaním osobných údajov.</div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-group">
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Odoslať záujem
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <span class="submit-note">Po odoslaní sa vám ozveme osobne, aby sme dohodli vhodnú formu spolupráce.</span>
+    </div>
+  </form>
+</div>
+
+<!-- ═══ SUCCESS ═══ -->
+<div class="state-panel" id="successMsg">
+  <div class="state-icon ok">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2>Ďakujeme. Ozveme sa vám osobne.</h2>
+  <p>Vašu správu sme prijali. Ozveme sa vám, aby sme dohodli vhodnú formu spolupráce.</p>
+  <div class="state-actions">
+    <a href="index.html" class="state-btn secondary">← Späť na iniciatívu</a>
+    <a href="dashboard.html" class="state-btn secondary">Pozrieť dashboard záujmu →</a>
+  </div>
+</div>
+
+<!-- ═══ ERROR ═══ -->
+<div class="state-panel" id="errorMsg">
+  <div class="state-icon err">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  </div>
+  <h2>Niečo sa pokazilo.</h2>
+  <p>Skúste to prosím znova alebo napíšte priamo na <a href="mailto:david.boruta@future-slovakia.eu" style="color:var(--accent)">david.boruta@future-slovakia.eu</a>.</p>
+  <div class="state-actions">
+    <button type="button" class="state-btn primary" id="errorRetryBtn">Skúsiť znova</button>
+    <a href="index.html" class="state-btn secondary">← Späť na iniciatívu</a>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="form-footer">
+  <p>
+    Future Slovakia Forum · Fórum Budúcnosti Slovenska, o.z. · IČO: 56046260<br>
+    <a href="mailto:forum@future-slovakia.eu">forum@future-slovakia.eu</a> ·
+    <a href="mailto:david.boruta@future-slovakia.eu">david.boruta@future-slovakia.eu</a> ·
+    <a href="https://www.future-slovakia.eu" target="_blank" rel="noopener">www.future-slovakia.eu</a>
+  </p>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════
+  //  GAS endpoint pre Partneri zmeny.
+  //  Dávid: vlož URL deploymentu z GAS_PARTNERI_TEMPLATE.gs (krok 5 v README).
+  // ═══════════════════════════════════════════════════════════════════
+  const GAS_URL = 'REPLACE_WITH_PARTNERI_GAS_URL';
+  const MAX_SUPPORT_ITEMS = 4;
+
+  const formSection = document.getElementById('formSection');
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg = document.getElementById('errorMsg');
+  const form = document.getElementById('regForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  function showOnly(el){
+    [formSection, successMsg, errorMsg].forEach(function(n){
+      if (n === el) n.classList.add('show'); else n.classList.remove('show');
+    });
+    formSection.style.display = (el === formSection) ? '' : 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Radio: typ partnerstva ─────────────────────────────────────────
+  form.querySelectorAll('input[name="typ_partnerstva"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      form.querySelectorAll('input[name="typ_partnerstva"]').forEach(function(rr){
+        rr.closest('.radio-item').classList.remove('checked');
+      });
+      if (r.checked) r.closest('.radio-item').classList.add('checked');
+      document.getElementById('typField').classList.remove('invalid');
+    });
+  });
+
+  // ── Checkbox: support items max 4 ─────────────────────────────────
+  const supportBoxes = Array.from(document.querySelectorAll('input[name="support_items"]'));
+  const supportLimit = document.getElementById('supportLimit');
+
+  function updateSupport(){
+    const checkedCount = supportBoxes.filter(function(b){ return b.checked; }).length;
+    supportBoxes.forEach(function(b){
+      const item = b.closest('.checkbox-item');
+      if (b.checked) {
+        item.classList.add('checked');
+        item.classList.remove('disabled');
+      } else {
+        item.classList.remove('checked');
+        if (checkedCount >= MAX_SUPPORT_ITEMS) {
+          item.classList.add('disabled');
+          b.disabled = true;
+        } else {
+          item.classList.remove('disabled');
+          b.disabled = false;
+        }
+      }
+    });
+    if (checkedCount >= MAX_SUPPORT_ITEMS) {
+      supportLimit.textContent = 'Maximum dosiahnutý — odznačte niektorú voľbu pre zmenu.';
+      supportLimit.style.color = 'var(--accent)';
+    } else {
+      supportLimit.textContent = 'Vyberte maximálne ' + MAX_SUPPORT_ITEMS + ' možnosti.';
+      supportLimit.style.color = '';
+    }
+  }
+  supportBoxes.forEach(function(b){ b.addEventListener('change', updateSupport); });
+
+  // ── Single checkbox UI (call, public note allowed) ─────────────────
+  ['wants_call', 'public_note_allowed'].forEach(function(id){
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('change', function(){
+      el.closest('.single-check').classList.toggle('checked', el.checked);
+    });
+  });
+
+  // ── GDPR ──────────────────────────────────────────────────────────
+  document.getElementById('gdprToggle').addEventListener('click', function(){
+    const text = document.getElementById('gdprText');
+    const toggle = document.getElementById('gdprToggle');
+    const isOpen = text.classList.toggle('show');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    toggle.querySelector('span').textContent = isOpen
+      ? 'Skryť podmienky spracovania osobných údajov'
+      : 'Zobraziť podmienky spracovania osobných údajov';
+  });
+  document.getElementById('gdprConsent').addEventListener('change', function(){
+    document.getElementById('consentItem').classList.toggle('checked', this.checked);
+    if (this.checked) document.getElementById('gdprField').classList.remove('invalid');
+  });
+
+  // ── Retry ─────────────────────────────────────────────────────────
+  document.getElementById('errorRetryBtn').addEventListener('click', function(){
+    showOnly(formSection);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Odoslať záujem <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+  });
+
+  // ── Submit ────────────────────────────────────────────────────────
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    form.querySelectorAll('.field').forEach(function(f){ f.classList.remove('invalid'); });
+
+    const meno = document.getElementById('meno');
+    const priezvisko = document.getElementById('priezvisko');
+    const email = document.getElementById('email');
+    const mobil = document.getElementById('mobil');
+    const organizacia = document.getElementById('organizacia');
+    const mesto_krajina = document.getElementById('mesto_krajina');
+    const forma_podpory = document.getElementById('forma_podpory');
+    const financne_pasmo = document.getElementById('financne_pasmo');
+    const preferred_vertical = document.getElementById('preferred_vertical');
+    const sprava = document.getElementById('sprava');
+    const wants_call = document.getElementById('wants_call');
+    const public_note_allowed = document.getElementById('public_note_allowed');
+    const gdpr = document.getElementById('gdprConsent');
+    const typEl = form.querySelector('input[name="typ_partnerstva"]:checked');
+
+    let valid = true;
+
+    if (!meno.value.trim()) { meno.closest('.field').classList.add('invalid'); valid = false; }
+    if (!priezvisko.value.trim()) { priezvisko.closest('.field').classList.add('invalid'); valid = false; }
+    if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      email.closest('.field').classList.add('invalid'); valid = false;
+    }
+    if (!typEl) { document.getElementById('typField').classList.add('invalid'); valid = false; }
+    if (!gdpr.checked) { document.getElementById('gdprField').classList.add('invalid'); valid = false; }
+
+    if (!valid) {
+      const firstErr = form.querySelector('.field.invalid');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const support_items = supportBoxes.filter(function(b){ return b.checked; }).map(function(b){ return b.value; });
+
+    const payload = {
+      meno: meno.value.trim(),
+      priezvisko: priezvisko.value.trim(),
+      email: email.value.trim(),
+      mobil: mobil.value.trim(),
+      organizacia: organizacia.value.trim(),
+      mesto_krajina: mesto_krajina.value.trim(),
+      typ_partnerstva: typEl ? typEl.value : '',
+      forma_podpory: forma_podpory.value,
+      financne_pasmo: financne_pasmo.value,
+      support_items: support_items,
+      preferred_vertical: preferred_vertical.value,
+      wants_call: !!wants_call.checked,
+      public_note_allowed: !!public_note_allowed.checked,
+      sprava: sprava.value.trim(),
+      gdpr: !!gdpr.checked,
+      user_agent: (navigator.userAgent || '').slice(0, 200)
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Odosielam...';
+
+    if (GAS_URL.indexOf('REPLACE_') === 0) {
+      alert('Formulár zatiaľ nie je pripojený k serveru (GAS URL placeholder). Napíšte priamo na david.boruta@future-slovakia.eu.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Odoslať záujem <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+      return;
+    }
+
+    try {
+      const res = await fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      let data = null;
+      try { data = await res.json(); } catch (err) { /* ignore */ }
+
+      if (data && data.error === 'already_registered') {
+        alert('Na tento e-mail je už záujem o partnerstvo zaevidovaný. Ak ide o omyl alebo chcete poslať doplňujúce informácie, napíšte nám na david.boruta@future-slovakia.eu.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Odoslať záujem <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+        return;
+      }
+      if (data && data.ok) {
+        showOnly(successMsg);
+        return;
+      }
+      showOnly(errorMsg);
+    } catch (err) {
+      showOnly(errorMsg);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
