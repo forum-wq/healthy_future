@@ -380,11 +380,11 @@
   .not-item{
     display:flex;align-items:flex-start;gap:14px;
     padding:14px 18px;
-    background:rgba(232,84,84,0.06);
-    border:1px solid rgba(232,84,84,0.20);
-    border-radius:10px;
+    background:rgba(6,36,75,0.04);
+    border-left:3px solid var(--text-primary);
+    border-radius:0 10px 10px 0;
   }
-  .not-item svg{width:18px;height:18px;flex-shrink:0;margin-top:2px;stroke:#e85454;fill:none;stroke-width:2.2}
+  .not-item svg{width:18px;height:18px;flex-shrink:0;margin-top:2px;stroke:var(--text-primary);fill:none;stroke-width:2.2}
   .not-item span{font-size:15px;color:var(--text-primary);font-weight:500;line-height:1.5}
   .yes-item{
     display:flex;align-items:flex-start;gap:14px;
@@ -405,14 +405,14 @@
     display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-primary);
   }
   .form-control {
-    width: 100%; padding: 14px 16px; background: rgba(0,0,0,0.2); border: 1px solid var(--border-soft);
+    width: 100%; padding: 14px 16px; background: #FCF6E8; border: 1px solid rgba(6,36,75,0.20);
     border-radius: 8px; color: var(--text-primary); font-family: var(--font); font-size: 15px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, outline-color 0.2s;
   }
   .form-control:focus {
-    outline: none; border-color: var(--accent);
+    outline: 2px solid rgba(255,174,0,0.25); outline-offset: 0; border-color: #FFAE00;
   }
-  .form-control::placeholder{color:var(--text-muted)}
+  .form-control::placeholder{color:rgba(6,36,75,0.50)}
   .form-group.invalid .form-control{border-color:#e85454}
   .form-group .field-error{
     display:none;font-size:12px;color:#e85454;margin-top:6px;
@@ -466,8 +466,10 @@
   .final-cta p{font-size:17px;max-width:780px;margin-bottom:32px}
   .final-quote{
     margin-top:36px;padding:20px 26px;
-    border-left:3px solid var(--accent);
-    background:rgba(0,0,0,0.18);border-radius:0 10px 10px 0;
+    background:transparent;
+    border:1px solid rgba(6,36,75,0.20);
+    border-left:3px solid #FFAE00;
+    border-radius:0 10px 10px 0;
     font-size:16px;font-weight:600;line-height:1.55;color:var(--text-primary);
     max-width:780px;
   }
@@ -876,7 +878,7 @@
         </div>
         <div class="form-group">
           <label for="f_type">Typ zapojenia *</label>
-          <select id="f_type" name="type" class="form-control" style="background-color: #0d1b2a;" required>
+          <select id="f_type" name="type" class="form-control" required>
             <option value="" disabled selected>Vyberte možnosť...</option>
             <option value="firma_csr">Chcem podporiť ako firma / CSR</option>
             <option value="individualny_donor">Chcem podporiť ako jednotlivec</option>
