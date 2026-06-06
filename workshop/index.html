@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>REFORMA 3.3 — SteerCo Decision Workshop</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ LOGIN OVERLAY ============ -->
+<div id="login" class="login-overlay" style="display:none;">
+  <div class="login-card">
+    <div class="brand login-brand">
+      <div class="mark"><span></span><span></span><span></span><span></span></div>
+      <div><b>REFORMA 3.3</b><small>Healthy Future of Slovakia</small></div>
+    </div>
+    <h1>SteerCo Decision Workshop</h1>
+    <p class="login-sub">Interné · prístup len pre členov SteerCo. Zadaj svoj osobný PIN — tým sa zároveň identifikuješ ako hlasujúci.</p>
+    <label for="pin-input">PIN</label>
+    <input id="pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="••••••">
+    <button id="login-btn" class="btn maya login-go">Prihlásiť sa</button>
+    <div id="login-err" class="login-err"></div>
+    <div class="login-foot">INTERNÉ · Future Slovakia Forum</div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="app" id="app-root" style="display:none;">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="mark"><span></span><span></span><span></span><span></span></div>
+      <div><b>REFORMA 3.3</b><small>Healthy Future of Slovakia</small></div>
+    </div>
+    <div class="deck-title">SteerCo Decision Workshop · 9. 6. 2026</div>
+    <div class="meta">
+      <span id="identity" class="identity"></span>
+      <span class="internal-tag">INTERNÉ</span>
+      <span class="progress-num"><span id="pcur">1</span>/<span id="ptot">–</span></span>
+    </div>
+  </header>
+  <div class="progress-strip"><div class="fill" id="pfill"></div></div>
+
+  <!-- stage is built entirely by app.js after login -->
+  <main class="stage" id="stage"></main>
+
+  <nav class="navbar">
+    <button class="nav-btn" id="prevBtn">◀ Späť</button>
+    <div class="center"><select class="jump" id="jump"></select></div>
+    <button class="nav-btn primary" id="nextBtn">Ďalej ▶</button>
+  </nav>
+
+</div>
+
+<!-- chair finalize modal -->
+<div id="modal" class="modal-overlay" style="display:none;"></div>
+
+<!-- print-only render target -->
+<div id="print-area"></div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
