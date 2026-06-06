@@ -12,6 +12,7 @@ var SK_TOKEN = "reforma33_token";
 var SK_MEMBER = "reforma33_member";
 var LK_VOTES = "reforma33_myvotes_v4";     // lokálny cache vlastných hlasov (per member)
 var LK_SIGS  = "reforma33_sigs_v4";
+var LK_SKIP  = "reforma33_skip_v4";        // „vrátiť sa neskôr" príznaky (per member)
 
 /* runtime obsah (naplní sa po auth) */
 var DECISIONS = [], SECTORS = [], MEMBERS = [], META = {}, EXTRA = {};
@@ -63,6 +64,13 @@ function setMyVote(id, idx, comment){
   try{ localStorage.setItem(LK_VOTES, JSON.stringify(all)); }catch(e){}
 }
 function myVote(id){ var v=myVotes()[id]; return v?v:null; }
+function isVoted(id){ var v=myVote(id); return !!(v && v.idx!=null); }
+
+function mySkips(){ try{ var raw=localStorage.getItem(LK_SKIP); if(raw){ var o=JSON.parse(raw); return o[ME.key]||{}; } }catch(e){} return {}; }
+function setSkip(id, val){ var all={}; try{ all=JSON.parse(localStorage.getItem(LK_SKIP)||"{}"); }catch(e){} var mine=all[ME.key]||{}; if(val) mine[id]=1; else delete mine[id]; all[ME.key]=mine; try{ localStorage.setItem(LK_SKIP, JSON.stringify(all)); }catch(e){} }
+function isSkipped(id){ return !!mySkips()[id]; }
+function statusOf(id){ return isVoted(id) ? "voted" : (isSkipped(id) ? "skip" : "open"); }
+function unfinished(){ return DECISIONS.filter(function(d){ return !isVoted(d.id); }); }
 
 /* ============================================================ AUTH */
 function showLogin(msg){
@@ -271,6 +279,7 @@ function decisionHTML(d,sec){
     '<div class="comment-wrap"><label for="comment-'+d.id+'">Komentár / podmienka (voliteľné)</label>'+
       '<textarea id="comment-'+d.id+'" placeholder="Pri PODMIENENE zapíš podmienku; pri ODLOŽIŤ owner + termín + dôvod."></textarea></div>'+
     '<div class="current-vote" id="current-'+d.id+'"></div>'+
+    '<div class="skip-row"><button class="btn ghost skip-btn" id="skip-'+d.id+'" onclick="skipDecision('+d.id+')">⏭ Vrátiť sa neskôr</button></div>'+
     '<details class="detail"><summary>Detail — odporúčaný / finálny wording · source note</summary><div class="dbody">'+
       '<h4>Odporúčaný wording</h4><div class="wording-box">'+esc(recWording(d)||"—")+'</div>'+
       '<div id="finalprev-'+d.id+'"></div>'+
@@ -280,7 +289,11 @@ function decisionHTML(d,sec){
 
 /* ============================================================ NAV */
 var slides=[], current=0;
-function collectSlides(){ slides=Array.prototype.slice.call(document.querySelectorAll(".stage .slide")); }
+function collectSlides(){
+  slides=Array.prototype.slice.call(document.querySelectorAll(".stage .slide"));
+  slideIndexByDecision={};
+  slides.forEach(function(s,i){ var d=s.getAttribute("data-decision"); if(d) slideIndexByDecision[String(d)]=i; });
+}
 function showSlide(i){
   if(i<0)i=0; if(i>slides.length-1)i=slides.length-1;
   if(slides[current]) slides[current].classList.remove("active");
@@ -304,7 +317,8 @@ function updateCurrentVote(d, savedMsg){
     box.innerHTML='<b>Tvoj hlas:</b> '+esc(o.t)+' &nbsp;→&nbsp; <span class="st '+o.outcome+'">'+STATUS_LABEL[o.outcome]+'</span>'+
                   (savedMsg?' <span class="saved">'+esc(savedMsg)+'</span>':'');
   } else {
-    box.innerHTML='<b>Tvoj hlas:</b> — zatiaľ nehlasované — <span class="st open">'+STATUS_LABEL.open+'</span>';
+    var skipTag = isSkipped(d.id) ? ' <span class="skip-tag">⏭ označené na neskôr</span>' : '';
+    box.innerHTML='<b>Tvoj hlas:</b> — zatiaľ nehlasované — <span class="st open">'+STATUS_LABEL.open+'</span>'+skipTag;
   }
   var fp=el("finalprev-"+d.id);
   if(fp){ var fw=(v&&d.options[v.idx])?d.options[v.idx].final:""; fp.innerHTML=fw?'<h4>Finálny wording podľa tvojej voľby</h4><div class="wording-box" style="border-left-color:var(--green);background:#eef8f1;">'+esc(fw)+'</div>':''; }
@@ -328,9 +342,12 @@ function bindVotes(){
         var idx=parseInt(ev.target.value,10);
         var ta=el("comment-"+d.id); var cm=ta?ta.value:"";
         setMyVote(d.id, idx, cm);
+        setSkip(d.id, false);                 // hlasovaním sa „neskôr" ruší
         ev.target.closest(".vote-block").querySelectorAll(".opt").forEach(function(l){ l.classList.remove("chosen"); });
         ev.target.closest(".opt").classList.add("chosen");
         pushVote(d);
+        refreshSkipBtn(d.id);
+        updateNavMarkers();
       });
     }
     var ta=el("comment-"+d.id);
@@ -344,9 +361,54 @@ function bindVotes(){
         saveTimers[d.id]=setTimeout(function(){ pushVote(d); }, 800);
       });
     }
+    refreshSkipBtn(d.id);
     updateCurrentVote(d);
   });
+  updateNavMarkers();
 }
+
+function refreshSkipBtn(id){
+  var b=el("skip-"+id); if(!b) return;
+  if(isVoted(id)){ b.style.display="none"; return; }
+  b.style.display="";
+  b.textContent = isSkipped(id) ? "⏭ Označené na neskôr — zrušiť" : "⏭ Vrátiť sa neskôr";
+  b.classList.toggle("is-skipped", isSkipped(id));
+}
+function skipDecision(id){
+  var now=!isSkipped(id); setSkip(id, now);
+  refreshSkipBtn(id); var d=decisionById(id); if(d) updateCurrentVote(d);
+  updateNavMarkers();
+  if(now) showSlide(current+1);   // pri označení rovno prejdi ďalej
+}
+
+/* ===== navigačné značky (✓ / ⏭ / ·) + počítadlo nedokončených ===== */
+var slideIndexByDecision={};
+function updateNavMarkers(){
+  var sel=el("jump");
+  if(sel){ for(var i=0;i<slides.length && i<sel.options.length;i++){
+    var s=slides[i]; var did=s.getAttribute("data-decision");
+    var base=(i+1)+"/"+slides.length+" · "+(s.getAttribute("data-title")||"");
+    var mark=""; if(did){ var st=statusOf(parseInt(did,10)); mark=(st==="voted"?"✓ ":(st==="skip"?"⏭ ":"· ")); }
+    sel.options[i].text=mark+base;
+  }}
+  var ne=el("todo-n"); if(ne) ne.textContent=unfinished().length;
+}
+function openTodo(){
+  var items=unfinished();
+  var rows=items.map(function(d){ var sec=sectorOf(d); var sk=isSkipped(d.id);
+    return '<div class="todo-item"><span class="todo-mark '+(sk?"is-skip":"is-open")+'">'+(sk?"⏭":"·")+'</span>'+
+           '<span class="todo-ttl">'+sec.num+'·'+esc(trunc_(d.title,52))+'</span>'+
+           '<button class="btn tiny" onclick="goTo('+d.id+')">otvoriť →</button></div>';
+  }).join("") || '<p class="muted" style="padding:8px 0;">Všetko odhlasované 🎉</p>';
+  var m=el("modal");
+  m.innerHTML='<div class="modal-box"><h3>Moje nedokončené ('+items.length+')</h3>'+
+    '<p class="muted" style="font-size:12px;margin:0 0 8px;">⏭ = označené na neskôr · · = ešte neotvorené/nehlasované</p>'+
+    '<div class="todo-list">'+rows+'</div>'+
+    '<div class="modal-actions"><button class="btn ghost" onclick="closeTodo()">Zavrieť</button></div></div>';
+  m.style.display="flex";
+}
+function closeTodo(){ var m=el("modal"); if(m){ m.style.display="none"; m.innerHTML=""; } }
+function goTo(id){ closeTodo(); var idx=slideIndexByDecision[String(id)]; if(idx!=null) showSlide(idx); }
 
 /* ============================================================ SIGNATURES (lokálne) */
 function renderSignatures(){
@@ -505,6 +567,7 @@ function init(){
   el("prevBtn").addEventListener("click", function(){ showSlide(current-1); });
   el("nextBtn").addEventListener("click", function(){ showSlide(current+1); });
   el("jump").addEventListener("change", function(e){ showSlide(parseInt(e.target.value,10)); });
+  var tb=el("todoBtn"); if(tb) tb.addEventListener("click", openTodo);
   el("login-btn").addEventListener("click", doLogin);
   el("pin-input").addEventListener("keydown", function(e){ if(e.key==="Enter") doLogin(); });
   document.addEventListener("keydown", function(e){
@@ -520,4 +583,5 @@ function init(){
 window.logout=logout; window.refreshResults=refreshResults;
 window.exportJSON=exportJSON; window.exportCSV=exportCSV; window.printRecord=printRecord;
 window.openFinalize=openFinalize; window.closeFinalize=closeFinalize; window.saveFinalize=saveFinalize;
+window.skipDecision=skipDecision; window.openTodo=openTodo; window.closeTodo=closeTodo; window.goTo=goTo;
 document.addEventListener("DOMContentLoaded", init);
