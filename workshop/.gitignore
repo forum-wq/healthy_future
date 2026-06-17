@@ -1,0 +1,30 @@
+# ============================================================
+# REFORMA 3.3 workshop — keep SENSITIVE content OUT of the
+# PUBLIC GitHub repo. Only the static login shell + backend
+# LOGIC template may be committed. Decision content, full
+# wording, PINs and source documents must NEVER be pushed.
+# ============================================================
+
+# Backend DATA (decisions, wording, members, extra slides)
+apps-script/Content.gs
+
+# Follow-up round 2026-06-17 — sensitive decision content / source data
+data/
+reforma33_questionnaire_items.json
+README_questionnaire_spec.md
+
+# PINs and any local secrets
+*.local.*
+PINS.local.txt
+
+# Documents that contain the full decision wording
+decision_record_template.json
+printable_decision_record.md
+*.docx
+*.pptx
+
+# Backups / scratch
+*.bak
+*.bak-*
+*~
+.DS_Store
