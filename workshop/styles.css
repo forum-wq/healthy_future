@@ -472,3 +472,14 @@ table.matrix th.mh{font-size:10px;writing-mode:initial;}
 .todo-item .todo-ttl{flex:1 1 auto;font-size:13px;}
 .todo-mark{flex:0 0 auto;width:20px;text-align:center;font-weight:800;}
 .todo-mark.is-skip{color:var(--warn);} .todo-mark.is-open{color:#9aa7ba;}
+
+/* ===== follow-up round (2026-06-17): priority chip + plain-language box ===== */
+.prio-chip{display:inline-block;font-weight:800;font-size:11px;letter-spacing:.5px;
+  padding:3px 9px;border-radius:999px;margin-bottom:6px;vertical-align:middle;}
+.prio-P0{background:#FBE3E0;color:#C0392B;border:1px solid #F0C0BA;}
+.prio-P1{background:#FDF1DC;color:#B9770E;border:1px solid #F2D49A;}
+.prio-P2{background:#E7F0FB;color:#2471A3;border:1px solid #C7DCF2;}
+.prio-P3{background:#EFF1F4;color:#5a6b82;border:1px solid var(--line);}
+.plain-box{margin:10px 0 12px;}
+.plain-box .plain-k{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.8px;
+  text-transform:uppercase;color:#2471A3;margin-right:8px;}

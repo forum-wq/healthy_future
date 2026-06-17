@@ -7,12 +7,14 @@
 "use strict";
 
 var GAS_URL = (window.WORKSHOP_CONFIG || {}).GAS_URL || "";
+var ROUND_ID = (window.WORKSHOP_CONFIG || {}).ROUND_ID || "2026-06-17-final25";
 
 var SK_TOKEN = "reforma33_token";
 var SK_MEMBER = "reforma33_member";
-var LK_VOTES = "reforma33_myvotes_v4";     // lokálny cache vlastných hlasov (per member)
-var LK_SIGS  = "reforma33_sigs_v4";
-var LK_SKIP  = "reforma33_skip_v4";        // „vrátiť sa neskôr" príznaky (per member)
+/* round-scoped cache keys — nový round 2026-06-17 sa nemieša so starým v4 (round 2026-06-09) */
+var LK_VOTES = "reforma33_myvotes_20260617_final25";   // lokálny cache vlastných hlasov (per member)
+var LK_SIGS  = "reforma33_sigs_20260617_final25";
+var LK_SKIP  = "reforma33_skip_20260617_final25";      // „vrátiť sa neskôr" príznaky (per member)
 
 /* runtime obsah (naplní sa po auth) */
 var DECISIONS = [], SECTORS = [], MEMBERS = [], META = {}, EXTRA = {};
@@ -139,10 +141,10 @@ function buildStage(){
 
   /* 1 — TITLE */
   html+='<section class="slide active title-slide" data-title="Title">'+
-    '<span class="eyebrow">Osobný workshop · 9. 6. 2026</span>'+
-    '<h1>'+esc(META.title||"REFORMA 3.3 — SteerCo Decision Workshop")+'</h1>'+
-    '<p class="sub">'+esc(META.subtitle||"")+'</p>'+
-    '<p class="lead">'+esc(META.lead||"")+'</p>'+
+    '<span class="eyebrow">SteerCo follow-up · 17. 6. 2026</span>'+
+    '<h1>'+esc(META.title||"REFORMA 3.3 — SteerCo Follow-up Decision Workshop")+'</h1>'+
+    '<p class="sub">'+esc(META.subtitle||"Finálny zoznam bodov na doriešenie · 17. 6. 2026")+'</p>'+
+    '<p class="lead">'+esc(META.lead||"Cieľom je uzamknúť, zaradiť alebo explicitne odložiť zvyšné P0–P3 body, ktoré blokujú MASTER sync, sektorové locky alebo ďalší review.")+'</p>'+
     '<div class="counter-box">'+
       '<div class="c"><b>'+DECISIONS.length+'</b><span>rozhodnutí</span></div>'+
       '<div class="c"><b>'+SECTORS.length+'</b><span>sektorov</span></div>'+
@@ -161,9 +163,9 @@ function buildStage(){
       '<div class="card flow"><h3>Pravidlá</h3>'+
         '<ul class="rules" style="margin:0;padding-left:18px;line-height:1.7;">'+
         '<li>Každý hlasuje <b>za seba</b> — tvoj hlas sa ukladá pod tvoje meno.</li>'+
-        '<li>Pri <b>PODMIENENE</b> zapíš konkrétnu podmienku.</li>'+
-        '<li>Pri <b>ODLOŽIŤ</b> zapíš owner, termín a dôvod.</li>'+
-        '<li>Finálny status položky potvrdzuje <b>chair</b> na slide Decision Record.</li></ul></div>'+
+        '<li>Pri <b>„Schváliť s úpravou“</b> zapíš konkrétnu úpravu do komentára.</li>'+
+        '<li>Pri <b>„Odložiť“</b> zapíš owner, termín a dôvod; pri <b>„Zamietnuť“</b> dôvod.</li>'+
+        '<li>Bod je <b>uzavretý (návrh)</b>, keď má rovnaká možnosť ≥ 4/7 a hlasovali zaň Bořuta aj Babeľa. Finálne ho potvrdzuje <b>chair</b> na slide Decision Record.</li></ul></div>'+
     '</div>'+
     '<div class="note-box" style="margin-top:14px;">Hlasy sa ukladajú na server (Google Sheet) — vidno ich naprieč zariadeniami. Na slide <b>Decision Record</b> daj <b>„Obnoviť výsledky"</b> pre aktuálnu maticu hlasov.</div>'+
   '</section>';
@@ -191,48 +193,38 @@ function buildStage(){
     items.forEach(function(d){ html+=decisionHTML(d,sec); });
   });
 
-  /* závislosti */
-  html+='<section class="slide" data-title="Rozhrania"><div class="kicker">Závislosti</div>'+
-    '<h1>Rozhrania, ktoré treba po hlasovaní patchnúť</h1><div class="grid cols-2">'+
-    (EXTRA.dependencies||[]).map(function(x,i){
-      var span=(i===(EXTRA.dependencies.length-1) && (EXTRA.dependencies.length%2===1))?' style="grid-column:1/-1;"':'';
-      return '<div class="card accent"'+span+'><h3>'+esc(x.h)+'</h3><p>'+esc(x.p)+'</p></div>';
-    }).join("")+'</div></section>';
-
-  /* closure */
-  html+='<section class="slide" data-title="Closure package"><div class="kicker">Návrh</div>'+
-    '<h1>Odporúčaný closure package</h1><div class="closure">'+
-    (EXTRA.closure||[]).map(function(x){ return '<div class="item"><div><div class="ttl">'+esc(x.ttl)+'</div><div class="txt">'+esc(x.txt)+'</div></div></div>'; }).join("")+
-    '</div></section>';
-
-  /* patch plan */
-  var pr=(EXTRA.patch&&EXTRA.patch.rows)||[];
-  html+='<section class="slide" data-title="Patch plan"><div class="kicker">Po hlasovaní</div>'+
-    '<h1>Čo sa musí upraviť po rozhodnutí</h1><table class="tbl">'+
-    '<thead><tr><th>Decision</th><th>Document patches</th><th>Owner</th><th>Trigger</th></tr></thead><tbody>'+
-    pr.map(function(r){ return '<tr><td>'+esc(r.decision)+'</td><td>'+esc(r.patches)+'</td><td>'+esc(r.owner)+'</td><td>'+esc(r.trigger)+'</td></tr>'; }).join("")+
-    '</tbody></table>'+
-    (EXTRA.patch&&EXTRA.patch.warn?'<div class="blocker-warn" style="margin-top:16px;background:#fff6e7;border-color:#f0cd8a;border-left-color:var(--warn);color:#6b4a12;"><span class="ic">⚠</span><span>'+esc(EXTRA.patch.warn)+'</span></div>':'')+
-  '</section>';
+  /* už uzavreté online (kontext, nehlasuje sa) */
+  var closedRows=(EXTRA.excludedClosed||[]).map(function(x){
+    return '<tr><td><b>'+esc(x.id)+'</b></td><td>'+esc(x.ref||"—")+'</td><td>'+esc(x.resolution||"")+'</td></tr>';
+  }).join("");
+  if(closedRows){
+    html+='<section class="slide" data-title="Už uzavreté (kontext)"><div class="kicker">Kontext · nehlasuje sa</div>'+
+      '<h1>Už uzavreté online — len pre kontext</h1>'+
+      '<p class="lead">Tieto body boli uzavreté v predošlom online kole (round 2026-06-09). V tomto rounde sa o nich nehlasuje — sú tu len ako referencia / source note.</p>'+
+      '<table class="tbl"><thead><tr><th style="width:70px;">ID</th><th style="width:80px;">Online</th><th>Výsledok</th></tr></thead><tbody>'+closedRows+'</tbody></table>'+
+      ((EXTRA.watch&&EXTRA.watch.length)?'<div class="blocker-warn" style="margin-top:16px;background:#fff6e7;border-color:#f0cd8a;border-left-color:var(--warn);color:#6b4a12;"><span class="ic">⚠</span><span>Watch pred lockom: '+EXTRA.watch.map(function(w){return esc((w.id?w.id+" — ":"")+(w.note||""));}).join(" · ")+'</span></div>':'')+
+    '</section>';
+  }
 
   /* DECISION RECORD */
   html+='<section class="slide" data-title="Decision Record"><div class="kicker">Generované zo hlasov</div>'+
     '<h1>Decision Record — pozície, tally a finál</h1>'+
+    (META.closingRule||EXTRA.closingRule?'<div class="note-box" style="margin:0 0 12px;">'+esc(EXTRA.closingRule||"")+'</div>':'')+
     '<div class="toolbar" style="margin:0 0 12px;"><button class="btn maya" onclick="refreshResults()">↻ Obnoviť výsledky</button>'+
       '<button class="btn" onclick="exportJSON()">Export JSON</button>'+
       '<button class="btn ghost" onclick="exportCSV()">Export CSV</button>'+
       '<button class="btn ghost" onclick="printRecord()">Print / PDF</button>'+
       '<span id="results-status" class="muted" style="align-self:center;font-size:12px;"></span></div>'+
     '<div id="dr-wrap" style="overflow:auto;"></div>'+
-    '<hr class="sep"><h3 style="color:var(--sapphire);margin:0 0 6px;font-size:14px;">Podpisy · 7 členov SteerCo · 9. 6. 2026</h3>'+
+    '<hr class="sep"><h3 style="color:var(--sapphire);margin:0 0 6px;font-size:14px;">Podpisy · 7 členov SteerCo · 17. 6. 2026</h3>'+
     '<div class="sig-grid" id="sig-grid"></div>'+
   '</section>';
 
   /* ZÁVER + appendix */
   html+='<section class="slide" data-title="Záver"><div class="kicker">Definícia</div><h1>Čo znamená „uzavreté"</h1>'+
     '<div class="grid cols-2"><div class="card accent"><h3>Položka je uzavretá iba ak:</h3>'+
-      '<ol class="steps"><li>je zvolená možnosť</li><li>je zaznamenaný owner</li><li>sú zaznamenané podmienky, ak sú</li><li>sú zaznamenané patch targets</li><li>je exportovaný Decision Record</li><li>je poznačené version-coupling</li></ol></div>'+
-      '<div class="card flow"><h3>Záverečná správa</h3><p style="line-height:1.55;">Po tomto workshope majú Async Balík 1 a Balík 2 prestať byť backlogom a stať sa SteerCo Decision Recordom. Otvorené zostanú len položky, ktoré SteerCo explicitne odloží s ownerom, termínom a dôvodom.</p></div></div>'+
+      '<ol class="steps"><li>má ≥ 4/7 hlasov za rovnakú možnosť</li><li>hlasovali zaň Bořuta aj Babeľa</li><li>sú zaznamenané podmienky, ak sú</li><li>je finalizovaný chairom</li><li>je exportovaný Decision Record</li></ol></div>'+
+      '<div class="card flow"><h3>Záverečná správa</h3><p style="line-height:1.55;">Po tomto follow-up rounde majú zvyšné P0–P3 body prestať blokovať MASTER sync a sektorové locky — buď sa uzamknú, zaradia, alebo sa explicitne odložia s ownerom, termínom a dôvodom.</p></div></div>'+
     '<details class="detail" style="margin-top:16px;"><summary>Appendix — zdrojové dokumenty</summary><div class="dbody appendix"><ul>'+
       (EXTRA.appendix||[]).map(function(x){ return '<li>'+esc(x)+'</li>'; }).join("")+
     '</ul></div></details></section>';
@@ -264,25 +256,29 @@ function renderAgenda(){
 function decisionHTML(d,sec){
   var t=tierOf(d);
   var chip='<span class="tier-chip '+t.key+'">'+t.label+' <span class="sub">· '+t.sub+'</span></span>';
+  var prio=d.priority?' <span class="prio-chip prio-'+esc(d.priority)+'" title="priorita">'+esc(d.priority)+'</span>':'';
   var opts=d.options.map(function(o,i){
     var rec=o.rec?' recommended':''; var tag=o.rec?' <span class="rec-tag">Odporúčané</span>':'';
     return '<label class="opt'+rec+'" data-opt="'+i+'"><input type="radio" name="vote-'+d.id+'" value="'+i+'"><span class="otext">'+esc(o.t)+tag+'</span></label>';
   }).join("");
-  var coord=d.coordFlag?'<div class="coord-flag"><b>⚠ Koordinačná poznámka</b> — '+esc(d.coordFlag)+'</div>':'';
-  return '<section class="slide" data-title="'+sec.num+'·'+esc(d.title)+'" data-decision="'+d.id+'">'+
-    '<div class="dhead"><div class="dnum">'+sec.num+'</div><div class="dtitle">'+
-      '<div class="sec-mini">Sektor '+sec.num+' — '+esc(sec.name)+'</div><h2>'+esc(d.title)+'</h2>'+chip+
+  var help=d.context?'<div class="note-box plain-box"><span class="plain-k">Po slovensky</span>'+esc(d.context)+'</div>':'';
+  var risk=d.risk?'<h4>Riziko, ak sa neuzavrie</h4><p style="margin:0;font-size:12.5px;line-height:1.5;">'+esc(d.risk)+'</p>':'';
+  var prior=d.prior_vote?'<h4>Predchádzajúci online stav</h4><p class="muted" style="margin:0;font-size:12px;">'+esc(d.prior_vote)+(d.online_ref?(' (online '+esc(d.online_ref)+')'):'')+'</p>':'';
+  return '<section class="slide" data-title="'+esc(sec.num+'·'+(d.code||d.id))+'" data-decision="'+esc(d.id)+'">'+
+    '<div class="dhead"><div class="dnum">'+esc(String(d.displayNumber||"•"))+'</div><div class="dtitle">'+
+      '<div class="sec-mini">Sektor '+sec.num+' — '+esc(sec.name)+' · '+esc(d.code||d.id)+'</div><h2>'+esc(d.title)+'</h2>'+chip+prio+
       '<div class="owner-line">Owner: <b>'+esc(d.owner)+'</b></div></div></div>'+
-    '<div class="change-box"><div class="ck">Čo tým meníme</div><div class="ct">'+esc(d.change)+'</div></div>'+coord+
+    '<div class="change-box"><div class="ck">Čo tým meníme</div><div class="ct">'+esc(d.change)+'</div></div>'+help+
     '<div class="qbox"><div class="qk">Čo presne hlasujeme</div><div class="qt">'+esc(d.question)+'</div></div>'+
     '<div class="vote-block"><div class="vk">Tvoj hlas — <b>'+esc(ME.label)+'</b></div>'+opts+'</div>'+
     '<div class="comment-wrap"><label for="comment-'+d.id+'">Komentár / podmienka (voliteľné)</label>'+
-      '<textarea id="comment-'+d.id+'" placeholder="Pri PODMIENENE zapíš podmienku; pri ODLOŽIŤ owner + termín + dôvod."></textarea></div>'+
+      '<textarea id="comment-'+d.id+'" placeholder="Pri „Schváliť s úpravou“ zapíš úpravu; pri „Odložiť“ owner + termín + dôvod; pri „Zamietnuť“ dôvod."></textarea></div>'+
     '<div class="current-vote" id="current-'+d.id+'"></div>'+
-    '<div class="skip-row"><button class="btn ghost skip-btn" id="skip-'+d.id+'" onclick="skipDecision('+d.id+')">⏭ Vrátiť sa neskôr</button></div>'+
-    '<details class="detail"><summary>Detail — odporúčaný / finálny wording · source note</summary><div class="dbody">'+
-      '<h4>Odporúčaný wording</h4><div class="wording-box">'+esc(recWording(d)||"—")+'</div>'+
+    '<div class="skip-row"><button class="btn ghost skip-btn" id="skip-'+d.id+'" onclick="skipDecision(\''+d.id+'\')">⏭ Vrátiť sa neskôr</button></div>'+
+    '<details class="detail"><summary>Detail — odporúčané znenie · riziko · source note</summary><div class="dbody">'+
+      '<h4>Odporúčané znenie rozhodnutia</h4><div class="wording-box">'+esc(d.recommended_text||recWording(d)||"—")+'</div>'+
       '<div id="finalprev-'+d.id+'"></div>'+
+      risk+prior+
       '<h4>Source note</h4><p class="muted" style="margin:0;font-size:12px;">'+esc(d.source_note||"—")+'</p>'+
     '</div></details></section>';
 }
@@ -326,7 +322,7 @@ function updateCurrentVote(d, savedMsg){
 function pushVote(d){
   var v=myVote(d.id); if(!v||v.idx==null) return;
   updateCurrentVote(d,"ukladám…");
-  api({action:"vote", token:TOKEN, decisionId:d.id, optionIndex:v.idx, comment:v.comment||""}).then(function(res){
+  api({action:"vote", token:TOKEN, roundId:ROUND_ID, decisionId:d.id, optionIndex:v.idx, comment:v.comment||""}).then(function(res){
     if(res.ok){ updateCurrentVote(d,"uložené ✓"); }
     else if(res.error==="no_session"){ updateCurrentVote(d,"⚠ relácia vypršala"); logout(); }
     else { updateCurrentVote(d,"⚠ "+(res.message||"nepodarilo sa uložiť")); }
@@ -388,7 +384,7 @@ function updateNavMarkers(){
   if(sel){ for(var i=0;i<slides.length && i<sel.options.length;i++){
     var s=slides[i]; var did=s.getAttribute("data-decision");
     var base=(i+1)+"/"+slides.length+" · "+(s.getAttribute("data-title")||"");
-    var mark=""; if(did){ var st=statusOf(parseInt(did,10)); mark=(st==="voted"?"✓ ":(st==="skip"?"⏭ ":"· ")); }
+    var mark=""; if(did){ var st=statusOf(did); mark=(st==="voted"?"✓ ":(st==="skip"?"⏭ ":"· ")); }
     sel.options[i].text=mark+base;
   }}
   var ne=el("todo-n"); if(ne) ne.textContent=unfinished().length;
@@ -398,7 +394,7 @@ function openTodo(){
   var rows=items.map(function(d){ var sec=sectorOf(d); var sk=isSkipped(d.id);
     return '<div class="todo-item"><span class="todo-mark '+(sk?"is-skip":"is-open")+'">'+(sk?"⏭":"·")+'</span>'+
            '<span class="todo-ttl">'+sec.num+'·'+esc(trunc_(d.title,52))+'</span>'+
-           '<button class="btn tiny" onclick="goTo('+d.id+')">otvoriť →</button></div>';
+           '<button class="btn tiny" onclick="goTo(\''+d.id+'\')">otvoriť →</button></div>';
   }).join("") || '<p class="muted" style="padding:8px 0;">Všetko odhlasované 🎉</p>';
   var m=el("modal");
   m.innerHTML='<div class="modal-box"><h3>Moje nedokončené ('+items.length+')</h3>'+
@@ -444,6 +440,14 @@ function tallyOf(did){
 }
 function memberMeta_(key){ for(var i=0;i<MEMBERS.length;i++){ if(MEMBERS[i].key===key) return MEMBERS[i]; } return null; }
 function voteForMember_(did, key){ var arr=(RESULTS.byDecision[String(did)])||[]; for(var i=0;i<arr.length;i++){ if(arr[i].memberKey===key) return arr[i]; } return null; }
+/* mechanická uzatváracia pravidlo: ≥4/7 za vedúcu možnosť A zároveň za ňu Bořuta aj Babeľa */
+function closingStatus_(did, tal){
+  if(!tal || tal.leading<0) return null;
+  var leadCount=tal.counts[tal.leading]||0;
+  var bo=voteForMember_(did,"Boruta"), ba=voteForMember_(did,"Babela");
+  var bothLead = !!(bo && ba && bo.optionIndex===tal.leading && ba.optionIndex===tal.leading);
+  return { closed:(leadCount>=4 && bothLead), leadCount:leadCount, bothLead:bothLead };
+}
 
 function refreshResults(){
   var st=el("results-status"); if(st) st.textContent="načítavam…";
@@ -476,10 +480,14 @@ function buildRecord(){
     var leadTxt = tal.leading>=0 ? (d.options[tal.leading]?d.options[tal.leading].t:"") : "—";
     var finCell;
     if(fin){ finCell='<span class="st '+fin.status+'">'+(STATUS_LABEL[fin.status]||fin.status)+'</span>'; }
-    else { finCell='<span class="muted">'+(tal.tie?'<b class="disp">DISPUTED (remíza)</b>':esc(trunc_(leadTxt,46)))+'</span>'; }
+    else if(tal.tie){ finCell='<b class="disp">DISPUTED (remíza)</b>'; }
+    else { var cs=closingStatus_(d.id, tal);
+      if(cs && cs.closed){ finCell='<span class="st closed_default" title="≥4/7 + Bořuta &amp; Babeľa">UZAVRETÝ (návrh '+cs.leadCount+'/7)</span>'; }
+      else { finCell='<span class="muted">OTVORENÝ · '+esc(trunc_(leadTxt,40))+'</span>'; }
+    }
     if(tal.vetoDissent) finCell+=' <span class="veto-warn" title="veto-holder nesúhlasí s vedúcou možnosťou">⚖ veto?</span>';
-    var chairBtn = ME.isChair ? '<button class="btn tiny" onclick="openFinalize('+d.id+')">✎</button>' : '';
-    return '<tr><td class="cell-num">'+d.id+'</td><td class="dt">'+sec.num+'·'+esc(trunc_(d.title,40))+'</td>'+cells+
+    var chairBtn = ME.isChair ? '<button class="btn tiny" onclick="openFinalize(\''+d.id+'\')">✎</button>' : '';
+    return '<tr><td class="cell-num">'+esc(String(d.displayNumber||""))+'</td><td class="dt">'+esc(d.code||d.id)+' · '+esc(trunc_(d.title,38))+'</td>'+cells+
            '<td class="tally">'+tallyStr+'</td><td class="fin">'+finCell+' '+chairBtn+'</td></tr>'+
            (fin&&fin.wording?'<tr class="finrow"><td></td><td colspan="'+(MEMBERS.length+3)+'"><b>Finál:</b> '+esc(fin.wording)+'</td></tr>':'');
   }).join("");
@@ -517,7 +525,7 @@ function saveFinalize(did){
 
 /* ============================================================ EXPORT */
 function buildExportObject(){
-  return { workshop:META.workshop, date:META.date, generated_by:ME?ME.label:"",
+  return { workshop:META.workshop, date:META.date, roundId:(META.roundId||ROUND_ID), generated_by:ME?ME.label:"",
     decisions:DECISIONS.map(function(d){
       var sec=sectorOf(d); var tal=tallyOf(d.id); var fin=RESULTS.finals[String(d.id)]||null;
       return { id:d.id, sector:sec.num+" "+sec.name, title:d.title, owner:d.owner,
@@ -533,18 +541,18 @@ function buildExportObject(){
 function dl_(fn,txt,type){ var b=new Blob([txt],{type:type||"text/plain;charset=utf-8"}); var u=URL.createObjectURL(b);
   var a=document.createElement("a"); a.href=u; a.download=fn; document.body.appendChild(a); a.click();
   setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(u); },100); }
-function exportJSON(){ dl_("reforma33_decision_record_2026-06-09.json", JSON.stringify(buildExportObject(),null,2), "application/json;charset=utf-8"); }
+function exportJSON(){ dl_("reforma33_decision_record_2026-06-17_final25.json", JSON.stringify(buildExportObject(),null,2), "application/json;charset=utf-8"); }
 function csvCell(s){ s=String(s==null?"":s); return '"'+s.replace(/"/g,'""')+'"'; }
 function exportCSV(){
-  var rows=[["id","sector","title","owner","tier","member","veto","option","outcome","comment","leading","final_status","final_wording"]];
+  var rows=[["round","id","sector","title","owner","priority","tier","member","veto","option","outcome","comment","leading","final_status","final_wording"]];
   DECISIONS.forEach(function(d){ var sec=sectorOf(d); var tal=tallyOf(d.id); var fin=RESULTS.finals[String(d.id)]||{};
     var lead=tal.leading>=0&&d.options[tal.leading]?d.options[tal.leading].t:"";
     MEMBERS.forEach(function(m){ var v=voteForMember_(d.id,m.key);
-      rows.push([d.id, sec.num+" "+sec.name, d.title, d.owner, tierOf(d).key, m.label, m.veto?"veto":"",
+      rows.push([(META.roundId||ROUND_ID), d.id, sec.num+" "+sec.name, d.title, d.owner, d.priority||"", tierOf(d).key, m.label, m.veto?"veto":"",
         v?v.optionText:"", v?v.outcome:"", v?v.comment:"", lead, fin.status||"", fin.wording||""]);
     });
   });
-  dl_("reforma33_decision_record_2026-06-09.csv", "﻿"+rows.map(function(r){return r.map(csvCell).join(",");}).join("\r\n"), "text/csv;charset=utf-8");
+  dl_("reforma33_decision_record_2026-06-17_final25.csv", "﻿"+rows.map(function(r){return r.map(csvCell).join(",");}).join("\r\n"), "text/csv;charset=utf-8");
 }
 function printRecord(){
   var o=buildExportObject();
@@ -553,7 +561,7 @@ function printRecord(){
     var st=d.final_status?(STATUS_LABEL[d.final_status]||d.final_status):(d.disputed?"DISPUTED":"—");
     return '<tr><td>'+d.id+'</td><td>'+esc(d.sector)+'</td><td>'+esc(d.title)+'</td><td>'+pos+'</td><td>'+esc(d.leading_option)+'</td><td>'+esc(d.final_wording||"—")+'</td><td>'+esc(st)+(d.veto_dissent?" ⚖":"")+'</td></tr>';
   }).join("");
-  el("print-area").innerHTML='<h1>REFORMA 3.3 — SteerCo Decision Record</h1><div>'+esc(o.workshop)+' · 9. 6. 2026 · INTERNÉ · export: '+esc(o.generated_by)+'</div>'+
+  el("print-area").innerHTML='<h1>REFORMA 3.3 — SteerCo Follow-up Decision Record</h1><div>'+esc(o.workshop)+' · 17. 6. 2026 · round '+esc(o.roundId||ROUND_ID)+' · INTERNÉ · export: '+esc(o.generated_by)+'</div>'+
     '<table><thead><tr><th>#</th><th>Sektor</th><th>Decision</th><th>Pozície (poradie možnosti)</th><th>Vedúca</th><th>Finálny wording</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table>';
   window.print();
 }

@@ -7,7 +7,7 @@
            Execute as "Me", Access "Anyone".
    Script Properties (Project Settings → Script Properties):
      SHEET_ID  = id Google Sheetu pre hlasy
-     PINS      = {"742238":"Babela", ...}   (PIN → memberKey)
+     PINS      = {"123456":"Babela", ...}   (PIN → memberKey)
      CHAIR_KEY = Boruta
 
    Endpointy (POST JSON, Content-Type: text/plain):
@@ -18,11 +18,12 @@
    ============================================================ */
 "use strict";
 
-var VOTES_SHEET  = "Votes";
-var FINALS_SHEET = "Finals";
+var ROUND_ID     = "2026-06-17-final25";   // nový round — staré hlasy (round 2026-06-09) ostávajú v "Votes"/"Finals"
+var VOTES_SHEET  = "Votes_final25";
+var FINALS_SHEET = "Finals_final25";
 var TOKEN_TTL    = 21600;   // 6 h (CacheService max)
-var VOTES_HEADERS  = ["timestamp","memberKey","memberLabel","decisionId","optionIndex","optionText","outcome","comment"];
-var FINALS_HEADERS = ["timestamp","decisionId","status","wording","chairKey"];
+var VOTES_HEADERS  = ["timestamp","memberKey","memberLabel","decisionId","optionIndex","optionText","outcome","comment","roundId"];
+var FINALS_HEADERS = ["timestamp","decisionId","status","wording","chairKey","roundId"];
 
 /* ---------------- routing ---------------- */
 function doPost(e){
@@ -85,7 +86,7 @@ function handleVote_(p){
   var key = memberFromToken_(p.token);
   if (!key) return json_({ ok:false, error:"no_session", message:"Relácia vypršala. Prihlás sa znova." });
 
-  var did = parseInt(p.decisionId, 10);
+  var did = String(p.decisionId || "");   // decisionId je teraz kód (napr. "T10")
   var oi  = parseInt(p.optionIndex, 10);
   var d   = decisionById_(did);
   if (!d) return json_({ ok:false, error:"bad_decision" });
@@ -103,7 +104,7 @@ function handleVote_(p){
       if (String(values[r][1]) === key && String(values[r][3]) === String(did)){ rowIndex = r + 1; break; }
     }
     var row = [ new Date(), key, member ? member.label : key, did, oi,
-                safe_(opt.t), opt.outcome, safe_(String(p.comment || "")) ];
+                safe_(opt.t), opt.outcome, safe_(String(p.comment || "")), ROUND_ID ];
     if (rowIndex > 0){ sh.getRange(rowIndex, 1, 1, row.length).setValues([row]); }
     else { sh.appendRow(row); }
   } finally { lock.releaseLock(); }
@@ -144,7 +145,7 @@ function handleFinalize_(p){
   if (!key) return json_({ ok:false, error:"no_session" });
   if (key !== chairKey_()) return json_({ ok:false, error:"not_chair", message:"Finálny status môže nastaviť len chair." });
 
-  var did = parseInt(p.decisionId, 10);
+  var did = String(p.decisionId || "");   // decisionId je teraz kód (napr. "T10")
   if (!decisionById_(did)) return json_({ ok:false, error:"bad_decision" });
 
   var lock = LockService.getScriptLock();
@@ -156,7 +157,7 @@ function handleFinalize_(p){
     for (var r = 1; r < values.length; r++){
       if (String(values[r][1]) === String(did)){ rowIndex = r + 1; break; }
     }
-    var row = [ new Date(), did, safe_(String(p.status || "")), safe_(String(p.wording || "")), key ];
+    var row = [ new Date(), did, safe_(String(p.status || "")), safe_(String(p.wording || "")), key, ROUND_ID ];
     if (rowIndex > 0){ sh.getRange(rowIndex, 1, 1, row.length).setValues([row]); }
     else { sh.appendRow(row); }
   } finally { lock.releaseLock(); }
@@ -184,7 +185,7 @@ function memberByKey_(key){
 }
 function decisionById_(id){
   var ds = getContent_().decisions;
-  for (var i = 0; i < ds.length; i++){ if (ds[i].id === id) return ds[i]; }
+  for (var i = 0; i < ds.length; i++){ if (String(ds[i].id) === String(id)) return ds[i]; }
   return null;
 }
 function getSheet_(name, headers){

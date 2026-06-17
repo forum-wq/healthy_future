@@ -5,8 +5,13 @@
 # wording, PINs and source documents must NEVER be pushed.
 # ============================================================
 
-# Backend DATA (47 decisions, wording, members, extra slides)
+# Backend DATA (decisions, wording, members, extra slides)
 apps-script/Content.gs
+
+# Follow-up round 2026-06-17 — sensitive decision content / source data
+data/
+reforma33_questionnaire_items.json
+README_questionnaire_spec.md
 
 # PINs and any local secrets
 *.local.*

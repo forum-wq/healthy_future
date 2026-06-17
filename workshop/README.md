@@ -34,7 +34,7 @@ Prehliadač (GitHub Pages, public)            Google (privátne)
    | Property | Hodnota |
    |---|---|
    | `SHEET_ID` | ID Sheetu z kroku 1 |
-   | `PINS` | JSON z `apps-script/PINS.local.txt` (napr. `{"742238":"Babela", ...}`) |
+   | `PINS` | JSON z `apps-script/PINS.local.txt` (napr. `{"123456":"Babela", ...}`) |
    | `CHAIR_KEY` | `Boruta` |
 4. **Deploy** — *Deploy → New deployment → Web app*:
    - **Execute as:** *Me*
